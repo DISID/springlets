@@ -1,4 +1,4 @@
-= Springlets
+= Springlets image:https://travis-ci.org/DISID/springlets.svg?branch=master["Build Status", link="https://travis-ci.org/DISID/springlets"]
 
 Springlets provides a series of heterogeneus small utilities and Spring Boot starters not available in the main Spring projects: Spring Framework, Spring Data, Spring Boot, ...
 
