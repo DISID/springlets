@@ -15,6 +15,7 @@
     <name>DISID Corporation</name>
     <url>http://www.disid.com</url> 
   </organization>
+<<<<<<< HEAD
   <dependencies>
   
     <!-- Spring dependencies -->
@@ -34,4 +35,13 @@
       <artifactId>javax.persistence</artifactId>
     </dependency>
   </dependencies>
+=======
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+>>>>>>> d40b30bf81030a3b747970684d6f152a08a2872d
 </project>
