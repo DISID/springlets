@@ -6,9 +6,10 @@
     <groupId>io.spring.platform</groupId>
     <artifactId>platform-bom</artifactId>
     <version>Athens-RC1</version>
+    <relativePath/>
   </parent>
-  <groupId>com.disid</groupId>
-  <artifactId>springlets</artifactId>
+  <groupId>io.springlets</groupId>
+  <artifactId>springlets-parent</artifactId>
   <version>1.0.0-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>Springlets</name>
@@ -23,14 +24,30 @@
   </properties>
 
   <modules>
-    <module>spring-framework</module>
-    <module>spring-data</module>
-    <module>spring-boot-starters</module>
+    <!--module>springlets</module-->
+    <!--module>springlets-boot-starters</module-->
+    <module>springlets-data</module>
+    <!--module>springlets-framework</module-->
   </modules>
+
+  <!-- 
+    Remove once the spring io platform bom becomes final,
+    as it will be available in maven central.   
+   -->
+  <repositories>
+    <repository>
+      <id>spring-milestones</id>
+      <name>Spring Milestones</name>
+      <url>https://repo.spring.io/milestone</url>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+  </repositories>
 
   <dependencyManagement>
     <!--
-    = Dependencies order:
+    = Dependencies order criteria:
 
     * Two dependency groups: first spring dependencies and next the external ones.
     * Inside a group: alphabetical order, ordering first by groupId, then by artifactId.
