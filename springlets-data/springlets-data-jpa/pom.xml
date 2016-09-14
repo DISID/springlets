@@ -15,4 +15,23 @@
     <name>DISID Corporation</name>
     <url>http://www.disid.com</url> 
   </organization>
+  <dependencies>
+  
+    <!-- Spring dependencies -->
+    <dependency>
+      <groupId>org.springframework.data</groupId>
+      <artifactId>spring-data-jpa</artifactId>
+    </dependency>
+  
+    <!-- Other dependencies -->
+    <dependency>
+      <groupId>com.querydsl</groupId>
+      <artifactId>querydsl-jpa</artifactId>
+    </dependency>
+    
+    <dependency>
+      <groupId>org.eclipse.persistence</groupId>
+      <artifactId>javax.persistence</artifactId>
+    </dependency>
+  </dependencies>
 </project>

@@ -15,4 +15,7 @@
     <name>DISID Corporation</name>
     <url>http://www.disid.com</url> 
   </organization>
+  <modules>
+    <module>springlets-data-jpa</module>
+  </modules>
 </project>
