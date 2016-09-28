@@ -1,6 +1,5 @@
 package io.springlets.data.jpa.repository.support;
 
-import org.springframework.roo.addon.layers.repository.jpa.annotations.RooGlobalSearch;
 import org.springframework.util.Assert;
 /**
  * Defines a global text search. This Value Object is used to define
@@ -9,7 +8,6 @@ import org.springframework.util.Assert;
  *
  * @author Spring Roo
  */
-@RooGlobalSearch
 public final class GlobalSearch {
 
   private final String searchText;
