@@ -56,7 +56,7 @@ public class QueryDslRepositorySupportExt<T> extends QueryDslRepositorySupport {
 
   /**
    * Creates a new {@link QueryDslRepositorySupport} instance for the given domain type.
-   * 
+   *
    * @param domainClass must not be {@literal null}.
    */
   public QueryDslRepositorySupportExt(Class<T> domainClass) {
@@ -66,7 +66,7 @@ public class QueryDslRepositorySupportExt<T> extends QueryDslRepositorySupport {
 
   /**
    * Applies the given {@link Pageable} to the given {@link JPQLQuery}.
-   * 
+   *
    * @param pageable the ordering and paging information
    * @param query the query to apply to
    * @return the updated query
@@ -79,17 +79,17 @@ public class QueryDslRepositorySupportExt<T> extends QueryDslRepositorySupport {
    * Applies the given {@link Pageable} to the given {@link JPQLQuery}.
    * Allows to map the attributes to order as provided in the {@link Pageable}
    * to real entity attributes. This might be used to work with projections
-   * or DTOs whose attributes don't have the same name as the entity ones. 
-   * 
+   * or DTOs whose attributes don't have the same name as the entity ones.
+   *
    * It allows to map to more than one entity attribute. As an example, if
    * the DTO used to create the {@link Pageable} has a fullName attribute, you
    * could map that attribute to two entity attributes: name and surname.
-   * In this case, the {@link Pageable} defines an order by a fullName 
-   * attribute, but que query will order by name and surname instead. 
-   *  
-   * @param pageable the ordering and paging 
-   * @param query 
-   * @param mapping definition of a mapping of order attribute names to 
+   * In this case, the {@link Pageable} defines an order by a fullName
+   * attribute, but que query will order by name and surname instead.
+   *
+   * @param pageable the ordering and paging
+   * @param query
+   * @param mapping definition of a mapping of order attribute names to
    *        real entity ones
    * @return the updated query
    */
@@ -102,16 +102,16 @@ public class QueryDslRepositorySupportExt<T> extends QueryDslRepositorySupport {
    * Applies the given {@link Pageable} to the given {@link JPQLQuery}.
    * Allows to map the attributes to order as provided in the {@link Pageable}
    * to real entity attributes. This might be used to work with projections
-   * or DTOs whose attributes don't have the same name as the entity ones. 
-   * 
+   * or DTOs whose attributes don't have the same name as the entity ones.
+   *
    * It allows to map to more than one entity attribute. As an example, if
    * the DTO used to create the {@link Pageable} has a fullName attribute, you
    * could map that attribute to two entity attributes: name and surname.
-   * In this case, the {@link Pageable} defines an order by a fullName 
-   * attribute, but que query will order by name and surname instead. 
-   *  
-   * @param pageable the ordering and paging 
-   * @param query 
+   * In this case, the {@link Pageable} defines an order by a fullName
+   * attribute, but que query will order by name and surname instead.
+   *
+   * @param pageable the ordering and paging
+   * @param query
    * @param attributeMapping definition of a mapping of order attribute names
    *        to real entity ones
    * @return the updated query
@@ -150,11 +150,11 @@ public class QueryDslRepositorySupportExt<T> extends QueryDslRepositorySupport {
 
   /**
    * Adds to a query an order by the entity identifier.
-   * This is useful as the default last order in queries where pagination is 
+   * This is useful as the default last order in queries where pagination is
    * applied, so you have always an absolute order. Otherwise, the order
    * of the results depends on the database criteria, which might change
    * even between pages, returning confusing results for the user.
-   * @param query 
+   * @param query
    * @return the updated query
    */
   @SuppressWarnings({"rawtypes", "unchecked"})
@@ -179,7 +179,7 @@ public class QueryDslRepositorySupportExt<T> extends QueryDslRepositorySupport {
    * performance.
    * @param text the text to look for
    * @param query
-   * @param globalSearchAttributes the list of attributes to perform the 
+   * @param globalSearchAttributes the list of attributes to perform the
    *        filter on
    * @return the updated query
    */
@@ -213,10 +213,9 @@ public class QueryDslRepositorySupportExt<T> extends QueryDslRepositorySupport {
    *        filter on
    * @return the updated query
    */
-  protected JPQLQuery applyGlobalSearch(GlobalSearch globalSearch, JPQLQuery query,
+  protected JPQLQuery<T> applyGlobalSearch(GlobalSearch globalSearch, JPQLQuery<T> query,
       Path<?>... globalSearchAttributes) {
-    if (globalSearch != null && !StringUtils.isEmpty(globalSearch.getText())
-        && globalSearchAttributes.length > 0) {
+    if (globalSearch != null) {
       String txt = globalSearch.getText();
       return applyGlobalSearch(txt, query, globalSearchAttributes);
     }
@@ -226,30 +225,30 @@ public class QueryDslRepositorySupportExt<T> extends QueryDslRepositorySupport {
   /**
    * Loads a page of data with the provided pagination criteria. It allows to
    * load full entities as well as projections.
-   * 
+   *
    * TODO: the current implementation expects the query to have already applied
    * the paging and sorting criteria, which is not what one could expect from
    * the method signature.
-   *  
+   *
    * Sample loading entities:
-   * 
+   *
    * <pre class="code">
    * loadPage(query, pageable, QEmployee.employee);
    * </pre>
-   * 
+   *
    * Sample with a projection:
-   * 
+   *
    * <pre class="code">
    * loadPage(query, pageable, Projections.constructor(EmployeeInfo.class,
    *    employee.id, employee.firstName, employee.lastName, employee.phone, employee.extension,
    *    employee.supervisor.id, employee.supervisor.firstName, employee.supervisor.lastName));
    * </pre>
-   * 
+   *
    * @param <M> the data type to load, usually a JPA Entity or a projection bean
    * @param query the query with the pagination and ordering criteria already applied
    * @param pageable the already applied pagination and ordering criteria
    * @param expression the entity or projection to build with the query data
-   * @return the loaded data page 
+   * @return the loaded data page
    */
   protected <M> Page<M> loadPage(JPQLQuery<M> query, Pageable pageable, Expression<M> expression) {
     query.select(expression);
@@ -260,7 +259,7 @@ public class QueryDslRepositorySupportExt<T> extends QueryDslRepositorySupport {
 
   /**
    * Recursively creates a dot-separated path for the property path.
-   * 
+   *
    * @param path must not be {@literal null}.
    * @return
    */
@@ -274,7 +273,7 @@ public class QueryDslRepositorySupportExt<T> extends QueryDslRepositorySupport {
 
   /**
    * Factory to create a mapping between simulated attributes and the entity
-   * real ones. 
+   * real ones.
    */
   public static class AttributeMappingBuilder {
 
