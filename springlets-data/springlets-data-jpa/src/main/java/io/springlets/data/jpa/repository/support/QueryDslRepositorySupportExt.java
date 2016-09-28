@@ -203,6 +203,27 @@ public class QueryDslRepositorySupportExt<T> extends QueryDslRepositorySupport {
   }
 
   /**
+   * Adds a global contains text filter on the provided attributes.
+   * WARNING: this creates a very inefficient query. If you have many entity
+   * instances to query, use instead an indexed text search solution for better
+   * performance.
+   * @param globalSearch Contains the text to look for
+   * @param query
+   * @param globalSearchAttributes the list of attributes to perform the
+   *        filter on
+   * @return the updated query
+   */
+  protected JPQLQuery applyGlobalSearch(GlobalSearch globalSearch, JPQLQuery query,
+      Path<?>... globalSearchAttributes) {
+    if (globalSearch != null && !StringUtils.isEmpty(globalSearch.getText())
+        && globalSearchAttributes.length > 0) {
+      String txt = globalSearch.getText();
+      return applyGlobalSearch(txt, query, globalSearchAttributes);
+    }
+    return query;
+  }
+
+  /**
    * Loads a page of data with the provided pagination criteria. It allows to
    * load full entities as well as projections.
    * 
@@ -219,7 +240,7 @@ public class QueryDslRepositorySupportExt<T> extends QueryDslRepositorySupport {
    * Sample with a projection:
    * 
    * <pre class="code">
-   * loadPage(query, pageable, ConstructorExpression.create(EmployeeInfo.class,
+   * loadPage(query, pageable, Projections.constructor(EmployeeInfo.class,
    *    employee.id, employee.firstName, employee.lastName, employee.phone, employee.extension,
    *    employee.supervisor.id, employee.supervisor.firstName, employee.supervisor.lastName));
    * </pre>
