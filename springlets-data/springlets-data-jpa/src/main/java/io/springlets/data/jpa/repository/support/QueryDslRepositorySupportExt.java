@@ -48,7 +48,7 @@ import javax.persistence.metamodel.SingularAttribute;
  * Base class with additional utilities for implementing repositories using QueryDsl library.
  *
  * @param <T> the entity class to manage in the repository
- * @author Cèsar Ordiñana
+ * @author Cèsar Ordiñana <a href="http://www.disid.com">DISID Corporation S.L.</a>
  */
 public class QueryDslRepositorySupportExt<T> extends QueryDslRepositorySupport {
 
@@ -149,7 +149,7 @@ public class QueryDslRepositorySupportExt<T> extends QueryDslRepositorySupport {
   }
 
   /**
-   * Adds to a query an order by the entity identifier.
+   * Adds to a query an order by the entity identifier related to this repository.
    * This is useful as the default last order in queries where pagination is
    * applied, so you have always an absolute order. Otherwise, the order
    * of the results depends on the database criteria, which might change
@@ -185,8 +185,7 @@ public class QueryDslRepositorySupportExt<T> extends QueryDslRepositorySupport {
    */
   protected JPQLQuery<T> applyGlobalSearch(String text, JPQLQuery<T> query,
       Path<?>... globalSearchAttributes) {
-    if (text != null && !StringUtils.isEmpty(text)
-        && globalSearchAttributes.length > 0) {
+    if (text != null && !StringUtils.isEmpty(text) && globalSearchAttributes.length > 0) {
       BooleanBuilder searchCondition = new BooleanBuilder();
       for (int i = 0; i < globalSearchAttributes.length; i++) {
         Path<?> path = globalSearchAttributes[i];
