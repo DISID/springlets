@@ -13,15 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.springlets.data.jpa.repository.support;
+package io.springlets.data.domain;
 
 import org.springframework.util.Assert;
+
 /**
  * Defines a global text search. This Value Object is used to define
  * global data searches in an entity or group of entities to validate
  * whether any or some of the data of the entity meet the search.
  *
- * @author Spring Roo
+ * @author Cèsar Ordiñana at http://www.disid.com[DISID Corporation S.L.]
  */
 public final class GlobalSearch {
 

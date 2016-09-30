@@ -7,10 +7,10 @@
     <artifactId>springlets-data</artifactId>
     <version>1.0.0-SNAPSHOT</version>
   </parent>
-  <artifactId>springlets-data-jpa</artifactId>
+  <artifactId>springlets-data-commons</artifactId>
   <packaging>jar</packaging>
-  <name>Springlets for Spring Data JPA</name>
-  <description>Springlets for Spring Data JPA</description>
+  <name>Springlets for Spring Data Commons</name>
+  <description>Springlets for Spring Data Commons</description>
   <organization>
     <name>DISID Corporation</name>
     <url>http://www.disid.com</url>
@@ -26,25 +26,14 @@
     <!-- Spring dependencies -->
     <dependency>
       <groupId>org.springframework.data</groupId>
-      <artifactId>spring-data-jpa</artifactId>
+      <artifactId>spring-data-commons</artifactId>
     </dependency>
-
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+			<optional>true</optional>
+</dependency>
     <!-- Other dependencies -->
-    <dependency>
-      <groupId>com.querydsl</groupId>
-      <artifactId>querydsl-jpa</artifactId>
-    </dependency>
-
-	<dependency>
-		<groupId>io.springlets</groupId>
-		<artifactId>springlets-data-commons</artifactId>
-		<version>${project.version}</version>
-	</dependency>
-
-    <dependency>
-      <groupId>org.eclipse.persistence</groupId>
-      <artifactId>javax.persistence</artifactId>
-    </dependency>
   </dependencies>
   <licenses>
     <license>

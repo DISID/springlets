@@ -26,6 +26,8 @@ import com.querydsl.core.types.dsl.PathBuilder;
 import com.querydsl.core.types.dsl.StringPath;
 import com.querydsl.jpa.JPQLQuery;
 
+import io.springlets.data.domain.GlobalSearch;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -48,7 +50,7 @@ import javax.persistence.metamodel.SingularAttribute;
  * Base class with additional utilities for implementing repositories using QueryDsl library.
  *
  * @param <T> the entity class to manage in the repository
- * @author Cèsar Ordiñana <a href="http://www.disid.com">DISID Corporation S.L.</a>
+ * @author Cèsar Ordiñana at http://www.disid.com[DISID Corporation S.L.]
  */
 public class QueryDslRepositorySupportExt<T> extends QueryDslRepositorySupport {
 

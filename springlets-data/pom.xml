@@ -16,6 +16,7 @@
     <url>http://www.disid.com</url> 
   </organization>
   <modules>
+    <module>springlets-data-commons</module>
     <module>springlets-data-jpa</module>
   </modules>
   <licenses>
