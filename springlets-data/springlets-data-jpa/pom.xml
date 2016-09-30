@@ -16,7 +16,13 @@
     <url>http://www.disid.com</url>
   </organization>
   <dependencies>
+    <!--
+    = Dependencies order criteria:
 
+    * Two dependency groups: first spring dependencies, next own dependencies and finally the external ones.
+    * Inside a group: alphabetical order, ordering first by groupId, then by artifactId.
+     -->
+     
     <!-- Spring dependencies -->
     <dependency>
       <groupId>org.springframework.data</groupId>
