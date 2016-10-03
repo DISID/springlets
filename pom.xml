@@ -33,9 +33,9 @@
 
   <modules>
     <!--module>springlets</module-->
-    <!--module>springlets-boot-starters</module-->
+    <module>springlets-framework</module>
     <module>springlets-data</module>
-    <!--module>springlets-framework</module-->
+    <!--module>springlets-boot-starters</module-->
   </modules>
 
   <dependencyManagement>
