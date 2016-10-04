@@ -50,7 +50,7 @@ TODO
 
 == Project versioning
 
-Springlets project follows the "Spring project versioning":https://github.com/spring-projects/spring-build-gradle/wiki/Spring-project-versioning best practices.
+Springlets project follows the https://github.com/spring-projects/spring-build-gradle/wiki/Spring-project-versioning[Spring project versioning] best practices.
 
 == License
 
