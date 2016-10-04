@@ -28,6 +28,10 @@ TODO
 
 TODO
 
+=== Project versioning
+
+Springlets project follows the https://github.com/spring-projects/spring-build-gradle/wiki/Spring-project-versioning[Spring project versioning] best practices.
+
 == Modules
 
 There are a number of modules in Springlets, here is a quick overview:
@@ -47,10 +51,6 @@ TODO
 === spring-security
 
 TODO
-
-== Project versioning
-
-Springlets project follows the https://github.com/spring-projects/spring-build-gradle/wiki/Spring-project-versioning[Spring project versioning] best practices.
 
 == License
 
