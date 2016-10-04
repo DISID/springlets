@@ -3,14 +3,13 @@
 Springlets provides a series of heterogeneus small utilities and Spring Boot starters not available in the main Spring projects: Spring Framework, Spring Data, Spring Boot, ...
 
 == Installation and Getting Started
-*TODO*
 
+TODO
 
 == Getting help
 Having trouble with Springlets ? We'd like to help!
 
-*TODO*
-
+TODO
 
 == Reporting Issues
 
@@ -30,6 +29,7 @@ TODO
 TODO
 
 == Modules
+
 There are a number of modules in Springlets, here is a quick overview:
 
 === spring-boot
@@ -43,6 +43,14 @@ TODO
 === spring-framework
 
 TODO
+
+=== spring-security
+
+TODO
+
+== Project versioning
+
+Springlets project follows the "Spring project versioning":https://github.com/spring-projects/spring-build-gradle/wiki/Spring-project-versioning best practices.
 
 == License
 
