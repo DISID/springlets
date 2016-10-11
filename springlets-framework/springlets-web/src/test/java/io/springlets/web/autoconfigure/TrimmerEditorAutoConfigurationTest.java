@@ -16,6 +16,12 @@
 package io.springlets.web.autoconfigure;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.CoreMatchers.is;
+import static org.mockito.Matchers.isNull;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.After;
 import org.junit.Before;
@@ -23,11 +29,22 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
+import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
+import org.springframework.boot.autoconfigure.web.HttpMessageConvertersAutoConfiguration;
+import org.springframework.boot.autoconfigure.web.WebMvcAutoConfiguration;
 import org.springframework.boot.test.util.EnvironmentTestUtils;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.core.env.Environment;
+import org.springframework.mock.web.MockServletContext;
+import org.springframework.stereotype.Controller;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
+import org.springframework.web.servlet.ModelAndView;
 
 import io.springlets.web.StringTrimmerAdvice;
 
@@ -99,7 +116,33 @@ public class TrimmerEditorAutoConfigurationTest {
   }
 
   /**
-   * Manually process the {@link TrimmerEditorAutoConfiguration} class by the
+   * Perform a POST request to check the {@link StringTrimmerAdvice} works.
+   * 
+   * Only the needed autoconfiguration is loaded in order to create 
+   * the Spring Web MVC artifacts to handle the HTTP request. 
+   * 
+   * @see MockServletContext
+   * @see MockMvc
+   */
+  @Test
+  public void registerAdvice() throws Exception {
+    EnvironmentTestUtils.addEnvironment(this.context, "springlets.mvc.trimeditor.enabled:true",
+        "springlets.mvc.trimeditor.chars-to-delete:YOUR-",
+        "springlets.mvc.trimeditor.empty-as-null:true");
+    this.context.setServletContext(new MockServletContext());
+    this.context.register(TestConfiguration.class);
+    this.context.refresh();
+
+    MockMvc mockMvc = MockMvcBuilders.webAppContextSetup(this.context).build();
+    mockMvc.perform(post("/persons").param("name", "YOUR-NAME").param("surname", "   "))
+        .andExpect(status().isOk())
+        .andExpect(model().attribute("name", is("NAME")))
+        .andExpect(model().attribute("surname", isNull()))
+        .andDo(print());
+  }
+
+  /**
+   * Process the {@link TrimmerEditorAutoConfiguration} class by the
    * {@link ApplicationContext}. After the processing the {@link StringTrimmerAdvice}
    * must be in the ApplicationContext.
    * 
@@ -115,4 +158,60 @@ public class TrimmerEditorAutoConfigurationTest {
     this.context.refresh();
   }
 
+  /**
+   * Load needed Spring Web MVC artifacts.
+   * 
+   * @see WebMvcAutoConfiguration
+   * @see HttpMessageConvertersAutoConfiguration
+   */
+  @Configuration
+  @ImportAutoConfiguration({WebMvcAutoConfiguration.class,
+      HttpMessageConvertersAutoConfiguration.class, TrimmerEditorAutoConfiguration.class})
+  protected static class TestConfiguration {
+
+    @Bean
+    public PersonsController controller() {
+      return new PersonsController();
+    }
+  }
+
+  /**
+   * Test Controller.
+   */
+  @Controller
+  protected static class PersonsController {
+
+    @PostMapping("/persons")
+    public ModelAndView user(Person person) {
+      ModelAndView model = new ModelAndView("person/show");
+      model.addObject("name", person.getName());
+      model.addObject("surname", person.getSurname());
+      return model;
+    }
+
+  }
+
+  /**
+   * Dummy domain class for request binding.
+   */
+  protected static class Person {
+    private String name;
+    private String surname;
+
+    public String getName() {
+      return name;
+    }
+
+    public void setName(String n) {
+      this.name = n;
+    }
+
+    public String getSurname() {
+      return surname;
+    }
+
+    public void setSurname(String sn) {
+      this.surname = sn;
+    }
+  }
 }
