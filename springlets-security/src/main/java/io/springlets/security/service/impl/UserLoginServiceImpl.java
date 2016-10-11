@@ -15,17 +15,17 @@
  */
 package io.springlets.security.service.impl;
 
-import java.util.List;
+import io.springlets.security.domain.UserLogin;
+import io.springlets.security.domain.UserLoginDetails;
+import io.springlets.security.repository.UserLoginRepository;
+import io.springlets.security.service.api.UserLoginService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import io.springlets.security.domain.UserLogin;
-import io.springlets.security.domain.UserLoginDetails;
-import io.springlets.security.repository.UserLoginRepository;
-import io.springlets.security.service.api.UserLoginService;
+import java.util.List;
 
 /**
  * = Implementation if {@link UserLoginService} API 
@@ -115,8 +115,7 @@ public class UserLoginServiceImpl implements UserLoginService {
 
   @Override
   public Long countByName(String username) {
-    return repository.countByName(username);
+    return repository.countByUsername(username);
   }
-
 
 }
