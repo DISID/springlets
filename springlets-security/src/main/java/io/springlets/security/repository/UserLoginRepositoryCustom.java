@@ -36,12 +36,4 @@ public interface UserLoginRepositoryCustom {
    */
   UserLoginDetails findDetailsByName(String username);
 
-  /**
-   * Counts all UserLogin with the provided username
-   * 
-   * @param username
-   * @return
-   */
-  Long countByName(String username);
-
 }

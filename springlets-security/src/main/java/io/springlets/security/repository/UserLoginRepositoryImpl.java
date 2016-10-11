@@ -15,18 +15,16 @@
  */
 package io.springlets.security.repository;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import org.springframework.data.jpa.repository.support.QueryDslRepositorySupport;
-import org.springframework.transaction.annotation.Transactional;
-
-import com.querydsl.jpa.JPQLQuery;
-
 import io.springlets.security.domain.QUserLogin;
 import io.springlets.security.domain.UserLogin;
 import io.springlets.security.domain.UserLoginDetails;
 import io.springlets.security.domain.UserLoginRole;
+
+import org.springframework.data.jpa.repository.support.QueryDslRepositorySupport;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Implementation of dynamic queries defiend on {@link UserLoginRepositoryCustom} interface
@@ -64,13 +62,5 @@ public class UserLoginRepositoryImpl extends QueryDslRepositorySupport
 
     return details;
   }
-
-  @Override
-  public Long countByName(String username) {
-    QUserLogin user = QUserLogin.userLogin;
-    JPQLQuery query = from(user).where(user.username.eq(username));
-    return query.fetchCount();
-  }
-
 
 }

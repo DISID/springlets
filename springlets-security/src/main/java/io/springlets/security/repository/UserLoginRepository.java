@@ -15,12 +15,12 @@
  */
 package io.springlets.security.repository;
 
+import io.springlets.security.domain.UserLogin;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
-
-import io.springlets.security.domain.UserLogin;
 
 /**
  * = Spring Data JPA repository for {@link UserLogin} entity
@@ -57,4 +57,11 @@ public interface UserLoginRepository
   @Query("SELECT u FROM UserLogin u WHERE u.username = :username AND u.locked = false AND u.fromDate <= CURRENT_DATE AND (u.thruDate > CURRENT_DATE OR u.thruDate IS NULL)")
   UserLogin findByActiveUsername(@Param("username") String username);
 
+  /**
+   * Counts all UserLogin with the provided username
+   * 
+   * @param username name of the user
+   * @return number of users with the given name
+   */
+  Long countByUsername(String username);
 }
