@@ -15,10 +15,24 @@
 		<name>DISID Corporation</name>
 		<url>http://www.disid.com</url>
 	</organization>
+
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+  <modules>
+    <module>springlets-security-jpa</module>
+  </modules>
+
 	<dependencies>
-		<!-- = Dependencies order criteria: * Two dependency groups: first spring 
-			dependencies, next own dependencies and finally the external ones. * Inside 
-			a group: alphabetical order, ordering first by groupId, then by artifactId. -->
+		<!--
+    = Dependencies order criteria:
+    * Two dependency groups: first spring dependencies, next own dependencies and finally the external ones.
+    * Inside a group: alphabetical order, ordering first by groupId, then by artifactId. -->
 
 		<!-- Spring dependencies -->
 		<dependency>
@@ -82,12 +96,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
-	<licenses>
-		<license>
-			<name>The Apache Software License, Version 2.0</name>
-			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-			<distribution>repo</distribution>
-		</license>
-	</licenses>
 </project>
