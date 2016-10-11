@@ -8,7 +8,7 @@
 		<version>1.0.0.BUILD-SNAPSHOT</version>
 	</parent>
 	<artifactId>springlets-security</artifactId>
-	<packaging>jar</packaging>
+	<packaging>pom</packaging>
 	<name>Springlets for Spring Security</name>
 	<description>Springlets for Spring Security</description>
 	<organization>

@@ -7,10 +7,14 @@
     <artifactId>springlets-security</artifactId>
     <version>1.0.0.BUILD-SNAPSHOT</version>
   </parent>
-  <artifactId>springlets-security-jpa</artifactId>
+  <artifactId>springlets-security-authentication</artifactId>
   <packaging>jar</packaging>
   <name>Springlets for Spring Security Authentication</name>
-  <description>Springlets JPA based authentication</description>
+  <description>
+    Springlets for Spring Security Authentication:
+
+    * JPA based authentication
+  </description>
   <organization>
     <name>DISID Corporation</name>
     <url>http://www.disid.com</url>
