@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>io.springlets</groupId>
+    <artifactId>springlets-security</artifactId>
+    <version>1.0.0.BUILD-SNAPSHOT</version>
+  </parent>
+  <artifactId>springlets-security-jpa</artifactId>
+  <packaging>jar</packaging>
+  <name>Springlets for Spring Security Authentication</name>
+  <description>Springlets JPA based authentication</description>
+  <organization>
+    <name>DISID Corporation</name>
+    <url>http://www.disid.com</url>
+  </organization>
+  <dependencies>
+    <!--
+    = Dependencies order criteria:
+
+    * Two dependency groups: first spring dependencies, next own dependencies and finally the external ones.
+    * Inside a group: alphabetical order, ordering first by groupId, then by artifactId.
+     -->
+     
+    <!-- Spring dependencies -->
+    <dependency>
+      <groupId>org.springframework.data</groupId>
+      <artifactId>spring-data-jpa</artifactId>
+    </dependency>
+
+    <!-- Other dependencies -->
+    <dependency>
+      <groupId>com.querydsl</groupId>
+      <artifactId>querydsl-jpa</artifactId>
+    </dependency>
+
+	<dependency>
+		<groupId>io.springlets</groupId>
+		<artifactId>springlets-data-commons</artifactId>
+		<version>${project.version}</version>
+	</dependency>
+
+    <dependency>
+      <groupId>org.eclipse.persistence</groupId>
+      <artifactId>javax.persistence</artifactId>
+    </dependency>
+  </dependencies>
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+</project>
