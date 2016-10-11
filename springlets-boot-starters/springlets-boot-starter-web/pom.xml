@@ -24,6 +24,17 @@
      -->
      
     <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-webmvc</artifactId>
+    </dependency>
+     
+    <dependency>
+      <groupId>io.springlets</groupId>
+      <artifactId>springlets-data-commons</artifactId>
+      <version>1.0.0.BUILD-SNAPSHOT</version>
+    </dependency>
+     
+    <dependency>
       <groupId>io.springlets</groupId>
       <artifactId>springlets-web</artifactId>
       <version>1.0.0.BUILD-SNAPSHOT</version>
