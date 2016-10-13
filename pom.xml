@@ -13,7 +13,9 @@
   <version>1.0.0.BUILD-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>Springlets</name>
-  <description>Springlets provides a series of heterogeneus small utilities and Spring Boot starters not available in the main Spring projects: Spring Framework, Spring Data, Spring Boot, ...</description>
+  <description>
+  Springlets provides a series of heterogeneus small utilities for Spring based applications and Spring Boot starters not available in the main Spring projects: Spring Framework, Spring Data, Spring Boot, ...
+  </description>
   <organization>
     <name>DISID Corporation</name>
     <url>http://www.disid.com</url>
@@ -58,6 +60,13 @@
     * Inside a group: alphabetical order, ordering first by groupId, then by artifactId.
      -->
     <dependencies>
+
+      <!-- Spring dependencies -->
+      <dependency>
+        <groupId>io.springlets</groupId>
+        <artifactId>springlets-web</artifactId>
+        <version>${project.version}</version>
+      </dependency>
 
       <!-- TracEE
       <dependency>
