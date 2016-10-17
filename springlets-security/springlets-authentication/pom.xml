@@ -60,12 +60,6 @@
     </dependency>
 
     <!-- Springlets -->
-    <dependency>
-      <groupId>io.springlets</groupId>
-      <artifactId>springlets-data-commons</artifactId>
-      <version>${project.version}</version>
-      <optional>true</optional>
-    </dependency>
 
 	<!-- 3rd party dependencies -->
     <dependency>
