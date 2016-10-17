@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>io.springlets</groupId>
+    <artifactId>springlets-boot-starters</artifactId>
+    <version>1.0.0.BUILD-SNAPSHOT</version>
+  </parent>
+  <artifactId>springlets-boot-starter-authentication</artifactId>
+  <packaging>jar</packaging>
+  <name>Springlets Spring Boot starter for web authentication</name>
+  <description>Springlets Spring Boot starter for autoconfiguration of additional web authentication and security utilities</description>
+  <organization>
+    <name>DISID Corporation</name>
+    <url>http://www.disid.com</url>
+  </organization>
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
+  <dependencies>
+    <!--
+    = Dependencies order criteria:
+
+    * Two dependency groups: first spring dependencies, next own dependencies and finally the external ones.
+    * Inside a group: alphabetical order, ordering first by groupId, then by artifactId.
+     -->
+
+    <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-config</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-webmvc</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>io.springlets</groupId>
+      <artifactId>springlets-autoconfigure</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>io.springlets</groupId>
+      <artifactId>springlets-authentication</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>io.springlets</groupId>
+      <artifactId>springlets-web</artifactId>
+    </dependency>
+    
+  </dependencies>
+</project>
