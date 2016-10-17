@@ -1,3 +1,18 @@
+/*
+ * Copyright 2016 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package io.springlets.http.converter.json;
 
 import com.fasterxml.jackson.core.JsonGenerator;
@@ -5,8 +20,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.boot.jackson.JsonComponent;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -53,59 +67,42 @@ import java.util.Map;
  *      ...
  * }
  * </pre>
- * 
+ * @author http://www.disid.com[DISID Corporation S.L.]
  */
+@JsonComponent
 public class BindingResultSerializer extends JsonSerializer<BindingResult> {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(BindingResultSerializer.class);
-  private static final String ERROR_WRITTING_BINDING = "Error writting BindingResult";
-
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void serialize(BindingResult result, JsonGenerator jgen, SerializerProvider provider)
       throws IOException, JsonProcessingException {
 
-    try {
-      // Create the errors map
-      Map<String, Object> allErrorsMessages = new HashMap<String, Object>();
+    // Create the errors map
+    Map<String, Object> allErrorsMessages = new HashMap<String, Object>();
 
-      // Get field errors
-      List<FieldError> fieldErrors = result.getFieldErrors();
-      if (fieldErrors.isEmpty()) {
-        // Nothing to do
-        jgen.writeNull();
-        return;
-      }
-
-      // Check if target type is an array or a bean
-      @SuppressWarnings("rawtypes")
-      Class targetClass = result.getTarget().getClass();
-      if (targetClass.isArray() || Collection.class.isAssignableFrom(targetClass)) {
-        loadListErrors(result.getFieldErrors(), allErrorsMessages);
-      } else {
-        loadObjectErrors(result.getFieldErrors(), allErrorsMessages);
-      }
-
-      // Create the result map
-      Map<String, Object> bindingResult = new HashMap<String, Object>();
-      bindingResult.put("target-resource", StringUtils.uncapitalize(result.getObjectName()));
-      bindingResult.put("error-count", result.getErrorCount());
-      bindingResult.put("errors", allErrorsMessages);
-
-      jgen.writeObject(bindingResult);
-    } catch (JsonProcessingException e) {
-      LOGGER.warn(ERROR_WRITTING_BINDING, e);
-      throw e;
-    } catch (IOException e) {
-      LOGGER.warn(ERROR_WRITTING_BINDING, e);
-      throw e;
-    } catch (Exception e) {
-      LOGGER.warn(ERROR_WRITTING_BINDING, e);
-      throw new IOException(ERROR_WRITTING_BINDING, e);
+    // Get field errors
+    List<FieldError> fieldErrors = result.getFieldErrors();
+    if (fieldErrors.isEmpty()) {
+      // Nothing to do
+      jgen.writeNull();
+      return;
     }
 
+    // Check if target type is an array or a bean
+    @SuppressWarnings("rawtypes")
+    Class targetClass = result.getTarget().getClass();
+    if (targetClass.isArray() || Collection.class.isAssignableFrom(targetClass)) {
+      loadListErrors(result.getFieldErrors(), allErrorsMessages);
+    } else {
+      loadObjectErrors(result.getFieldErrors(), allErrorsMessages);
+    }
+
+    // Create the result map
+    Map<String, Object> bindingResult = new HashMap<String, Object>();
+    bindingResult.put("target-resource", StringUtils.uncapitalize(result.getObjectName()));
+    bindingResult.put("error-count", result.getErrorCount());
+    bindingResult.put("errors", allErrorsMessages);
+
+    jgen.writeObject(bindingResult);
   }
 
   /**

@@ -15,32 +15,32 @@
  */
 package io.springlets.web;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import io.springlets.http.converter.json.BindingResultModule;
-import io.springlets.web.config.EnableSpringletsWebJacksonSupport;
+import io.springlets.data.web.GlobalSearchHandlerMethodArgumentResolver;
+import io.springlets.data.web.config.EnableSpringletsDataWebSupport;
 
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
-import org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration;
+import org.springframework.boot.autoconfigure.data.web.SpringDataWebAutoConfiguration;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 /**
- * {@link EnableAutoConfiguration Auto-configuration} for Springlets Web Jackson support.
+ * {@link EnableAutoConfiguration Auto-configuration} for Springlets Data's web support.
  * <p>
- * When in effect, the auto-configuration is the equivalent of enabling Springlets Web
- * Jackson support through the {@link EnableSpringletsWebJacksonSupport} annotation.
+ * When in effect, the auto-configuration is the equivalent of enabling Springlets Data's web
+ * support through the {@link EnableSpringletsDataWebSupport} annotation.
  * @author Cèsar Ordiñana at http://www.disid.com[DISID Corporation S.L.]
  */
 @Configuration
-@EnableSpringletsWebJacksonSupport
+@EnableSpringletsDataWebSupport
 @ConditionalOnWebApplication
-@ConditionalOnClass({BindingResultModule.class, ObjectMapper.class})
-@ConditionalOnMissingBean(BindingResultModule.class)
-@AutoConfigureAfter(JacksonAutoConfiguration.class)
-public class SpringletsDataWebAutoConfiguration {
+@ConditionalOnClass({GlobalSearchHandlerMethodArgumentResolver.class,
+    WebMvcConfigurerAdapter.class})
+@ConditionalOnMissingBean(GlobalSearchHandlerMethodArgumentResolver.class)
+@AutoConfigureAfter(SpringDataWebAutoConfiguration.class)
+public class SpringletsWebAutoConfiguration {
 
 }
