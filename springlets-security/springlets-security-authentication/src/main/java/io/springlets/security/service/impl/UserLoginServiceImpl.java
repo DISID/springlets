@@ -15,21 +15,34 @@
  */
 package io.springlets.security.service.impl;
 
-import io.springlets.security.domain.UserLogin;
-import io.springlets.security.domain.UserLoginDetails;
-import io.springlets.security.repository.UserLoginRepository;
-import io.springlets.security.service.api.UserLoginService;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import io.springlets.security.domain.UserLogin;
+import io.springlets.security.domain.UserLoginInfo;
+import io.springlets.security.repository.UserLoginRepository;
+import io.springlets.security.service.api.UserLoginService;
 
 /**
- * = Implementation if {@link UserLoginService} API 
+ * = {@link UserLoginService} implementation
+ *  
+ * {@link UserLoginService} default implementation used and configured by
+ * the Springlets Boot Autoconfiguration to load and store UserLogin 
+ * from repositories.
  * 
+ * CRUD methods are transactional by default. For reading operations the 
+ * transaction configuration readOnly flag is set to true, all others are 
+ * configured with a plain {@link Transactional} so that default transaction 
+ * configuration applies. 
+ * 
+ * Developers may use this class directly, subclass it, or write their own 
+ * UserLoginService implementation from scratch.
+ * 
+ * @author Enrique Ruiz at http://www.disid.com[DISID Corporation S.L.]
  * @author Cèsar Ordiñana at http://www.disid.com[DISID Corporation S.L.]
  * @author Juan Carlos García at http://www.disid.com[DISID Corporation S.L.]
  */
@@ -101,7 +114,7 @@ public class UserLoginServiceImpl implements UserLoginService {
   }
 
   @Override
-  public UserLoginDetails findDetailsByUsername(String username) {
+  public UserLoginInfo findDetailsByUsername(String username) {
     return repository.findDetailsByName(username);
   }
 

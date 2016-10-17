@@ -13,48 +13,47 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.springlets.web.autoconfigure;
+package io.springlets.boot.autoconfigure.web.mvc;
 
-import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.autoconfigure.web.WebMvcAutoConfiguration;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import io.springlets.web.StringTrimmerAdvice;
+import io.springlets.web.mvc.config.EnableSpringletsWebMvcAdvices;
+import io.springlets.web.mvc.config.SpringletsWebMvcConfiguration;
 
 /**
- * = TrimmerEditorAutoConfiguration
- *
- * {@link ConfigurationProperties} for configuring {@link StringTrimmerEditor}.
+ * {@link EnableAutoConfiguration Auto-configuration} for Springlets Web MVC
+ * integration.
+ * 
+ * Activates when the application is a web application and no
+ * {@link SpringletsWebMvcConfiguration} is found.
+ * 
+ * Once in effect, the auto-configuration allows to configure any property of
+ * {@link SpringletsWebMvcConfiguration} using the `springlets.mvc.advices` prefix 
  * 
  * @author Enrique Ruiz at http://www.disid.com[DISID Corporation S.L.]
  */
 @AutoConfigureAfter(WebMvcAutoConfiguration.class)
-@Configuration
-@ConditionalOnProperty(prefix = "springlets.mvc.trimeditor", name = "enabled", havingValue = "true", matchIfMissing = false)
+@ConditionalOnClass(SpringletsWebMvcConfiguration.class)
+@ConditionalOnMissingBean(SpringletsWebMvcConfiguration.class)
+@ConditionalOnProperty(prefix = "springlets.mvc.advices", name = "enabled", havingValue = "true", matchIfMissing = true)
 @ConditionalOnWebApplication
-@EnableConfigurationProperties(TrimmerEditorProperties.class)
-public class TrimmerEditorAutoConfiguration {
-
-  private final TrimmerEditorProperties properties;
-
-  public TrimmerEditorAutoConfiguration(TrimmerEditorProperties properties) {
-    this.properties = properties;
-  }
+@Configuration
+@EnableConfigurationProperties(SpringletsWebMvcAdvicesProperties.class)
+@EnableSpringletsWebMvcAdvices
+public class SpringletsWebMvcAdvicesAutoConfiguration {
 
   @Bean
-  @ConditionalOnMissingBean
-  public StringTrimmerAdvice stringTrimmerAdvice() {
-    StringTrimmerAdvice trimmerAdvice = new StringTrimmerAdvice();
-    trimmerAdvice.setCharsToDelete(this.properties.getCharsToDelete());
-    trimmerAdvice.setEmptyAsNull(this.properties.isEmptyAsNull());
-    return trimmerAdvice;
+  public SpringletsWebMvcAdvicesConfigurer springBootSpringletsWebMvcConfigurer() {
+    return new SpringletsWebMvcAdvicesConfigurer();
   }
 
 }

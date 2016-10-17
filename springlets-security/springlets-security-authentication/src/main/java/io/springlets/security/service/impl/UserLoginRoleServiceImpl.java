@@ -27,8 +27,21 @@ import io.springlets.security.repository.UserLoginRoleRepository;
 import io.springlets.security.service.api.UserLoginRoleService;
 
 /**
- * = Implementation if {@link UserLoginRoleService} API 
+ * = {@link UserLoginRoleService} implementation 
  * 
+ * {@link UserLoginRoleService} default implementation used and configured by
+ * the Springlets Boot Autoconfiguration to load and store UserLoginRole 
+ * from repositories.
+ * 
+ * CRUD methods are transactional by default. For reading operations the 
+ * transaction configuration readOnly flag is set to true, all others are 
+ * configured with a plain {@link Transactional} so that default transaction 
+ * configuration applies. 
+ * 
+ * Developers may use this class directly, subclass it, or write their own 
+ * UserLoginRoleService implementation from scratch.
+ * 
+ * @author Enrique Ruiz at http://www.disid.com[DISID Corporation S.L.]
  * @author Cèsar Ordiñana at http://www.disid.com[DISID Corporation S.L.]
  * @author Juan Carlos García at http://www.disid.com[DISID Corporation S.L.]
  */

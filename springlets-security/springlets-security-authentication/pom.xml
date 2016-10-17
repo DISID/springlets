@@ -7,7 +7,7 @@
     <artifactId>springlets-security</artifactId>
     <version>1.0.0.BUILD-SNAPSHOT</version>
   </parent>
-  <artifactId>springlets-security-authentication</artifactId>
+  <artifactId>springlets-authentication</artifactId>
   <packaging>jar</packaging>
   <name>Springlets for Spring Security Authentication</name>
   <description>
@@ -19,6 +19,15 @@
     <name>DISID Corporation</name>
     <url>http://www.disid.com</url>
   </organization>
+
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
   <dependencies>
     <!--
     = Dependencies order criteria:
@@ -33,28 +42,37 @@
       <artifactId>spring-data-jpa</artifactId>
     </dependency>
 
+    <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-config</artifactId>
+      <optional>true</optional>
+    </dependency>
+
+    <!-- Springlets -->
+    <dependency>
+      <groupId>io.springlets</groupId>
+      <artifactId>springlets-data-commons</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+
     <!-- Other dependencies -->
     <dependency>
       <groupId>com.querydsl</groupId>
       <artifactId>querydsl-jpa</artifactId>
+      <optional>true</optional>
     </dependency>
 
-	<dependency>
-		<groupId>io.springlets</groupId>
-		<artifactId>springlets-data-commons</artifactId>
-		<version>${project.version}</version>
-	</dependency>
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
+      <optional>true</optional>
+    </dependency>
 
     <dependency>
       <groupId>org.eclipse.persistence</groupId>
       <artifactId>javax.persistence</artifactId>
+      <optional>true</optional>
     </dependency>
   </dependencies>
-  <licenses>
-    <license>
-      <name>The Apache Software License, Version 2.0</name>
-      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-      <distribution>repo</distribution>
-    </license>
-  </licenses>
+
 </project>

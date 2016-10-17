@@ -13,27 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.springlets.security.repository;
-
-import io.springlets.security.domain.UserLogin;
-import io.springlets.security.domain.UserLoginInfo;
+package io.springlets.web.mvc.config;
 
 /**
- * Interface that defines dynamic queries for repository related with 
- * {@link UserLogin} entity.
+ * Component to configure and customize the setup of Springlets Web MVC.
  * 
- * @author Cèsar Ordiñana at http://www.disid.com[DISID Corporation S.L.]
- * @author Juan Carlos García at http://www.disid.com[DISID Corporation S.L.]
+ * @author eruiz
+ *
  */
-public interface UserLoginRepositoryCustom {
-
+public interface SpringletsWebMvcConfigurer {
+  
   /**
-   * Obtains a DTO with the authentication and authorization data
-   * associated to an user by the provided username.
+   * Adds additional configuration to the given SpringletsWebMvcSettings.
    * 
-   * @param username
-   * @return
+   * @param config Main configuration bean.
    */
-  UserLoginInfo findDetailsByName(String username);
+  void configureSpringletsWebMvcSettings(SpringletsWebMvcSettings config);
 
 }

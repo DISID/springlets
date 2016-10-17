@@ -13,56 +13,57 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.springlets.web.autoconfigure;
+package io.springlets.web.mvc.advice;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
-
-import io.springlets.web.StringTrimmerAdvice;
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.InitBinder;
 
 /**
- * = TrimmerEditorProperties
- *
- * {@link ConfigurationProperties} for configuring {@link StringTrimmerEditor}.
+ * Customizes the data binding to trim request parameter values.
+ * 
+ * Optionally allows transforming an empty string into a null value.
  * 
  * @author Enrique Ruiz at http://www.disid.com[DISID Corporation S.L.]
  */
-@ConfigurationProperties(prefix = "springlets.mvc.trimeditor")
-public class TrimmerEditorProperties {
+@ControllerAdvice
+public class StringTrimmerAdvice {
 
-  /** `true` set up the {@link StringTrimmerAdvice} */
-  private boolean enabled = false;
-
-  /** `true` if an empty parameter value is to be transformed into `null` */
   private boolean emptyAsNull = false;
-  
-  /** 
-   * Set of characters to delete, in addition to trimming the parameter value. 
-   * Useful for deleting unwanted line breaks: e.g. "\r\n\f" will delete all new lines and line feeds in a String.
-   */
+
   private String charsToDelete = null;
 
-  public boolean isEnabled() {
-    return enabled;
-  }
-
-  public void setEnabled(boolean enabled) {
-    this.enabled = enabled;
-  }
 
   public boolean isEmptyAsNull() {
     return emptyAsNull;
   }
 
+
   public void setEmptyAsNull(boolean emptyAsNull) {
     this.emptyAsNull = emptyAsNull;
   }
+
 
   public String getCharsToDelete() {
     return charsToDelete;
   }
 
+
   public void setCharsToDelete(String charsToDelete) {
     this.charsToDelete = charsToDelete;
   }
-  
+
+  /**
+   * Registers the {@link StringTrimmerEditor}
+   *
+   * @param webDataBinder
+   */
+  @InitBinder
+  public void initBinder(WebDataBinder webDataBinder) {
+    StringTrimmerEditor trimmer =
+        new StringTrimmerEditor(this.getCharsToDelete(), this.isEmptyAsNull());
+    webDataBinder.registerCustomEditor(String.class, trimmer);
+  }
+
 }

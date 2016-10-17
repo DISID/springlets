@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.springlets.web.autoconfigure;
+package io.springlets.boot.autoconfigure.web.mvc;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.is;
@@ -46,14 +46,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.servlet.ModelAndView;
 
-import io.springlets.web.StringTrimmerAdvice;
+import io.springlets.web.mvc.advice.StringTrimmerAdvice;
 
 /**
- * Tests for {@link rimmerEditorAutoConfiguration}
+ * Tests for {@link SpringletsWebMvcAdvicesAutoConfiguration}
  *
  * @author Enrique Ruiz at http://www.disid.com[DISID Corporation S.L.]
  */
-public class TrimmerEditorAutoConfigurationTest {
+public class SpringletsWebMvcAdvicesAutoConfigurationTest {
 
   @Rule
   public final ExpectedException thrown = ExpectedException.none();
@@ -62,9 +62,7 @@ public class TrimmerEditorAutoConfigurationTest {
       new AnnotationConfigWebApplicationContext();
 
   @Before
-  public void setupContext() {
-    //    this.context.setServletContext(new MockServletContext());
-  }
+  public void setupContext() {}
 
   @After
   public void close() {
@@ -75,17 +73,41 @@ public class TrimmerEditorAutoConfigurationTest {
   }
 
   /**
-   * Check if "springlets.mvc.trimeditor.enabled" is not defined the
-   * StringTrimmerAdvice is not registered.
+   * The default value for `springlets.mvc.advices.enabled` is true, so
+   * check that if it is not defined the StringTrimmerAdvice is registered.
    * 
    * @throws Exception
    */
   @Test
   public void defaultConfiguration() throws Exception {
-    this.thrown.expect(NoSuchBeanDefinitionException.class);
-    this.thrown.expectMessage("No qualifying bean of type [io.springlets.web.StringTrimmerAdvice]");
+
+    // Setup
     registerAndRefreshContext();
 
+    // Exercise
+    StringTrimmerAdvice advice = this.context.getBean(StringTrimmerAdvice.class);
+
+    // Verify
+    assertThat(advice).isNotNull();
+  }
+
+  /**
+   * Check if `springlets.mvc.advices.enabled` is false the
+   * StringTrimmerAdvice is not registered.
+   * 
+   * @throws Exception
+   */
+  @Test
+  public void disabledAdvice() {
+
+    // Verify
+    this.thrown.expect(NoSuchBeanDefinitionException.class);
+    this.thrown.expectMessage("No qualifying bean of type [");
+
+    // Setup
+    registerAndRefreshContext("springlets.mvc.advices.enabled:false");
+
+    // Exercise
     this.context.getBean(StringTrimmerAdvice.class);
   }
 
@@ -95,7 +117,7 @@ public class TrimmerEditorAutoConfigurationTest {
    */
   @Test
   public void enableAdvice() {
-    registerAndRefreshContext("springlets.mvc.trimeditor.enabled:true");
+    registerAndRefreshContext("springlets.mvc.advices.enabled:true");
     assertThat(this.context.getBean(StringTrimmerAdvice.class)).isNotNull();
   }
 
@@ -106,9 +128,9 @@ public class TrimmerEditorAutoConfigurationTest {
    */
   @Test
   public void overrideProperties() throws Exception {
-    registerAndRefreshContext("springlets.mvc.trimeditor.enabled:true",
-        "springlets.mvc.trimeditor.chars-to-delete:abc",
-        "springlets.mvc.trimeditor.empty-as-null:true");
+    registerAndRefreshContext("springlets.mvc.advices.enabled:true",
+        "springlets.mvc.advices.trimeditor.chars-to-delete:abc",
+        "springlets.mvc.advices.trimeditor.empty-as-null:true");
 
     StringTrimmerAdvice advice = this.context.getBean(StringTrimmerAdvice.class);
     assertThat(advice.getCharsToDelete()).isEqualTo("abc");
@@ -126,9 +148,10 @@ public class TrimmerEditorAutoConfigurationTest {
    */
   @Test
   public void registerAdvice() throws Exception {
-    EnvironmentTestUtils.addEnvironment(this.context, "springlets.mvc.trimeditor.enabled:true",
-        "springlets.mvc.trimeditor.chars-to-delete:YOUR-",
-        "springlets.mvc.trimeditor.empty-as-null:true");
+    EnvironmentTestUtils.addEnvironment(this.context, 
+        "springlets.mvc.advices.enabled:true",
+        "springlets.mvc.advices.trimeditor.chars-to-delete:YOUR-",
+        "springlets.mvc.advices.trimeditor.empty-as-null:true");
     this.context.setServletContext(new MockServletContext());
     this.context.register(TestConfiguration.class);
     this.context.refresh();
@@ -142,7 +165,7 @@ public class TrimmerEditorAutoConfigurationTest {
   }
 
   /**
-   * Process the {@link TrimmerEditorAutoConfiguration} class by the
+   * Process the {@link SpringletsWebMvcAdvicesAutoConfiguration} class by the
    * {@link ApplicationContext}. After the processing the {@link StringTrimmerAdvice}
    * must be in the ApplicationContext.
    * 
@@ -154,7 +177,7 @@ public class TrimmerEditorAutoConfigurationTest {
    */
   private void registerAndRefreshContext(String... env) {
     EnvironmentTestUtils.addEnvironment(this.context, env);
-    this.context.register(TrimmerEditorAutoConfiguration.class);
+    this.context.register(SpringletsWebMvcAdvicesAutoConfiguration.class);
     this.context.refresh();
   }
 
@@ -166,7 +189,7 @@ public class TrimmerEditorAutoConfigurationTest {
    */
   @Configuration
   @ImportAutoConfiguration({WebMvcAutoConfiguration.class,
-      HttpMessageConvertersAutoConfiguration.class, TrimmerEditorAutoConfiguration.class})
+      HttpMessageConvertersAutoConfiguration.class, SpringletsWebMvcAdvicesAutoConfiguration.class})
   protected static class TestConfiguration {
 
     @Bean

@@ -13,7 +13,9 @@
   <version>1.0.0.BUILD-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>Springlets</name>
-  <description>Springlets provides a series of heterogeneus small utilities and Spring Boot starters not available in the main Spring projects: Spring Framework, Spring Data, Spring Boot, ...</description>
+  <description>
+  Springlets provides a series of heterogeneus small utilities for Spring based applications and Spring Boot starters not available in the main Spring projects: Spring Framework, Spring Data, Spring Boot, ...
+  </description>
   <organization>
     <name>DISID Corporation</name>
     <url>http://www.disid.com</url>
@@ -36,6 +38,7 @@
     <module>springlets-framework</module>
     <module>springlets-data</module>
     <module>springlets-security</module>
+    <module>springlets-autoconfigure</module>
     <module>springlets-boot-starters</module>
   </modules>
   
@@ -58,6 +61,31 @@
     * Inside a group: alphabetical order, ordering first by groupId, then by artifactId.
      -->
     <dependencies>
+
+      <!-- Springlets dependencies -->
+      <dependency>
+        <groupId>io.springlets</groupId>
+        <artifactId>springlets-autoconfigure</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>io.springlets</groupId>
+        <artifactId>springlets-authentication</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>io.springlets</groupId>
+        <artifactId>springlets-data-commons</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>io.springlets</groupId>
+        <artifactId>springlets-web</artifactId>
+        <version>${project.version}</version>
+      </dependency>
 
       <!-- TracEE
       <dependency>

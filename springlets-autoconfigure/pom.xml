@@ -4,17 +4,25 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>io.springlets</groupId>
-    <artifactId>springlets-framework</artifactId>
+    <artifactId>springlets-parent</artifactId>
     <version>1.0.0.BUILD-SNAPSHOT</version>
   </parent>
-  <artifactId>springlets-web</artifactId>
+  <artifactId>springlets-autoconfigure</artifactId>
   <packaging>jar</packaging>
-  <name>Springlets for Spring Framework web support</name>
-  <description>Springlets for Spring Framework web support</description>
+  <name>Springlets AutoConfigure</name>
+  <description>Springlets auto-configurators for Spring Boot</description>
   <organization>
     <name>DISID Corporation</name>
-    <url>http://www.disid.com</url>
+    <url>http://www.disid.com</url> 
   </organization>
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
   <dependencies>
     <!--
     = About the dependencies
@@ -32,13 +40,8 @@
 
     * Never include dependencies to Spring Boot Starters, instead include each needed library 
     -->
-     
+
     <!-- Spring dependencies -->
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-test</artifactId>
-      <scope>test</scope>
-    </dependency>
 
     <dependency>
       <groupId>org.springframework</groupId>
@@ -50,41 +53,35 @@
       <groupId>org.springframework</groupId>
       <artifactId>spring-webmvc</artifactId>
       <optional>true</optional>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot</artifactId>
-      <optional>true</optional>
-      <scope>test</scope>
     </dependency>
 
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-configuration-processor</artifactId>
       <optional>true</optional>
-      <scope>provided</scope>
     </dependency>
 
     <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-test</artifactId>
-      <scope>test</scope>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-config</artifactId>
+      <optional>true</optional>
     </dependency>
 
-    <!-- Other dependencies -->
+    <!-- Springlets dependencies -->
+
     <dependency>
-	  <groupId>com.fasterxml.jackson.core</groupId>
-	  <artifactId>jackson-core</artifactId>
+      <groupId>io.springlets</groupId>
+      <artifactId>springlets-authentication</artifactId>
       <optional>true</optional>
     </dependency>
-    
+
     <dependency>
-	  <groupId>com.fasterxml.jackson.core</groupId>
-	  <artifactId>jackson-databind</artifactId>
+      <groupId>io.springlets</groupId>
+      <artifactId>springlets-web</artifactId>
       <optional>true</optional>
     </dependency>
+
+    <!-- 3rd party dependencies -->
 
     <dependency>
       <groupId>javax.servlet</groupId>
@@ -93,30 +90,17 @@
     </dependency>
 
     <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>jcl-over-slf4j</artifactId>
+      <groupId>javax.validation</groupId>
+      <artifactId>validation-api</artifactId>
       <optional>true</optional>
     </dependency>
 
     <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-api</artifactId>
-      <optional>true</optional>
-    </dependency>
-
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-test</artifactId>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-validator</artifactId>
       <optional>true</optional>
     </dependency>
 
   </dependencies>
 
-  <licenses>
-    <license>
-      <name>The Apache Software License, Version 2.0</name>
-      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-      <distribution>repo</distribution>
-    </license>
-  </licenses>
 </project>
