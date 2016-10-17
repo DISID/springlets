@@ -17,7 +17,6 @@ package io.springlets.boot.autoconfigure.web.mvc;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-import io.springlets.web.mvc.advice.StringTrimmerAdvice;
 import io.springlets.web.mvc.config.SpringletsWebMvcSettings;
 
 /**
@@ -61,25 +60,14 @@ public class SpringletsWebMvcAdvicesProperties {
    */
   public static class StringTrimmerAdviceProperties {
 
-    /** `true` set up the {@link StringTrimmerAdvice} */
-    private boolean enabled = true;
-
     /** `true` if an empty parameter value is to be transformed into `null` */
-    private boolean emptyAsNull = false;
+    private boolean emptyAsNull = true;
 
     /** 
      * Set of characters to delete, in addition to trimming the parameter value. 
      * Useful for deleting unwanted line breaks: e.g. "\r\n\f" will delete all new lines and line feeds in a String.
      */
     private String charsToDelete = null;
-
-    public boolean isEnabled() {
-      return enabled;
-    }
-
-    public void setEnabled(boolean enabled) {
-      this.enabled = enabled;
-    }
 
     public boolean isEmptyAsNull() {
       return emptyAsNull;
