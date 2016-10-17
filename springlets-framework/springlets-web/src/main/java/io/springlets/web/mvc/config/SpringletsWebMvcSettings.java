@@ -43,7 +43,7 @@ public class SpringletsWebMvcSettings {
   public static class StringTrimmerAdviceSettings {
 
     /** `true` if an empty parameter value is to be transformed into `null` */
-    private boolean emptyAsNull = false;
+    private boolean emptyAsNull = true;
 
     /** 
      * Set of characters to delete, in addition to trimming the parameter value. 

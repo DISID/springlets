@@ -20,7 +20,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 
@@ -52,7 +51,7 @@ public class SpringletsWebMvcConfigurationTest {
 
   /**
    * Check if "springlets.mvc.advices.enabled" is not defined the
-   * StringTrimmerAdvice is not registered.
+   * StringTrimmerAdvice is registered and empty-as-null is true.
    * 
    * @throws Exception
    */
@@ -69,13 +68,13 @@ public class SpringletsWebMvcConfigurationTest {
     // Verify
     assertThat(this.context.getBean(SpringletsWebMvcSettings.class)).isNotNull();
     assertThat(advice).isNotNull();
-    assertThat(advice.isEmptyAsNull()).isEqualTo(false);
+    assertThat(advice.isEmptyAsNull()).isEqualTo(true);
     assertThat(advice.getCharsToDelete()).isNull();
   }
 
   /**
-   * Enable the {@link StringTrimmerAdvice} and check it is in the
-   * {@link ApplicationContext}.
+   * Configure the {@link StringTrimmerAdvice} and check it has the right
+   * settings.
    */
   @Test
   public void configureAdvice() {
@@ -91,7 +90,7 @@ public class SpringletsWebMvcConfigurationTest {
     // Verify
     assertThat(this.context.getBean(SpringletsWebMvcSettings.class)).isNotNull();
     assertThat(advice).isNotNull();
-    assertThat(advice.isEmptyAsNull()).isEqualTo(true);
+    assertThat(advice.isEmptyAsNull()).isEqualTo(false);
     assertThat(advice.getCharsToDelete()).isEqualTo("abc");
   }
 
@@ -99,7 +98,7 @@ public class SpringletsWebMvcConfigurationTest {
    * Test Configurer.
    */
   protected static class DummyConfigurer implements SpringletsWebMvcConfigurer {
-    public boolean emptyAsNull = true;
+    public boolean emptyAsNull = false;
     public String charsToDelete = "abc";
 
     public DummyConfigurer() {

@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 @ControllerAdvice
 public class StringTrimmerAdvice {
 
-  private boolean emptyAsNull = false;
+  private boolean emptyAsNull = true;
 
   private String charsToDelete = null;
 

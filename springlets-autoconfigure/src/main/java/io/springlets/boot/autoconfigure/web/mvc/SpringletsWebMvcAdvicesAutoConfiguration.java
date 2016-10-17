@@ -16,6 +16,7 @@
 package io.springlets.boot.autoconfigure.web.mvc;
 
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
+import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -41,7 +42,7 @@ import io.springlets.web.mvc.config.SpringletsWebMvcConfiguration;
  * 
  * @author Enrique Ruiz at http://www.disid.com[DISID Corporation S.L.]
  */
-@AutoConfigureAfter(WebMvcAutoConfiguration.class)
+@AutoConfigureBefore(WebMvcAutoConfiguration.class)
 @ConditionalOnClass(SpringletsWebMvcConfiguration.class)
 @ConditionalOnMissingBean(SpringletsWebMvcConfiguration.class)
 @ConditionalOnProperty(prefix = "springlets.mvc.advices", name = "enabled", havingValue = "true", matchIfMissing = true)
