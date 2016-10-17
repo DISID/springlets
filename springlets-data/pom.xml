@@ -15,10 +15,6 @@
     <name>DISID Corporation</name>
     <url>http://www.disid.com</url> 
   </organization>
-  <modules>
-    <module>springlets-data-commons</module>
-    <module>springlets-data-jpa</module>
-  </modules>
   <licenses>
     <license>
       <name>The Apache Software License, Version 2.0</name>
@@ -26,4 +22,8 @@
       <distribution>repo</distribution>
     </license>
   </licenses>
+  <modules>
+    <module>springlets-data-commons</module>
+    <module>springlets-data-jpa</module>
+  </modules>
 </project>

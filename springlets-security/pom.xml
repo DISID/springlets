@@ -24,15 +24,27 @@
 		</license>
 	</licenses>
 
-  <modules>
-    <module>springlets-security-authentication</module>
-  </modules>
+    <modules>
+      <module>springlets-security-authentication</module>
+    </modules>
 
 	<dependencies>
-		<!--
-    = Dependencies order criteria:
-    * Two dependency groups: first spring dependencies, next own dependencies and finally the external ones.
-    * Inside a group: alphabetical order, ordering first by groupId, then by artifactId. -->
+	    <!--
+	    = About the dependencies
+	
+	    ORDER CRITERIA:
+	
+	    * Three dependency groups: first spring dependencies, next own dependencies and finally the external ones.
+	    * Inside a group: alphabetical order, ordering first by groupId, then by artifactId.
+	
+	    OPTIONAL:
+	
+	    * All the dependencies MUST BE optional = true, the starter will include the needed libraries
+	    
+	    STARTERS:
+	
+	    * Never include dependencies to Spring Boot Starters, instead include each needed library 
+	    -->
 
 		<!-- Spring dependencies -->
 		<dependency>

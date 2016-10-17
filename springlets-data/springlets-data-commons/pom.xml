@@ -15,10 +15,30 @@
 		<name>DISID Corporation</name>
 		<url>http://www.disid.com</url>
 	</organization>
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
 	<dependencies>
-		<!-- = Dependencies order criteria: * Two dependency groups: first spring 
-			dependencies, next own dependencies and finally the external ones. * Inside 
-			a group: alphabetical order, ordering first by groupId, then by artifactId. -->
+	    <!--
+	    = About the dependencies
+	
+	    ORDER CRITERIA:
+	
+	    * Three dependency groups: first spring dependencies, next own dependencies and finally the external ones.
+	    * Inside a group: alphabetical order, ordering first by groupId, then by artifactId.
+	
+	    OPTIONAL:
+	
+	    * All the dependencies MUST BE optional = true, the starter will include the needed libraries
+	    
+	    STARTERS:
+	
+	    * Never include dependencies to Spring Boot Starters, instead include each needed library 
+	    -->
 
 		<!-- Spring dependencies -->
 		<dependency>
@@ -34,21 +54,12 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-		</dependency>
-
-		<dependency>
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-commons</artifactId>
+			<optional>true</optional>
 		</dependency>
-		<!-- Other dependencies -->
+		
+		<!-- 3rd party dependencies -->
+	    
 	</dependencies>
-	<licenses>
-		<license>
-			<name>The Apache Software License, Version 2.0</name>
-			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-			<distribution>repo</distribution>
-		</license>
-	</licenses>
 </project>

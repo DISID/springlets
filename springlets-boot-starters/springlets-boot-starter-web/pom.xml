@@ -25,11 +25,21 @@
 
   <dependencies>
     <!--
-    = Dependencies order criteria:
+    = About the dependencies
 
-    * Two dependency groups: first spring dependencies, next own dependencies and finally the external ones.
+    ORDER CRITERIA:
+
+    * Three dependency groups: first spring dependencies, next own dependencies and finally the external ones.
     * Inside a group: alphabetical order, ordering first by groupId, then by artifactId.
-     -->
+
+    OPTIONAL:
+
+    * All the dependencies MUST BE optional = true, the starter will include the needed libraries
+    
+    STARTERS:
+
+    * Never include dependencies to Spring Boot Starters, instead include each needed library 
+    -->
 
     <dependency>
       <groupId>org.springframework</groupId>

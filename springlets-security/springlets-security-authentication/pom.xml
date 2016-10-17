@@ -30,16 +30,27 @@
 
   <dependencies>
     <!--
-    = Dependencies order criteria:
+    = About the dependencies
 
-    * Two dependency groups: first spring dependencies, next own dependencies and finally the external ones.
+    ORDER CRITERIA:
+
+    * Three dependency groups: first spring dependencies, next own dependencies and finally the external ones.
     * Inside a group: alphabetical order, ordering first by groupId, then by artifactId.
-     -->
-     
+
+    OPTIONAL:
+
+    * All the dependencies MUST BE optional = true, the starter will include the needed libraries
+    
+    STARTERS:
+
+    * Never include dependencies to Spring Boot Starters, instead include each needed library 
+    -->
+    
     <!-- Spring dependencies -->
     <dependency>
       <groupId>org.springframework.data</groupId>
       <artifactId>spring-data-jpa</artifactId>
+      <optional>true</optional>
     </dependency>
 
     <dependency>
@@ -53,9 +64,10 @@
       <groupId>io.springlets</groupId>
       <artifactId>springlets-data-commons</artifactId>
       <version>${project.version}</version>
+      <optional>true</optional>
     </dependency>
 
-    <!-- Other dependencies -->
+	<!-- 3rd party dependencies -->
     <dependency>
       <groupId>com.querydsl</groupId>
       <artifactId>querydsl-jpa</artifactId>

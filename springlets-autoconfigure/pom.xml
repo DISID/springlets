@@ -29,7 +29,7 @@
 
     ORDER CRITERIA:
 
-    * Two dependency groups: first spring dependencies, next own dependencies and finally the external ones.
+    * Three dependency groups: first spring dependencies, next own dependencies and finally the external ones.
     * Inside a group: alphabetical order, ordering first by groupId, then by artifactId.
 
     OPTIONAL:
@@ -54,10 +54,17 @@
       <artifactId>spring-webmvc</artifactId>
       <optional>true</optional>
     </dependency>
-
+    
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+    
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-autoconfigure</artifactId>
+      <optional>true</optional>
     </dependency>
 
     <dependency>
@@ -65,13 +72,13 @@
       <artifactId>spring-boot-configuration-processor</artifactId>
       <optional>true</optional>
     </dependency>
-
+    
     <dependency>
       <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-test</artifactId>
+      <artifactId>spring-boot-test</artifactId>
       <scope>test</scope>
     </dependency>
-    
+   
     <dependency>
       <groupId>org.springframework.security</groupId>
       <artifactId>spring-security-config</artifactId>
@@ -88,12 +95,23 @@
 
     <dependency>
       <groupId>io.springlets</groupId>
+      <artifactId>springlets-data-commons</artifactId>
+      <optional>true</optional>
+    </dependency>
+
+    <dependency>
+      <groupId>io.springlets</groupId>
       <artifactId>springlets-web</artifactId>
       <optional>true</optional>
     </dependency>
 
     <!-- 3rd party dependencies -->
-
+    <dependency>
+	  <groupId>com.fasterxml.jackson.core</groupId>
+	  <artifactId>jackson-databind</artifactId>
+      <optional>true</optional>
+    </dependency>
+    
     <dependency>
       <groupId>javax.servlet</groupId>
       <artifactId>javax.servlet-api</artifactId>

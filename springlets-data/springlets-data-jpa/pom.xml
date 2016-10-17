@@ -15,37 +15,6 @@
     <name>DISID Corporation</name>
     <url>http://www.disid.com</url>
   </organization>
-  <dependencies>
-    <!--
-    = Dependencies order criteria:
-
-    * Two dependency groups: first spring dependencies, next own dependencies and finally the external ones.
-    * Inside a group: alphabetical order, ordering first by groupId, then by artifactId.
-     -->
-     
-    <!-- Spring dependencies -->
-    <dependency>
-      <groupId>org.springframework.data</groupId>
-      <artifactId>spring-data-jpa</artifactId>
-    </dependency>
-
-    <!-- Other dependencies -->
-    <dependency>
-      <groupId>com.querydsl</groupId>
-      <artifactId>querydsl-jpa</artifactId>
-    </dependency>
-
-	<dependency>
-		<groupId>io.springlets</groupId>
-		<artifactId>springlets-data-commons</artifactId>
-		<version>${project.version}</version>
-	</dependency>
-
-    <dependency>
-      <groupId>org.eclipse.persistence</groupId>
-      <artifactId>javax.persistence</artifactId>
-    </dependency>
-  </dependencies>
   <licenses>
     <license>
       <name>The Apache Software License, Version 2.0</name>
@@ -53,4 +22,50 @@
       <distribution>repo</distribution>
     </license>
   </licenses>
+  <dependencies>
+    <!--
+    = About the dependencies
+
+    ORDER CRITERIA:
+
+    * Three dependency groups: first spring dependencies, next own dependencies and finally the external ones.
+    * Inside a group: alphabetical order, ordering first by groupId, then by artifactId.
+
+    OPTIONAL:
+
+    * All the dependencies MUST BE optional = true, the starter will include the needed libraries
+    
+    STARTERS:
+
+    * Never include dependencies to Spring Boot Starters, instead include each needed library 
+    -->
+    
+    <!-- Spring dependencies -->
+    <dependency>
+      <groupId>org.springframework.data</groupId>
+      <artifactId>spring-data-jpa</artifactId>
+      <optional>true</optional>
+    </dependency>
+
+    <!-- Springlets dependencies -->
+
+	<dependency>
+      <groupId>io.springlets</groupId>
+	  <artifactId>springlets-data-commons</artifactId>
+      <optional>true</optional>
+ 	</dependency>
+
+    <!-- 3rd party dependencies -->
+    <dependency>
+      <groupId>com.querydsl</groupId>
+      <artifactId>querydsl-jpa</artifactId>
+      <optional>true</optional>
+    </dependency>
+
+    <dependency>
+      <groupId>org.eclipse.persistence</groupId>
+      <artifactId>javax.persistence</artifactId>
+      <optional>true</optional>
+    </dependency>
+  </dependencies>
 </project>

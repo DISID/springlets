@@ -55,11 +55,13 @@
 
   <dependencyManagement>
     <!--
-    = Dependencies order criteria:
+    = About the dependencies
 
-    * Two dependency groups: first spring dependencies and next the external ones.
+    ORDER CRITERIA:
+
+    * Two dependency groups: first spring dependencies, next the external ones.
     * Inside a group: alphabetical order, ordering first by groupId, then by artifactId.
-     -->
+    -->
     <dependencies>
 
       <!-- Springlets dependencies -->
@@ -115,6 +117,32 @@
 
     </dependencies>
   </dependencyManagement>
+
+  <dependencies>
+	<dependency>
+		<groupId>junit</groupId>
+		<artifactId>junit</artifactId>
+		<scope>test</scope>
+	</dependency>
+
+	<dependency>
+		<groupId>org.assertj</groupId>
+		<artifactId>assertj-core</artifactId>
+		<scope>test</scope>
+	</dependency>
+
+	<dependency>
+		<groupId>org.mockito</groupId>
+		<artifactId>mockito-core</artifactId>
+		<scope>test</scope>
+	</dependency>
+	    
+    <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>jcl-over-slf4j</artifactId>
+		<scope>test</scope>
+    </dependency>
+  </dependencies>
 
   <build>
     <pluginManagement>

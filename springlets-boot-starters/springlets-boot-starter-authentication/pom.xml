@@ -25,16 +25,23 @@
 
   <dependencies>
     <!--
-    = Dependencies order criteria:
+    = About the dependencies
 
-    * Two dependency groups: first spring dependencies, next own dependencies and finally the external ones.
+    ORDER CRITERIA:
+
+    * Three dependency groups: first spring dependencies, next own dependencies and finally the external ones.
     * Inside a group: alphabetical order, ordering first by groupId, then by artifactId.
-     -->
 
-    <dependency>
-      <groupId>org.springframework.security</groupId>
-      <artifactId>spring-security-config</artifactId>
-    </dependency>
+    OPTIONAL:
+
+    * All the dependencies MUST BE optional = true, the starter will include the needed libraries
+    
+    STARTERS:
+
+    * Never include dependencies to Spring Boot Starters, instead include each needed library 
+    -->
+    
+    <!-- Spring dependencies -->
 
     <dependency>
       <groupId>org.springframework</groupId>
@@ -47,13 +54,20 @@
     </dependency>
 
     <dependency>
-      <groupId>io.springlets</groupId>
-      <artifactId>springlets-autoconfigure</artifactId>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-config</artifactId>
     </dependency>
+    
+    <!-- Springlets dependencies -->
 
     <dependency>
       <groupId>io.springlets</groupId>
       <artifactId>springlets-authentication</artifactId>
+    </dependency>
+    
+    <dependency>
+      <groupId>io.springlets</groupId>
+      <artifactId>springlets-autoconfigure</artifactId>
     </dependency>
 
     <dependency>
@@ -61,5 +75,6 @@
       <artifactId>springlets-web</artifactId>
     </dependency>
     
+    <!-- 3rd party dependencies -->
   </dependencies>
 </project>
