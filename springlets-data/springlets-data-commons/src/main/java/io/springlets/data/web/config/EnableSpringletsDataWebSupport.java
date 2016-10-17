@@ -23,8 +23,6 @@ import io.springlets.data.web.datatables.DatatablesSort;
 import io.springlets.data.web.datatables.DatatablesSortHandlerMethodArgumentResolver;
 
 import org.springframework.context.annotation.Import;
-import org.springframework.context.annotation.ImportSelector;
-import org.springframework.core.type.AnnotationMetadata;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Inherited;
@@ -51,19 +49,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE, ElementType.ANNOTATION_TYPE})
 @Inherited
-@Import({EnableSpringletsDataWebSupport.SpringletsDataWebConfigurationImportSelector.class})
+@Import({SpringletsDataWebConfiguration.class})
 public @interface EnableSpringletsDataWebSupport {
 
-  /**
-   * Import selector to register {@link SpringletsDataWebConfiguration} as configuration class.
-   * 
-   * @author Cèsar Ordiñana at http://www.disid.com[DISID Corporation S.L.]
-   */
-  static class SpringletsDataWebConfigurationImportSelector implements ImportSelector {
-
-    @Override
-    public String[] selectImports(AnnotationMetadata importingClassMetadata) {
-      return new String[] {SpringletsDataWebConfiguration.class.getName()};
-    }
-  }
 }

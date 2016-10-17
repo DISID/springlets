@@ -41,6 +41,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
     WebMvcConfigurerAdapter.class})
 @ConditionalOnMissingBean(GlobalSearchHandlerMethodArgumentResolver.class)
 @AutoConfigureAfter(SpringDataWebAutoConfiguration.class)
-public class SpringletsDataWebAutoConfiguration {
+public class SpringletsDataArgumentResolversAutoConfiguration {
 
 }
