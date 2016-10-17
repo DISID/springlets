@@ -31,25 +31,16 @@
 
     * Three dependency groups: first spring dependencies, next own dependencies and finally the external ones.
     * Inside a group: alphabetical order, ordering first by groupId, then by artifactId.
-
-    OPTIONAL:
-
-    * All the dependencies MUST BE optional = true, the starter will include the needed libraries
-    
-    STARTERS:
-
-    * Never include dependencies to Spring Boot Starters, instead include each needed library 
     -->
+    
+    <!-- Spring dependencies -->
 
     <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-webmvc</artifactId>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
     </dependency>
-
-    <dependency>
-    	<groupId>com.fasterxml.jackson.core</groupId>
-    	<artifactId>jackson-databind</artifactId>
-    </dependency>
+    
+    <!-- Springlets dependencies -->
 
     <dependency>
       <groupId>io.springlets</groupId>
@@ -65,5 +56,13 @@
       <groupId>io.springlets</groupId>
       <artifactId>springlets-web</artifactId>
     </dependency>
+
+    <!-- 3rd party dependencies -->
+
+    <dependency>
+    	<groupId>com.fasterxml.jackson.core</groupId>
+    	<artifactId>jackson-databind</artifactId>
+    </dependency>
+
   </dependencies>
 </project>
