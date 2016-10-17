@@ -20,7 +20,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 
-import org.springframework.boot.jackson.JsonComponent;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -69,7 +68,6 @@ import java.util.Map;
  * </pre>
  * @author http://www.disid.com[DISID Corporation S.L.]
  */
-@JsonComponent
 public class BindingResultSerializer extends JsonSerializer<BindingResult> {
 
   @Override

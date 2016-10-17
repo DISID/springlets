@@ -15,9 +15,8 @@
  */
 package io.springlets.web;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import io.springlets.http.converter.json.BindingResultModule;
+import io.springlets.data.web.GlobalSearchHandlerMethodArgumentResolver;
+import io.springlets.data.web.config.EnableSpringletsDataWebSupport;
 import io.springlets.web.config.EnableSpringletsWebJacksonSupport;
 
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
@@ -25,8 +24,9 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
-import org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration;
+import org.springframework.boot.autoconfigure.data.web.SpringDataWebAutoConfiguration;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 /**
  * {@link EnableAutoConfiguration Auto-configuration} for Springlets Web Jackson support.
@@ -35,12 +35,14 @@ import org.springframework.context.annotation.Configuration;
  * Jackson support through the {@link EnableSpringletsWebJacksonSupport} annotation.
  * @author Cèsar Ordiñana at http://www.disid.com[DISID Corporation S.L.]
  */
+
 @Configuration
-@EnableSpringletsWebJacksonSupport
+@EnableSpringletsDataWebSupport
 @ConditionalOnWebApplication
-@ConditionalOnClass({BindingResultModule.class, ObjectMapper.class})
-@ConditionalOnMissingBean(BindingResultModule.class)
-@AutoConfigureAfter(JacksonAutoConfiguration.class)
+@ConditionalOnClass({GlobalSearchHandlerMethodArgumentResolver.class,
+    WebMvcConfigurerAdapter.class})
+@ConditionalOnMissingBean(GlobalSearchHandlerMethodArgumentResolver.class)
+@AutoConfigureAfter(SpringDataWebAutoConfiguration.class)
 public class SpringletsDataWebAutoConfiguration {
 
 }

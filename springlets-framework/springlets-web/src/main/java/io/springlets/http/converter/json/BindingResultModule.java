@@ -17,7 +17,7 @@ package io.springlets.http.converter.json;
 
 import com.fasterxml.jackson.databind.module.SimpleModule;
 
-import org.springframework.boot.jackson.JsonComponent;
+import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 
@@ -26,7 +26,7 @@ import org.springframework.validation.FieldError;
  *
  * @author Cèsar Ordiñana at http://www.disid.com[DISID Corporation S.L.]
  */
-@JsonComponent
+@Component
 public class BindingResultModule extends SimpleModule {
 
   private static final long serialVersionUID = 6297913040418497316L;

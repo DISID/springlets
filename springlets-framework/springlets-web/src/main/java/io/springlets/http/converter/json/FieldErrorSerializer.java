@@ -20,7 +20,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 
-import org.springframework.boot.jackson.JsonComponent;
 import org.springframework.validation.FieldError;
 
 import java.io.IOException;
@@ -31,7 +30,6 @@ import java.util.Map;
  * {@link FieldError} Jackson Serializer for {@link FieldError} objects.
  * @author http://www.disid.com[DISID Corporation S.L.]
  */
-@JsonComponent
 public class FieldErrorSerializer extends JsonSerializer<FieldError> {
 
   @Override

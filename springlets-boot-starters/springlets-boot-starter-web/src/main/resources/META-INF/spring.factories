@@ -1,1 +1,3 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=io.springlets.web.SpringletsDataWebAutoConfiguration
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+io.springlets.web.SpringletsWebJacksonAutoConfiguration,\
+io.springlets.web.SpringletsDataWebAutoConfiguration
