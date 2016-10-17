@@ -15,14 +15,13 @@
  */
 package io.springlets.security.web.config;
 
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 
 /**
- * {@link EnableAutoConfiguration Auto-configuration} to setup Spring Security
+ * Configuration to setup Spring Security
  * authentication.
  *  
  * @author Enrique Ruiz at http://www.disid.com[DISID Corporation S.L.]
