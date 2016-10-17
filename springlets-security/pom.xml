@@ -24,9 +24,9 @@
 		</license>
 	</licenses>
 
-    <modules>
-      <module>springlets-security-authentication</module>
-    </modules>
+  <modules>
+    <module>springlets-authentication</module>
+  </modules>
 
 	<dependencies>
 	    <!--
