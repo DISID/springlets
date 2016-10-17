@@ -17,7 +17,7 @@ package io.springlets.security.repository;
 
 import io.springlets.security.domain.QUserLogin;
 import io.springlets.security.domain.UserLogin;
-import io.springlets.security.domain.UserLoginDetails;
+import io.springlets.security.domain.UserLoginInfo;
 import io.springlets.security.domain.UserLoginRole;
 
 import org.springframework.data.jpa.repository.support.QueryDslRepositorySupport;
@@ -27,7 +27,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Implementation of dynamic queries defiend on {@link UserLoginRepositoryCustom} interface
+ * Implementation of dynamic queries defined on {@link UserLoginRepositoryCustom} interface
  * 
  * @author Cèsar Ordiñana at http://www.disid.com[DISID Corporation S.L.]
  * @author Juan Carlos García at http://www.disid.com[DISID Corporation S.L.]
@@ -41,11 +41,11 @@ public class UserLoginRepositoryImpl extends QueryDslRepositorySupport
   }
 
   @Override
-  public UserLoginDetails findDetailsByName(String username) {
+  public UserLoginInfo findDetailsByName(String username) {
 
     QUserLogin user = QUserLogin.userLogin;
     UserLogin userLogin = from(user).where(user.username.eq(username)).fetchOne();
-    UserLoginDetails details = null;
+    UserLoginInfo details = null;
     if (userLogin != null) {
       Set<UserLoginRole> userLoginRoles = userLogin.getUserLoginRoles();
       Set<String> roleNames = null;
@@ -56,7 +56,7 @@ public class UserLoginRepositoryImpl extends QueryDslRepositorySupport
         }
       }
       details =
-          new UserLoginDetails(userLogin.getId(), userLogin.getUsername(), userLogin.getPassword(),
+          new UserLoginInfo(userLogin.getId(), userLogin.getUsername(), userLogin.getPassword(),
               userLogin.getFromDate(), userLogin.getThruDate(), userLogin.getLocked(), roleNames);
     }
 

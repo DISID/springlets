@@ -15,32 +15,6 @@
     <name>DISID Corporation</name>
     <url>http://www.disid.com</url>
   </organization>
-  <dependencies>
-    <!--
-    = Dependencies order criteria:
-
-    * Two dependency groups: first spring dependencies, next own dependencies and finally the external ones.
-    * Inside a group: alphabetical order, ordering first by groupId, then by artifactId.
-     -->
-     
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-webmvc</artifactId>
-    </dependency>
-     
-    <dependency>
-      <groupId>io.springlets</groupId>
-      <artifactId>springlets-data-commons</artifactId>
-      <version>1.0.0.BUILD-SNAPSHOT</version>
-    </dependency>
-     
-    <dependency>
-      <groupId>io.springlets</groupId>
-      <artifactId>springlets-web</artifactId>
-      <version>1.0.0.BUILD-SNAPSHOT</version>
-    </dependency>
-    
-  </dependencies>
   <licenses>
     <license>
       <name>The Apache Software License, Version 2.0</name>
@@ -48,4 +22,34 @@
       <distribution>repo</distribution>
     </license>
   </licenses>
+
+  <dependencies>
+    <!--
+    = Dependencies order criteria:
+
+    * Two dependency groups: first spring dependencies, next own dependencies and finally the external ones.
+    * Inside a group: alphabetical order, ordering first by groupId, then by artifactId.
+     -->
+
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-webmvc</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>io.springlets</groupId>
+      <artifactId>springlets-autoconfigure</artifactId>
+    </dependency>
+     
+    <dependency>
+      <groupId>io.springlets</groupId>
+      <artifactId>springlets-data-commons</artifactId>
+    </dependency>
+     
+    <dependency>
+      <groupId>io.springlets</groupId>
+      <artifactId>springlets-web</artifactId>
+    </dependency>
+    
+  </dependencies>
 </project>

@@ -73,23 +73,22 @@ public class SpringletsWebMvcAdvicesAutoConfigurationTest {
   }
 
   /**
-   * Check if `springlets.mvc.advices.enabled` is not defined the
-   * StringTrimmerAdvice is not registered.
+   * The default value for `springlets.mvc.advices.enabled` is true, so
+   * check that if it is not defined the StringTrimmerAdvice is registered.
    * 
    * @throws Exception
    */
   @Test
   public void defaultConfiguration() throws Exception {
 
-    // Verify
-    this.thrown.expect(NoSuchBeanDefinitionException.class);
-    this.thrown.expectMessage("No qualifying bean of type [");
-
     // Setup
     registerAndRefreshContext();
 
     // Exercise
-    this.context.getBean(StringTrimmerAdvice.class);
+    StringTrimmerAdvice advice = this.context.getBean(StringTrimmerAdvice.class);
+
+    // Verify
+    assertThat(advice).isNotNull();
   }
 
   /**

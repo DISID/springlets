@@ -18,14 +18,16 @@ package io.springlets.security.service.api;
 import java.util.List;
 
 import io.springlets.security.domain.UserLogin;
-import io.springlets.security.domain.UserLoginDetails;
+import io.springlets.security.domain.UserLoginInfo;
 
 /**
  * 
  * = API of the service related with the entity {@link UserLogin}
  *
- * Interface that defines the operations related with the entity {@link UserLogin}.
+ * Interface that defines the persistence operations related with the 
+ * entity {@link UserLogin}.
  * 
+ * @author Enrique Ruiz at http://www.disid.com[DISID Corporation S.L.]
  * @author Cèsar Ordiñana at http://www.disid.com[DISID Corporation S.L.]
  * @author Juan Carlos García at http://www.disid.com[DISID Corporation S.L.]
  */
@@ -55,7 +57,7 @@ public interface UserLoginService {
 
   UserLogin findByActiveUsername(String username);
 
-  UserLoginDetails findDetailsByUsername(String username);
+  UserLoginInfo findDetailsByUsername(String username);
   
   UserLogin lock(String username);
 

@@ -62,7 +62,7 @@ public class SpringletsWebMvcAdvicesProperties {
   public static class StringTrimmerAdviceProperties {
 
     /** `true` set up the {@link StringTrimmerAdvice} */
-    private boolean enabled = false;
+    private boolean enabled = true;
 
     /** `true` if an empty parameter value is to be transformed into `null` */
     private boolean emptyAsNull = false;

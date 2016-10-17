@@ -17,11 +17,21 @@
   </organization>
   <dependencies>
     <!--
-    = Dependencies order criteria:
+    = About the dependencies
+
+    ORDER CRITERIA:
 
     * Two dependency groups: first spring dependencies, next own dependencies and finally the external ones.
     * Inside a group: alphabetical order, ordering first by groupId, then by artifactId.
-     -->
+
+    OPTIONAL:
+
+    * All the dependencies MUST BE optional = true, the starter will include the needed libraries
+    
+    STARTERS:
+
+    * Never include dependencies to Spring Boot Starters, instead include each needed library 
+    -->
      
     <!-- Spring dependencies -->
     <dependency>
@@ -67,38 +77,37 @@
     <dependency>
 	  <groupId>com.fasterxml.jackson.core</groupId>
 	  <artifactId>jackson-core</artifactId>
+      <optional>true</optional>
     </dependency>
     
     <dependency>
 	  <groupId>com.fasterxml.jackson.core</groupId>
 	  <artifactId>jackson-databind</artifactId>
+      <optional>true</optional>
     </dependency>
 
     <dependency>
       <groupId>javax.servlet</groupId>
       <artifactId>javax.servlet-api</artifactId>
       <optional>true</optional>
-      <scope>provided</scope>
     </dependency>
 
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>jcl-over-slf4j</artifactId>
+      <optional>true</optional>
     </dependency>
 
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-simple</artifactId>
+      <optional>true</optional>
     </dependency>
 
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
+      <optional>true</optional>
     </dependency>
 
   </dependencies>

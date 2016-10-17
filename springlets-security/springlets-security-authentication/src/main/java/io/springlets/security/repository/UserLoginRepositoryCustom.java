@@ -16,7 +16,7 @@
 package io.springlets.security.repository;
 
 import io.springlets.security.domain.UserLogin;
-import io.springlets.security.domain.UserLoginDetails;
+import io.springlets.security.domain.UserLoginInfo;
 
 /**
  * Interface that defines dynamic queries for repository related with 
@@ -34,6 +34,6 @@ public interface UserLoginRepositoryCustom {
    * @param username
    * @return
    */
-  UserLoginDetails findDetailsByName(String username);
+  UserLoginInfo findDetailsByName(String username);
 
 }

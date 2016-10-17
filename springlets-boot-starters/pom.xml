@@ -16,6 +16,7 @@
     <url>http://www.disid.com</url> 
   </organization>
   <modules>
+    <module>springlets-boot-starter-authentication</module>
     <module>springlets-boot-starter-web</module>
   </modules>
   <licenses>

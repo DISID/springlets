@@ -44,7 +44,7 @@ import io.springlets.web.mvc.config.SpringletsWebMvcConfiguration;
 @AutoConfigureAfter(WebMvcAutoConfiguration.class)
 @ConditionalOnClass(SpringletsWebMvcConfiguration.class)
 @ConditionalOnMissingBean(SpringletsWebMvcConfiguration.class)
-@ConditionalOnProperty(prefix = "springlets.mvc.advices", name = "enabled", havingValue = "true", matchIfMissing = false)
+@ConditionalOnProperty(prefix = "springlets.mvc.advices", name = "enabled", havingValue = "true", matchIfMissing = true)
 @ConditionalOnWebApplication
 @Configuration
 @EnableConfigurationProperties(SpringletsWebMvcAdvicesProperties.class)
@@ -52,8 +52,8 @@ import io.springlets.web.mvc.config.SpringletsWebMvcConfiguration;
 public class SpringletsWebMvcAdvicesAutoConfiguration {
 
   @Bean
-  public SpringBootSpringletsWebMvcAdvicesConfigurer springBootSpringletsWebMvcConfigurer() {
-    return new SpringBootSpringletsWebMvcAdvicesConfigurer();
+  public SpringletsWebMvcAdvicesConfigurer springBootSpringletsWebMvcConfigurer() {
+    return new SpringletsWebMvcAdvicesConfigurer();
   }
 
 }

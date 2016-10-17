@@ -38,6 +38,7 @@
     <module>springlets-framework</module>
     <module>springlets-data</module>
     <module>springlets-security</module>
+    <module>springlets-autoconfigure</module>
     <module>springlets-boot-starters</module>
   </modules>
   
@@ -61,7 +62,25 @@
      -->
     <dependencies>
 
-      <!-- Spring dependencies -->
+      <!-- Springlets dependencies -->
+      <dependency>
+        <groupId>io.springlets</groupId>
+        <artifactId>springlets-autoconfigure</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>io.springlets</groupId>
+        <artifactId>springlets-authentication</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>io.springlets</groupId>
+        <artifactId>springlets-data-commons</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+
       <dependency>
         <groupId>io.springlets</groupId>
         <artifactId>springlets-web</artifactId>
