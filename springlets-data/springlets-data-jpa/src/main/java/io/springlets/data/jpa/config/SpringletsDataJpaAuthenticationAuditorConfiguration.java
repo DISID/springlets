@@ -33,7 +33,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 public class SpringletsDataJpaAuthenticationAuditorConfiguration {
 
   @Bean
-  public AuditorAware<String> authenticationAuditorAware() {
+  public AuditorAware<String> auditorProvider() {
     return new AuthenticationAuditorAware();
   }
 

@@ -44,7 +44,7 @@ public class SpringletsDataJpaAuthenticationAuditorConfigurationTest {
     // Setup
 
     // Exercise
-    AuditorAware<String> authenticationAuditorAware = configuration.authenticationAuditorAware();
+    AuditorAware<String> authenticationAuditorAware = configuration.auditorProvider();
 
     // Verify
     assertThat(authenticationAuditorAware).isNotNull()

@@ -24,6 +24,7 @@
   </licenses>
   <modules>
     <module>springlets-boot-starter-authentication</module>
+    <module>springlets-boot-starter-data-jpa</module>
     <module>springlets-boot-starter-web</module>
   </modules>
 </project>

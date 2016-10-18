@@ -85,6 +85,12 @@
 
       <dependency>
         <groupId>io.springlets</groupId>
+        <artifactId>springlets-data-jpa</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>io.springlets</groupId>
         <artifactId>springlets-web</artifactId>
         <version>${project.version}</version>
       </dependency>
