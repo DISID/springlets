@@ -20,8 +20,11 @@ import org.springframework.boot.autoconfigure.PropertyPlaceholderAutoConfigurati
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.data.jpa.JpaRepositoriesAutoConfiguration;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 
@@ -36,7 +39,10 @@ import io.springlets.security.jpa.config.SpringletsSecurityJpaConfiguration;
  * @author Enrique Ruiz at http://www.disid.com[DISID Corporation S.L.]
  */
 //@AutoConfigureBefore(AuthenticationConfiguration.class)
-@ConditionalOnClass(SpringletsSecurityJpaConfiguration.class)
+@AutoConfigureBefore(JpaBaseConfiguration.class)
+@ConditionalOnClass({SpringletsSecurityJpaConfiguration.class,
+    LocalContainerEntityManagerFactoryBean.class})
+@Configuration
 @ConfigurationProperties(prefix = "springlets.security.jpa")
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 @EnableSpringletsSecurityJpa

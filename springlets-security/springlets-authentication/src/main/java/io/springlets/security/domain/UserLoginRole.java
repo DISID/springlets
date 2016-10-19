@@ -29,34 +29,32 @@ import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 
 /**
- * = _UserLoginRole_ Entity
- *
  * Entity that represents relations between users and roles.
  *
+ * @author Enrique Ruiz at http://www.disid.com[DISID Corporation S.L.]
  * @author Cèsar Ordiñana at http://www.disid.com[DISID Corporation S.L.]
  * @author Juan Carlos García at http://www.disid.com[DISID Corporation S.L.]
  */
 @Entity
-@Table(name = "${springlets.security.domain.user-login-roles.table-name:USER_LOGIN_ROLES}")
+@Table(name = "USER_LOGIN_ROLE")
 public class UserLoginRole {
 
   @Id
-  @Column(name = "${springlets.security.domain.user-login-roles.id-column-name:USER_LOGIN_ROLE_ID}")
+  @Column(name = "USER_LOGIN_ROLE_ID")
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "userLoginRoleGen")
-  @SequenceGenerator(name = "userLoginRoleGen",
-      sequenceName = "${springlets.security.domain.user-login-roles.sequence-name:SEQ_USER_LOGIN_ROLES}")
+  @SequenceGenerator(name = "userLoginRoleGen", sequenceName = "SEQ_USER_LOGIN_ROLES")
   private Long id;
 
-  @Column(name = "${springlets.security.domain.user-login-roles.version-column-name:VERSION}")
+  @Column(name = "VERSION")
   @Version
   private long version;
 
-  @JoinColumn(name = "${springlets.security.domain.user-login-roles.id-column-name:USER_LOGIN}")
+  @JoinColumn(name = "USER_LOGIN")
   @ManyToOne(fetch = FetchType.LAZY)
   @NotNull
   private UserLogin userLogin;
 
-  @JoinColumn(name = "${springlets.security.domain.user-login-roles.id-column-name:LOGIN_ROLE}")
+  @JoinColumn(name = "LOGIN_ROLE")
   @ManyToOne(fetch = FetchType.LAZY)
   @NotNull
   private LoginRole loginRole;

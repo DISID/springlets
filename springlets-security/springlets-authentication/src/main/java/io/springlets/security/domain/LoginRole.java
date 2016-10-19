@@ -33,26 +33,25 @@ import javax.validation.constraints.Size;
  * @author Juan Carlos García at http://www.disid.com[DISID Corporation S.L.]
  */
 @Entity
-@Table(name = "${springlets.security.domain.login-role.table-name:LOGIN_ROLE}")
+@Table(name = "LOGIN_ROLE")
 public class LoginRole {
 
-  @Column(name = "${springlets.security.domain.login-role.id-column-name:LOGIN_ROLE_ID}")
+  @Column(name = "LOGIN_ROLE_ID")
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "loginRoleGen")
   @Id
-  @SequenceGenerator(name = "loginRoleGen",
-      sequenceName = "${springlets.security.domain.login-role.sequence-name:SEQ_LOGIN_ROLE}")
+  @SequenceGenerator(name = "loginRoleGen", sequenceName = "SEQ_LOGIN_ROLE")
   private Long id;
 
-  @Column(name = "${springlets.security.domain.login-role.version-column-name:VERSION}")
+  @Column(name = "VERSION")
   @Version
   private long version;
 
-  @Column(name = "${springlets.security.domain.login-role.name-column-name:NAME}", unique = true)
+  @Column(name = "NAME", unique = true)
   @NotNull
   @Size(max = 20)
   private String name;
 
-  @Column(name = "${springlets.security.domain.login-role.description-column-name:DESCRIPTION}")
+  @Column(name = "DESCRIPTION")
   @NotNull
   @Size(max = 50)
   private String description;
@@ -130,7 +129,5 @@ public class LoginRole {
     return "LoginRole {" + "id='" + id + '\'' + ", name='" + name + '\'' + ", description='"
         + description + '\'' + ", version='" + version + '\'' + "} " + super.toString();
   }
-
-
 
 }

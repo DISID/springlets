@@ -38,57 +38,56 @@ import javax.validation.constraints.Size;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
- * = _UserLogin_ Entity
+ * Some applications require the user to have a login in order to gain access
+ * to the application.
  *
- * JPA Entity that models the user identification data and whose
- * instances can be loaded and stored in a database. 
+ * This JPA Entity models the user login given to a user. 
  * 
+ * @author Enrique Ruiz at http://www.disid.com[DISID Corporation S.L.]
  * @author Cèsar Ordiñana at http://www.disid.com[DISID Corporation S.L.]
  * @author Juan Carlos García at http://www.disid.com[DISID Corporation S.L.]
  */
 @Entity
-@Table(name = "${springlets.security.domain.users-login.table-name:USERS_LOGIN}")
+@Table(name = "USER_LOGIN")
 public class UserLogin {
 
-  @Column(name = "${springlets.security.domain.users-login.id-column-name:USER_LOGIN_ID}")
+  @Column(name = "USER_LOGIN_ID")
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "userLoginGen")
   @Id
-  @SequenceGenerator(name = "userLoginGen",
-      sequenceName = "${springlets.security.domain.users-login.sequence-name:SEQ_USERS_LOGIN}")
+  @SequenceGenerator(name = "userLoginGen", sequenceName = "SEQ_USER_LOGIN")
   private Long id;
 
-  @Column(name = "${springlets.security.domain.users-login.version-column-name:VERSION}")
+  @Column(name = "VERSION")
   @Version
   private long version;
 
-  @Column(name = "${springlets.security.domain.users-login.username-column-name:USERNAME}",
+  @Column(name = "USERNAME",
       unique = true)
   @NotNull
   @Size(max = 30)
   @Pattern(regexp = "^[^<>\\\\'\"&;%]*$")
   private String username;
 
-  @Column(name = "${springlets.security.domain.users-login.password-column-name:PASSWORD}")
+  @Column(name = "PASSWORD")
   @NotNull
   @Size(max = 255)
   private String password;
 
-  @Column(name = "${springlets.security.domain.users-login.from-date-column-name:FROM_DATE}")
-  @DateTimeFormat(pattern = "${springlets.security.domain.users-login.from-date-pattern:dd/MM/yyyy}")
+  @Column(name = "FROM_DATE")
+  @DateTimeFormat(pattern = "dd/MM/yyyy")
   @NotNull
   @Temporal(TemporalType.TIMESTAMP)
   private Calendar fromDate;
 
-  @Column(name = "${springlets.security.domain.users-login.thru-date-column-name:THRU_DATE}")
-  @DateTimeFormat(pattern = "${springlets.security.domain.users-login.thru-date-pattern:dd/MM/yyyy}")
+  @Column(name = "THRU_DATE")
+  @DateTimeFormat(pattern = "dd/MM/yyyy")
   @Temporal(TemporalType.TIMESTAMP)
   private Calendar thruDate;
 
-  @Column(
-      name = "${springlets.security.domain.users-login.need-change-password-column-name:NEED_CHANGE_PASSWORD}")
+  @Column(name = "NEED_CHANGE_PASSWORD")
   private Boolean needChangePassword;
 
-  @Column(name = "${springlets.security.domain.users-login.locked-column-name:LOCKED}")
+  @Column(name = "LOCKED")
   private Boolean locked;
 
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "userLogin")

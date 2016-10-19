@@ -29,6 +29,7 @@ import io.springlets.security.domain.LoginRole;
  *
  * @see JPARepository
  * 
+ * @author Enrique Ruiz at http://www.disid.com[DISID Corporation S.L.]
  * @author Cèsar Ordiñana at http://www.disid.com[DISID Corporation S.L.]
  * @author Juan Carlos García at http://www.disid.com[DISID Corporation S.L.]
  */
