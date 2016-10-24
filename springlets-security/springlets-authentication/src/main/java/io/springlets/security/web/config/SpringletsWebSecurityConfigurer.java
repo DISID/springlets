@@ -16,6 +16,9 @@
 
 package io.springlets.security.web.config;
 
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -23,12 +26,14 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.header.writers.StaticHeadersWriter;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 /**
  * 
  * @author Enrique Ruiz at http://www.disid.com[DISID Corporation S.L.]
  */
-class SpringletsWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
+class SpringletsWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 
   boolean disableConcurrency = true;
 
@@ -63,7 +68,8 @@ class SpringletsWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapte
 
     // CSP settings
 
-    http.headers()
+    http
+      .headers()
         .addHeaderWriter(new StaticHeadersWriter(X_CONTENT_SECURITY_POLICY_HEADER,
             DEFAULT_POLICY_DIRECTIVES))
         .addHeaderWriter(new StaticHeadersWriter(CONTENT_SECURITY_POLICY_HEADER,
@@ -73,11 +79,41 @@ class SpringletsWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapte
 
     // Authentication
 
-    http.formLogin().loginPage(LOGIN_FORM_URL).permitAll().and()
+    http
+      .authorizeRequests()
+        .antMatchers("/public/**", "/webjars/**", "/resources/**", "/static/**").permitAll()
+        .anyRequest().authenticated()
+        .and()
+      .formLogin()
+        .loginPage(LOGIN_FORM_URL)
+        .permitAll()
+        .and()
+      .logout()
+        .permitAll();
+
+    // IMPORTANT: loginPage() will set the URL path to which redirect to
+    // identify the user it does NOT create the method that handles the 
+    // request.
 
     // se añade redirección personalizada en caso de excepción por acceso no autorizado
-    .exceptionHandling().authenticationEntryPoint(new SpringletsWebAuthenticationEntryPoint())
-    .accessDeniedHandler(new SpringletsWebAccessDeniedHandlerImpl());
+    http
+      .exceptionHandling()
+        .authenticationEntryPoint(new SpringletsSecurityWebAuthenticationEntryPoint())
+      .accessDeniedHandler(new SpringletsSecurityWebAccessDeniedHandlerImpl());
 
   }
+
+  /**
+   * El método heredado {@link WebSecurityConfigurerAdapter#authenticationManagerBean()}
+   * no registra el {@link AuthenticationManager} en el contexto de Spring.
+   *
+   * El objeto de este método es obtener el {@link AuthenticationManager} del padre y
+   * registrarlo en el contexto de Spring.
+   */
+//  @Bean
+//  @Override
+//  public AuthenticationManager authenticationManagerBean() throws Exception {
+//    return super.authenticationManagerBean();
+//  }
+
 }

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.springlets.security.domain;
+package io.springlets.security.jpa.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -29,6 +29,7 @@ import javax.validation.constraints.Size;
 /**
  * JPA Entity that models the user roles.
  * 
+ * @author Enrique Ruiz at http://www.disid.com[DISID Corporation S.L.]
  * @author Cèsar Ordiñana at http://www.disid.com[DISID Corporation S.L.]
  * @author Juan Carlos García at http://www.disid.com[DISID Corporation S.L.]
  */

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.springlets.security.service.impl;
+package io.springlets.security.jpa.service.impl;
 
 import java.util.List;
 
@@ -22,9 +22,9 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import io.springlets.security.domain.UserLoginRole;
-import io.springlets.security.repository.UserLoginRoleRepository;
-import io.springlets.security.service.api.UserLoginRoleService;
+import io.springlets.security.jpa.domain.UserLoginRole;
+import io.springlets.security.jpa.repository.UserLoginRoleRepository;
+import io.springlets.security.jpa.service.api.UserLoginRoleService;
 
 /**
  * = {@link UserLoginRoleService} implementation 

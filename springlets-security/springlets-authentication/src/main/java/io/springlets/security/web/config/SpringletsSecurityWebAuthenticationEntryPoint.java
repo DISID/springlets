@@ -1,3 +1,6 @@
+/**
+ * 
+ */
 package io.springlets.security.web.config;
 
 import java.io.IOException;
@@ -7,18 +10,29 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.http.MediaType;
-import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.DefaultRedirectStrategy;
-import org.springframework.security.web.access.AccessDeniedHandlerImpl;
 import org.springframework.security.web.util.matcher.MediaTypeRequestMatcher;
 import org.springframework.web.accept.ContentNegotiationStrategy;
 import org.springframework.web.accept.HeaderContentNegotiationStrategy;
 
-public class SpringletsWebAccessDeniedHandlerImpl extends AccessDeniedHandlerImpl {
+/**
+ * 
+ * @author Enrique Ruiz at http://www.disid.com[DISID Corporation S.L.]
+ */
+public class SpringletsSecurityWebAuthenticationEntryPoint implements AuthenticationEntryPoint {
+
+  // Don't make final to allow test cases faking them
+  private static String LOGIN_FORM_URL = "/login";
 
   @Override
-  public void handle(HttpServletRequest request, HttpServletResponse response,
-      AccessDeniedException accessDeniedException) throws IOException, ServletException {
+  public void commence(HttpServletRequest request, HttpServletResponse response,
+      AuthenticationException authException) throws IOException, ServletException {
+
+//    if (LOG.isDebugEnabled()) {
+//      LOG.debug("Redirigiendo a pantalla de login: " + LOGIN_FORM_URL);
+//    }
 
     ContentNegotiationStrategy negotiationStrategy = new HeaderContentNegotiationStrategy();
     MediaTypeRequestMatcher matcher =
@@ -28,11 +42,9 @@ public class SpringletsWebAccessDeniedHandlerImpl extends AccessDeniedHandlerImp
     if (matcher.matches(request)) {
       DefaultRedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
       redirectStrategy.setContextRelative(false);
-      redirectStrategy.sendRedirect(request, response, "/errores/403");
+      redirectStrategy.sendRedirect(request, response, LOGIN_FORM_URL);
     } else {
       response.sendError(HttpServletResponse.SC_FORBIDDEN);
-
     }
-
   }
 }

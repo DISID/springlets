@@ -13,43 +13,55 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.springlets.security.service.api;
+package io.springlets.security.jpa.service.api;
 
 import java.util.List;
 
-import io.springlets.security.domain.LoginRole;
+import io.springlets.security.jpa.domain.UserLogin;
+import io.springlets.security.jpa.domain.UserLoginInfo;
 
 /**
  * 
- * = API of the service related with the entity {@link LoginRole}
+ * = API of the service related with the entity {@link UserLogin}
  *
- * Interface that defines the operations related with the entity {@link LoginRole}.
+ * Interface that defines the persistence operations related with the 
+ * entity {@link UserLogin}.
  * 
+ * @author Enrique Ruiz at http://www.disid.com[DISID Corporation S.L.]
  * @author Cèsar Ordiñana at http://www.disid.com[DISID Corporation S.L.]
  * @author Juan Carlos García at http://www.disid.com[DISID Corporation S.L.]
  */
-public interface LoginRoleService {
-
+public interface UserLoginService {
+  
   //=== CRUD Methods
 
-  LoginRole save(LoginRole loginRole);
+  UserLogin save(UserLogin userLogin);
 
   void delete(Long id);
 
-  // === Batch CRUD Methods
+  //=== Batch CRUD Methods
 
-  List<LoginRole> save(Iterable<LoginRole> loginRoles);
+  List<UserLogin> save(Iterable<UserLogin> userLogins);
 
   void delete(Iterable<Long> ids);
 
-  // === Finders
+  //=== Finders
 
-  List<LoginRole> findAll();
+  List<UserLogin> findAll();
 
-  List<LoginRole> findAll(Iterable<Long> ids);
+  List<UserLogin> findAll(Iterable<Long> ids);
 
-  LoginRole findOne(Long id);
+  UserLogin findOne(Long id);
 
-  LoginRole findByName(String name);
+  UserLogin findByUsername(String username);
+
+  UserLogin findByActiveUsername(String username);
+
+  UserLoginInfo findDetailsByUsername(String username);
+  
+  UserLogin lock(String username);
+
+  Long countByName(String username);
+
 
 }

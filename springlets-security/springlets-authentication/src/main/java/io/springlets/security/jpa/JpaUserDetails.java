@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.springlets.security.jpa.userdetails;
+package io.springlets.security.jpa;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -25,7 +25,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import io.springlets.security.domain.UserLoginInfo;
+import io.springlets.security.jpa.domain.UserLoginInfo;
 
 /**
  * Models core user information retrieved by a JpaUserDetailsService.

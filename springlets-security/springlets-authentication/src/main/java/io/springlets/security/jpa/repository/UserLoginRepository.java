@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.springlets.security.repository;
+package io.springlets.security.jpa.repository;
 
-import io.springlets.security.domain.UserLogin;
+import io.springlets.security.jpa.domain.UserLogin;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -31,6 +31,7 @@ import org.springframework.transaction.annotation.Transactional;
  *
  * @see JPARepository
  * 
+ * @author Enrique Ruiz at http://www.disid.com[DISID Corporation S.L.]
  * @author Cèsar Ordiñana at http://www.disid.com[DISID Corporation S.L.]
  * @author Juan Carlos García at http://www.disid.com[DISID Corporation S.L.]
  */

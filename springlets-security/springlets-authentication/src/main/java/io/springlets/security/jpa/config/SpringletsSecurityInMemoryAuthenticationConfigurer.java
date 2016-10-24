@@ -20,10 +20,11 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.SecurityConfigurer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configurers.GlobalAuthenticationConfigurerAdapter;
+import org.springframework.security.config.annotation.authentication.configurers.provisioning.InMemoryUserDetailsManagerConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import io.springlets.security.jpa.userdetails.JpaUserDetailsService;
+import io.springlets.security.jpa.JpaUserDetailsService;
 
 /**
  * A {@link SecurityConfigurer} that registers the {@link JpaUserDetailsService}
@@ -31,18 +32,12 @@ import io.springlets.security.jpa.userdetails.JpaUserDetailsService;
  * 
  * Also, the {@link AuthenticationManagerBuilder} will create automatically a 
  * {@link DaoAuthenticationProvider} that delegates in the given {@link JpaUserDetailsService}.
- *
+ * 
  * Based on https://github.com/spring-projects/spring-data-rest[Spring Data REST] project.
  * 
  * @author Enrique Ruiz at http://www.disid.com[DISID Corporation S.L.]
  */
-class SpringletsSecurityJpaConfigurerAdapter extends GlobalAuthenticationConfigurerAdapter {
-
-  protected JpaUserDetailsService userDetailsService;
-
-  public SpringletsSecurityJpaConfigurerAdapter(JpaUserDetailsService userDetailsServ) {
-    this.userDetailsService = userDetailsServ;
-  }
+class SpringletsSecurityInMemoryAuthenticationConfigurer extends GlobalAuthenticationConfigurerAdapter {
 
   /**
    * {@inheritDoc}
@@ -56,6 +51,23 @@ class SpringletsSecurityJpaConfigurerAdapter extends GlobalAuthenticationConfigu
   @Override
   public void init(AuthenticationManagerBuilder auth) throws Exception {
 
-    auth.userDetailsService(this.userDetailsService).passwordEncoder(new BCryptPasswordEncoder());
+    // No se usa     auth.inMemoryAuthentication().withUser()...
+    // porque sobrescribe el UserDetails por defecto, cosa que no se quiere
+    // pq el por defecto debe ser el JpaUserDetailsService
+
+    // Añadir el AuthenticationProvider en memoria preconfigurado con un usuario
+    // especifico de la aplicación que tendrá acceso a las vistas de monitorización
+    // como /healthcheck
+    InMemoryUserDetailsManagerConfigurer<AuthenticationManagerBuilder> inMemAuthProvConfigurer =
+        new InMemoryUserDetailsManagerConfigurer<AuthenticationManagerBuilder>();
+
+    inMemAuthProvConfigurer
+      .withUser("user").password("password").roles("USER");
+
+    inMemAuthProvConfigurer
+      .withUser("admin").password("password").roles("USER", "ADMIN");
+
+    inMemAuthProvConfigurer.configure(auth);
   }
+
 }

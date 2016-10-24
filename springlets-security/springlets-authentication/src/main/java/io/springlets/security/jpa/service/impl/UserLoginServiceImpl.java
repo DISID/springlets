@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.springlets.security.service.impl;
+package io.springlets.security.jpa.service.impl;
 
 import java.util.List;
 
@@ -22,15 +22,16 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import io.springlets.security.domain.LoginRole;
-import io.springlets.security.repository.LoginRoleRepository;
-import io.springlets.security.service.api.LoginRoleService;
+import io.springlets.security.jpa.domain.UserLogin;
+import io.springlets.security.jpa.domain.UserLoginInfo;
+import io.springlets.security.jpa.repository.UserLoginRepository;
+import io.springlets.security.jpa.service.api.UserLoginService;
 
 /**
- * = {@link LoginRoleService} implementation 
- * 
- * {@link LoginRoleService} default implementation used and configured by
- * the Springlets Boot Autoconfiguration to load and store LoginRole 
+ * = {@link UserLoginService} implementation
+ *  
+ * {@link UserLoginService} default implementation used and configured by
+ * the Springlets Boot Autoconfiguration to load and store UserLogin 
  * from repositories.
  * 
  * CRUD methods are transactional by default. For reading operations the 
@@ -39,7 +40,7 @@ import io.springlets.security.service.api.LoginRoleService;
  * configuration applies. 
  * 
  * Developers may use this class directly, subclass it, or write their own 
- * LoginRoleService implementation from scratch.
+ * UserLoginService implementation from scratch.
  * 
  * @author Enrique Ruiz at http://www.disid.com[DISID Corporation S.L.]
  * @author Cèsar Ordiñana at http://www.disid.com[DISID Corporation S.L.]
@@ -47,21 +48,21 @@ import io.springlets.security.service.api.LoginRoleService;
  */
 @Service
 @Transactional(readOnly = true)
-public class LoginRoleServiceImpl implements LoginRoleService {
+public class UserLoginServiceImpl implements UserLoginService {
 
-  private final LoginRoleRepository repository;
+  private final UserLoginRepository repository;
 
   @Autowired
-  public LoginRoleServiceImpl(@Lazy LoginRoleRepository repo) {
+  public UserLoginServiceImpl(UserLoginRepository repo) {
     this.repository = repo;
   }
 
-  //=== CRUD Methods
+  // === CRUD Methods
 
   @Override
   @Transactional
-  public LoginRole save(LoginRole loginRole) {
-    return repository.save(loginRole);
+  public UserLogin save(UserLogin userLogin) {
+    return repository.save(userLogin);
   }
 
   @Override
@@ -70,42 +71,64 @@ public class LoginRoleServiceImpl implements LoginRoleService {
     repository.delete(id);
   }
 
-  //=== Batch CRUD Methods
+  // === Batch CRUD Methods
 
   @Override
   @Transactional
-  public List<LoginRole> save(Iterable<LoginRole> loginRoles) {
-    return repository.save(loginRoles);
+  public List<UserLogin> save(Iterable<UserLogin> userLogins) {
+    return repository.save(userLogins);
   }
 
   @Override
   @Transactional
   public void delete(Iterable<Long> ids) {
-    List<LoginRole> toDelete = repository.findAll(ids);
+    List<UserLogin> toDelete = repository.findAll(ids);
     repository.deleteInBatch(toDelete);
   }
 
-  //=== Finders
+  // === Finders
 
   @Override
-  public List<LoginRole> findAll() {
+  public List<UserLogin> findAll() {
     return repository.findAll();
   }
 
   @Override
-  public List<LoginRole> findAll(Iterable<Long> ids) {
+  public List<UserLogin> findAll(Iterable<Long> ids) {
     return repository.findAll(ids);
   }
 
   @Override
-  public LoginRole findOne(Long id) {
+  public UserLogin findOne(Long id) {
     return repository.findOne(id);
   }
 
   @Override
-  public LoginRole findByName(String name) {
-    return repository.findByName(name);
+  public UserLogin findByUsername(String username) {
+    return repository.findByUsername(username);
   }
 
+  @Override
+  public UserLogin findByActiveUsername(String username) {
+    return repository.findByActiveUsername(username);
+  }
+
+  @Override
+  public UserLoginInfo findDetailsByUsername(String username) {
+    return repository.findDetailsByName(username);
+  }
+
+  @Override
+  @Transactional
+  public UserLogin lock(String username) {
+    UserLogin userLogin = repository.findByUsername(username);
+    userLogin.setLocked(true);
+    return repository.save(userLogin);
+  }
+
+  @Override
+  public Long countByName(String username) {
+    return repository.countByUsername(username);
+  }
 
 }

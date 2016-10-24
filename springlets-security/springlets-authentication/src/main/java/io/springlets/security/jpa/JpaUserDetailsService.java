@@ -13,14 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.springlets.security.jpa.userdetails;
+package io.springlets.security.jpa;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-import io.springlets.security.domain.UserLoginInfo;
-import io.springlets.security.service.api.UserLoginService;
+import io.springlets.security.jpa.domain.UserLoginInfo;
+import io.springlets.security.jpa.service.api.UserLoginService;
 
 /**
  * UserDetailsService implementation that loads user data credentials

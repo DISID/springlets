@@ -26,9 +26,13 @@ import java.util.List;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryAware;
+import org.springframework.beans.factory.NoSuchBeanDefinitionException;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.ImportSelector;
 import org.springframework.core.type.AnnotationMetadata;
+
+import io.springlets.security.jpa.config.SpringletsSecurityJpaAuthenticationConfiguration;
 
 /**
  * 
@@ -41,7 +45,7 @@ import org.springframework.core.type.AnnotationMetadata;
 public @interface EnableSpringletsWebSecurity {
 
   /**
-   * Import selector to register {@link SpringletsSecurityJpaConfiguration} as configuration class.
+   * Import selector to register {@link SpringletsSecurityJpaAuthenticationConfiguration} as configuration class.
    * 
    * @author Enrique Ruiz at http://www.disid.com[DISID Corporation S.L.]
    */
@@ -51,14 +55,46 @@ public @interface EnableSpringletsWebSecurity {
     /** Owning BeanFactory */
     private BeanFactory beanFactory;
 
+    /**
+     * {@inheritDoc}
+     * 
+     * Due to Springlets is independent from Spring Boot the ConditionalOnBean annotation
+     * is not used, however this method offers the same feature by using the 
+     * BeanFactoryAware interface.
+     * 
+     * The @{@link Configuration} classes that should be imported are:
+     * 
+     * * {@link SpringletsWebSecurityConfiguration}, if no bean of the given type was found
+     * * {@link SpringletsWebSecurityConfiguration}, if no bean of the given type was found
+     */
     @Override
     public String[] selectImports(AnnotationMetadata importingClassMetadata) {
-      boolean webConfigurerPresent = this.beanFactory.getBean(SpringletsWebSecurityConfiguration.class) != null;
-
       List<String> imports = new ArrayList<String>();
 
-      if(!webConfigurerPresent) {
+      // Import SpringletsWebSecurityConfiguration
+      boolean webConfigPresent;
+      try {
+        webConfigPresent =
+            this.beanFactory.getBean(SpringletsWebSecurityConfiguration.class) != null;
+      } catch (NoSuchBeanDefinitionException ex) {
+        webConfigPresent = false;
+      }
+
+      if (!webConfigPresent) {
         imports.add(SpringletsWebSecurityConfiguration.class.getName());
+      }
+
+      // Import SpringletsSecurityWebMvcConfiguration
+      boolean webMvcConfigPresent;
+      try {
+        webMvcConfigPresent =
+            this.beanFactory.getBean(SpringletsSecurityWebMvcConfiguration.class) != null;
+      } catch (NoSuchBeanDefinitionException ex) {
+        webMvcConfigPresent = false;
+      }
+
+      if (!webMvcConfigPresent) {
+        imports.add(SpringletsSecurityWebMvcConfiguration.class.getName());
       }
 
       return imports.toArray(new String[imports.size()]);

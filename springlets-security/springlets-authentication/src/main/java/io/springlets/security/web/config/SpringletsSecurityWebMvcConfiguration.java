@@ -17,34 +17,20 @@ package io.springlets.security.web.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
-
-import io.springlets.security.jpa.config.SpringletsSecurityJpaAuthenticationConfiguration;
 
 /**
- * Configuration to setup Spring Security
- * authentication.
  *  
  * @author Enrique Ruiz at http://www.disid.com[DISID Corporation S.L.]
  */
 @Configuration
-@EnableWebSecurity
-@Import(SpringletsSecurityJpaAuthenticationConfiguration.class)
-public class SpringletsWebSecurityConfiguration {
-
-//  @Bean
-//  public SpringSecurityDialect securityDialect() {
-//    return new SpringSecurityDialect();
-//  }
+public class SpringletsSecurityWebMvcConfiguration {
 
   @Bean
   @Order(Ordered.HIGHEST_PRECEDENCE)
-  public SpringletsWebSecurityConfigurer springletsWebSecurityConfigurer() {
-    return new SpringletsWebSecurityConfigurer();
+  public SpringletsSecurityWebMvcConfigurer springletsSecurityWebMvcConfigurer() {
+    return new SpringletsSecurityWebMvcConfigurer();
   }
 
 }

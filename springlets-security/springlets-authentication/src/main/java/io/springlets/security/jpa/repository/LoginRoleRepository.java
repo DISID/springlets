@@ -13,12 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.springlets.security.repository;
+package io.springlets.security.jpa.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Transactional;
 
-import io.springlets.security.domain.LoginRole;
+import io.springlets.security.jpa.domain.LoginRole;
 
 /**
  * = Spring Data JPA repository for {@link LoginRole} entity

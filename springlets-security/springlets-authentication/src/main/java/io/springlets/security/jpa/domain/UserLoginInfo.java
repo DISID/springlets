@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.springlets.security.domain;
+package io.springlets.security.jpa.domain;
 
 import java.util.Calendar;
 import java.util.Set;

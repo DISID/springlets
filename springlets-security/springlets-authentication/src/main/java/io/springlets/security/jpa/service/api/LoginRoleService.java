@@ -13,26 +13,44 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.springlets.security.repository;
+package io.springlets.security.jpa.service.api;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.transaction.annotation.Transactional;
+import java.util.List;
 
-import io.springlets.security.domain.UserLoginRole;
+import io.springlets.security.jpa.domain.LoginRole;
 
 /**
- * = Spring Data JPA repository for {@link UserLoginRole} entity
  * 
- * To get more info about Spring Data JPA repositories:
- * 
- * * http://docs.spring.io/spring-data/jpa/docs/current/reference/html/#repositories
+ * = API of the service related with the entity {@link LoginRole}
  *
- * @see JPARepository
+ * Interface that defines the operations related with the entity {@link LoginRole}.
  * 
+ * @author Enrique Ruiz at http://www.disid.com[DISID Corporation S.L.]
  * @author Cèsar Ordiñana at http://www.disid.com[DISID Corporation S.L.]
  * @author Juan Carlos García at http://www.disid.com[DISID Corporation S.L.]
  */
-@Transactional(readOnly = true)
-public interface UserLoginRoleRepository extends JpaRepository<UserLoginRole, Long> {
+public interface LoginRoleService {
+
+  //=== CRUD Methods
+
+  LoginRole save(LoginRole loginRole);
+
+  void delete(Long id);
+
+  // === Batch CRUD Methods
+
+  List<LoginRole> save(Iterable<LoginRole> loginRoles);
+
+  void delete(Iterable<Long> ids);
+
+  // === Finders
+
+  List<LoginRole> findAll();
+
+  List<LoginRole> findAll(Iterable<Long> ids);
+
+  LoginRole findOne(Long id);
+
+  LoginRole findByName(String name);
 
 }

@@ -22,7 +22,6 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -32,62 +31,53 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryAware;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.config.BeanDefinition;
-import org.springframework.beans.factory.config.ConstructorArgumentValues;
-import org.springframework.beans.factory.support.BeanDefinitionRegistry;
-import org.springframework.beans.factory.support.GenericBeanDefinition;
 import org.springframework.context.annotation.Import;
-import org.springframework.context.annotation.ImportAware;
-import org.springframework.context.annotation.ImportBeanDefinitionRegistrar;
 import org.springframework.context.annotation.ImportSelector;
-import org.springframework.core.Ordered;
 import org.springframework.core.annotation.AliasFor;
 import org.springframework.core.annotation.AnnotationAttributes;
-import org.springframework.core.annotation.Order;
 import org.springframework.core.type.AnnotationMetadata;
-import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.util.Assert;
 import org.springframework.util.ClassUtils;
 import org.springframework.util.StringUtils;
 
 /**
- * Annotation to automatically import the {@link SpringletsSecurityJpaConfiguration}
+ * Annotation to automatically import the {@link SpringletsSecurityJpaAuthenticationConfiguration}
  *
  * @author Enrique Ruiz at http://www.disid.com[DISID Corporation S.L.]
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE, ElementType.ANNOTATION_TYPE})
 @Inherited
-@Import({EnableSpringletsSecurityJpa.SpringletsSecurityJpaImportSelector.class})
-public @interface EnableSpringletsSecurityJpa {
-//
-//  /**
-//   * Alias for the {@link #basePackages()} attribute. Allows for more concise annotation
-//   * declarations e.g.: {@code @EntityScan("org.my.pkg")} instead of
-//   * {@code @EntityScan(basePackages="org.my.pkg")}.
-//   * @return the base packages to scan
-//   */
-//  @AliasFor("basePackages")
-//  String[] value() default "io.springlets.security.domain";
-//
-//  /**
-//   * Base packages to scan for entities. {@link #value()} is an alias for (and mutually
-//   * exclusive with) this attribute.
-//   * <p>
-//   * Use {@link #basePackageClasses()} for a type-safe alternative to String-based
-//   * package names.
-//   * @return the base packages to scan
-//   */
-//  @AliasFor("value")
-//  String[] basePackages() default {};
+@Import({EnableSpringletsSecurityJpaAuthentication.SpringletsSecurityJpaAuthenticationImportSelector.class})
+public @interface EnableSpringletsSecurityJpaAuthentication {
 
   /**
-   * Import selector to register {@link SpringletsSecurityJpaConfiguration} as configuration class.
+   * Alias for the {@link #basePackages()} attribute. Allows for more concise annotation
+   * declarations e.g.: `@EnableSpringletsSecurityJpaAuthentication("org.my.pkg")` instead of
+   * `@EnableSpringletsSecurityJpaAuthentication(basePackages="org.my.pkg")`.
+   * 
+   * @return the base packages to scan
+   */
+  @AliasFor("basePackages")
+  String[] value() default {};
+
+  /**
+   * Base packages to scan for entities. {@link #value()} is an alias for (and mutually
+   * exclusive with) this attribute.
+   * <p>
+   * Use {@link #basePackageClasses()} for a type-safe alternative to String-based
+   * package names.
+   * @return the base packages to scan
+   */
+  @AliasFor("value")
+  String[] basePackages() default {};
+
+  /**
+   * Import selector to register {@link SpringletsSecurityJpaAuthenticationConfiguration} as configuration class.
    * 
    * @author Enrique Ruiz at http://www.disid.com[DISID Corporation S.L.]
    */
-  static class SpringletsSecurityJpaImportSelector implements BeanFactoryAware, ImportSelector {
+  static class SpringletsSecurityJpaAuthenticationImportSelector implements BeanFactoryAware, ImportSelector {
 
     /** Owning BeanFactory */
     private BeanFactory beanFactory;
@@ -99,13 +89,13 @@ public @interface EnableSpringletsSecurityJpa {
 
       try {
         jpaConfigurerPresent =
-            this.beanFactory.getBean(SpringletsSecurityJpaConfiguration.class) != null;
+            this.beanFactory.getBean(SpringletsSecurityJpaAuthenticationConfiguration.class) != null;
       } catch (NoSuchBeanDefinitionException ex) {
         jpaConfigurerPresent = false;
       }
 
       if (!jpaConfigurerPresent) {
-        imports.add(SpringletsSecurityJpaConfiguration.class.getName());
+        imports.add(SpringletsSecurityJpaAuthenticationConfiguration.class.getName());
       }
 
       return imports.toArray(new String[imports.size()]);
@@ -129,8 +119,33 @@ public @interface EnableSpringletsSecurityJpa {
     public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
       this.beanFactory = beanFactory;
     }
+
+//    /**
+//     * Get the packages to scan value in the annotation @EnableSpringletsSecurityJpa
+//     * of the importing @Configuration class.
+//     *  
+//     * @param metadata
+//     * @return
+//     */
+//    private Set<String> getPackagesToScan(AnnotationMetadata metadata) {
+//      AnnotationAttributes attributes = AnnotationAttributes.fromMap(
+//          metadata.getAnnotationAttributes(EnableSpringletsSecurityJpaAuthentication.class.getName()));
+//
+//      String[] basePackages = attributes.getStringArray("basePackages");
+//
+//      Set<String> packagesToScan = new LinkedHashSet<String>();
+//      packagesToScan.addAll(Arrays.asList(basePackages));
+//
+//      if (packagesToScan.isEmpty()) {
+//        String packageName = ClassUtils.getPackageName(metadata.getClassName());
+//        Assert.state(!StringUtils.isEmpty(packageName),
+//            "@EnableSpringletsSecurityJpaAuthentication cannot be used with the default package");
+//        return Collections.singleton(packageName);
+//      }
+//      return packagesToScan;
+//    }
   }
-  
+
 //  @Order(Ordered.HIGHEST_PRECEDENCE)
 //  static class SpringletsSecurityModelDefinitionRegistrar implements ImportBeanDefinitionRegistrar {
 //
@@ -172,33 +187,7 @@ public @interface EnableSpringletsSecurityJpa {
 //      }
 //
 //    }
-//
-//    /**
-//     * Get the packages to scan value in the annotation @EnableSpringletsSecurityJpa
-//     * of the importing @Configuration class.
-//     *  
-//     * @param metadata
-//     * @return
-//     */
-//    private Set<String> getPackagesToScan(AnnotationMetadata metadata) {
-//      AnnotationAttributes attributes = AnnotationAttributes.fromMap(
-//          metadata.getAnnotationAttributes(EnableSpringletsSecurityJpa.class.getName()));
-//
-//      String[] basePackages = attributes.getStringArray("basePackages");
-//
-//      Set<String> packagesToScan = new LinkedHashSet<String>();
-//      packagesToScan.addAll(Arrays.asList(basePackages));
-//
-//      if (packagesToScan.isEmpty()) {
-//        String packageName = ClassUtils.getPackageName(metadata.getClassName());
-//        Assert.state(!StringUtils.isEmpty(packageName),
-//            "@EnableSpringletsSecurityJpa cannot be used with the default package");
-//        return Collections.singleton(packageName);
-//      }
-//      return packagesToScan;
-//    }
-//  }
-//
+
 //  static class EntityRegistry {
 //
 //    private final List<String> packageNames;

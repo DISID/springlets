@@ -13,27 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.springlets.security.repository;
+package io.springlets.security.jpa.repository;
 
-import io.springlets.security.domain.UserLogin;
-import io.springlets.security.domain.UserLoginInfo;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.transaction.annotation.Transactional;
+
+import io.springlets.security.jpa.domain.UserLoginRole;
 
 /**
- * Interface that defines dynamic queries for repository related with 
- * {@link UserLogin} entity.
+ * = Spring Data JPA repository for {@link UserLoginRole} entity
  * 
+ * To get more info about Spring Data JPA repositories:
+ * 
+ * * http://docs.spring.io/spring-data/jpa/docs/current/reference/html/#repositories
+ *
+ * @see JPARepository
+ * 
+ * @author Enrique Ruiz at http://www.disid.com[DISID Corporation S.L.]
  * @author Cèsar Ordiñana at http://www.disid.com[DISID Corporation S.L.]
  * @author Juan Carlos García at http://www.disid.com[DISID Corporation S.L.]
  */
-public interface UserLoginRepositoryCustom {
-
-  /**
-   * Obtains a DTO with the authentication and authorization data
-   * associated to an user by the provided username.
-   * 
-   * @param username
-   * @return
-   */
-  UserLoginInfo findDetailsByName(String username);
+@Transactional(readOnly = true)
+public interface UserLoginRoleRepository extends JpaRepository<UserLoginRole, Long> {
 
 }
