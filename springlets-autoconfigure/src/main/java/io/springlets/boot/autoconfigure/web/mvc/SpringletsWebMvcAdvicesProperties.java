@@ -15,75 +15,113 @@
  */
 package io.springlets.boot.autoconfigure.web.mvc;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
-
 import io.springlets.web.mvc.config.SpringletsWebMvcSettings;
+
+import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
  * {@link ConfigurationProperties} for Springlets Web MVC.
- * 
+ *
  * Based on DevToolsProperties.
- * 
+ *
  * @author Enrique Ruiz at http://www.disid.com[DISID Corporation S.L.]
  */
 @ConfigurationProperties(prefix = "springlets.mvc.advices")
 public class SpringletsWebMvcAdvicesProperties {
 
-  private StringTrimmerAdviceProperties trimeditor = new StringTrimmerAdviceProperties();
+	private StringTrimmerAdviceProperties trimeditor = new StringTrimmerAdviceProperties();
 
-  public StringTrimmerAdviceProperties getTrimeditor() {
-    return trimeditor;
-  }
+	private JsonpAdviceProperties jsonp = new JsonpAdviceProperties();
 
-  public void setTrimeditor(StringTrimmerAdviceProperties trimeditorProperties) {
-    this.trimeditor = trimeditorProperties;
-  }
+	public StringTrimmerAdviceProperties getTrimeditor() {
+		return trimeditor;
+	}
 
-  /**
-   * Sets configuration items from the Spring Boot `springlets.mvc.advices` 
-   * namespace to Springlets Web MVC settings.
-   * 
-   * @param configuration
-   */
-  public void applyTo(SpringletsWebMvcSettings configuration) {
-    SpringletsWebMvcSettings.StringTrimmerAdviceSettings trimmerAdviceSettings =
-        new SpringletsWebMvcSettings.StringTrimmerAdviceSettings();
+	public void setTrimeditor(StringTrimmerAdviceProperties trimeditorProperties) {
+		this.trimeditor = trimeditorProperties;
+	}
 
-    trimmerAdviceSettings.setEmptyAsNull(this.getTrimeditor().isEmptyAsNull());
-    trimmerAdviceSettings.setCharsToDelete(this.getTrimeditor().getCharsToDelete());
+	public JsonpAdviceProperties getJsonp() {
+		return jsonp;
+	}
 
-    configuration.setTrimmerAdviceSettings(trimmerAdviceSettings);
-  }
+	public void setTrimeditor(JsonpAdviceProperties jsonpProperties) {
+		this.jsonp = jsonpProperties;
+	}
 
-  /**
-   * `springlets.mvc.advices.trimeditor` properties.
-   */
-  public static class StringTrimmerAdviceProperties {
+	/**
+	 * Sets configuration items from the Spring Boot `springlets.mvc.advices`
+	 * namespace to Springlets Web MVC settings.
+	 *
+	 * @param configuration
+	 */
+	public void applyTo(SpringletsWebMvcSettings configuration) {
 
-    /** `true` if an empty parameter value is to be transformed into `null` */
-    private boolean emptyAsNull = true;
+		// StringTrimmer properties
+		SpringletsWebMvcSettings.StringTrimmerAdviceSettings trimmerAdviceSettings = new SpringletsWebMvcSettings.StringTrimmerAdviceSettings();
 
-    /** 
-     * Set of characters to delete, in addition to trimming the parameter value. 
-     * Useful for deleting unwanted line breaks: e.g. "\r\n\f" will delete all new lines and line feeds in a String.
-     */
-    private String charsToDelete = null;
+		trimmerAdviceSettings.setEmptyAsNull(this.getTrimeditor().isEmptyAsNull());
+		trimmerAdviceSettings.setCharsToDelete(this.getTrimeditor().getCharsToDelete());
 
-    public boolean isEmptyAsNull() {
-      return emptyAsNull;
-    }
+		configuration.setTrimmerAdviceSettings(trimmerAdviceSettings);
 
-    public void setEmptyAsNull(boolean emptyAsNull) {
-      this.emptyAsNull = emptyAsNull;
-    }
+		// Jsonp properties
+		SpringletsWebMvcSettings.JsonpAdviceSettings jsonpAdviceSettings = new SpringletsWebMvcSettings.JsonpAdviceSettings();
+		jsonpAdviceSettings.setJsonpQueryParamNames(this.getJsonp().getQueryParamNames());
 
-    public String getCharsToDelete() {
-      return charsToDelete;
-    }
+		configuration.setJsonpAdviceSettings(jsonpAdviceSettings);
+	}
 
-    public void setCharsToDelete(String charsToDelete) {
-      this.charsToDelete = charsToDelete;
-    }
-  }
+	/**
+	 * `springlets.mvc.advices.trimeditor` properties.
+	 */
+	public static class StringTrimmerAdviceProperties {
+
+		/**
+		 * `true` if an empty parameter value is to be transformed into `null`
+		 */
+		private boolean emptyAsNull = true;
+
+		/**
+		 * Set of characters to delete, in addition to trimming the parameter
+		 * value. Useful for deleting unwanted line breaks: e.g. "\r\n\f" will
+		 * delete all new lines and line feeds in a String.
+		 */
+		private String charsToDelete = null;
+
+		public boolean isEmptyAsNull() {
+			return emptyAsNull;
+		}
+
+		public void setEmptyAsNull(boolean emptyAsNull) {
+			this.emptyAsNull = emptyAsNull;
+		}
+
+		public String getCharsToDelete() {
+			return charsToDelete;
+		}
+
+		public void setCharsToDelete(String charsToDelete) {
+			this.charsToDelete = charsToDelete;
+		}
+	}
+
+	/**
+	 * `springlets.mvc.advices.jsonp` properties.
+	 */
+	public static class JsonpAdviceProperties {
+
+		/** Jsonp parameters name. `callback` parameter name by default */
+		private String[] queryParamNames = { "callback" };
+
+		public String[] getQueryParamNames() {
+			return queryParamNames;
+		}
+
+		public void setQueryParamNames(String[] queryParamNames) {
+			this.queryParamNames = queryParamNames;
+		}
+
+	}
 
 }

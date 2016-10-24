@@ -17,54 +17,84 @@ package io.springlets.web.mvc.config;
 
 /**
  * Springlets Web MVC configuration.
- * 
- * This class allows for pluggable apply of configuration values, allowing 
+ *
+ * This class allows for pluggable apply of configuration values, allowing
  * Springlets Web MVC to remain independent of any specific 3rd party library
- * like the Spring Boot that loads the configuration values via properties 
+ * like the Spring Boot that loads the configuration values via properties
  * files.
  *
  * @author Enrique Ruiz at http://www.disid.com[DISID Corporation S.L.]
  */
 public class SpringletsWebMvcSettings {
 
-  private StringTrimmerAdviceSettings trimmerAdviceSettings = new StringTrimmerAdviceSettings();
+	private StringTrimmerAdviceSettings trimmerAdviceSettings = new StringTrimmerAdviceSettings();
 
-  public StringTrimmerAdviceSettings getTrimmerAdviceSettings() {
-    return trimmerAdviceSettings;
-  }
+	private JsonpAdviceSettings jsonpAdviceSettings = new JsonpAdviceSettings();
 
-  public void setTrimmerAdviceSettings(StringTrimmerAdviceSettings trimmerAdviceSettings) {
-    this.trimmerAdviceSettings = trimmerAdviceSettings;
-  }
+	public StringTrimmerAdviceSettings getTrimmerAdviceSettings() {
+		return trimmerAdviceSettings;
+	}
 
-  /**
-   * StringTrimmerAdvice settings.
-   */
-  public static class StringTrimmerAdviceSettings {
+	public void setTrimmerAdviceSettings(StringTrimmerAdviceSettings trimmerAdviceSettings) {
+		this.trimmerAdviceSettings = trimmerAdviceSettings;
+	}
 
-    /** `true` if an empty parameter value is to be transformed into `null` */
-    private boolean emptyAsNull = true;
+	public JsonpAdviceSettings getJsonpAdviceSettings() {
+		return jsonpAdviceSettings;
+	}
 
-    /** 
-     * Set of characters to delete, in addition to trimming the parameter value. 
-     * Useful for deleting unwanted line breaks: e.g. "\r\n\f" will delete all new lines and line feeds in a String.
-     */
-    private String charsToDelete = null;
+	public void setJsonpAdviceSettings(JsonpAdviceSettings jsonpAdviceSettings) {
+		this.jsonpAdviceSettings = jsonpAdviceSettings;
+	}
 
-    public boolean isEmptyAsNull() {
-      return emptyAsNull;
-    }
+	/**
+	 * StringTrimmerAdvice settings.
+	 */
+	public static class StringTrimmerAdviceSettings {
 
-    public void setEmptyAsNull(boolean emptyAsNull) {
-      this.emptyAsNull = emptyAsNull;
-    }
+		/**
+		 * `true` if an empty parameter value is to be transformed into `null`
+		 */
+		private boolean emptyAsNull = true;
 
-    public String getCharsToDelete() {
-      return charsToDelete;
-    }
+		/**
+		 * Set of characters to delete, in addition to trimming the parameter
+		 * value. Useful for deleting unwanted line breaks: e.g. "\r\n\f" will
+		 * delete all new lines and line feeds in a String.
+		 */
+		private String charsToDelete = null;
 
-    public void setCharsToDelete(String charsToDelete) {
-      this.charsToDelete = charsToDelete;
-    }
-  }
+		public boolean isEmptyAsNull() {
+			return emptyAsNull;
+		}
+
+		public void setEmptyAsNull(boolean emptyAsNull) {
+			this.emptyAsNull = emptyAsNull;
+		}
+
+		public String getCharsToDelete() {
+			return charsToDelete;
+		}
+
+		public void setCharsToDelete(String charsToDelete) {
+			this.charsToDelete = charsToDelete;
+		}
+	}
+
+	/**
+	 * JsonpAdvice settings.
+	 */
+	public static class JsonpAdviceSettings {
+
+		/** Jsonp parameters name. `callback` parameter name by default */
+		private String[] jsonpQueryParamNames = { "callback" };
+
+		public String[] getJsonpQueryParamNames() {
+			return jsonpQueryParamNames;
+		}
+
+		public void setJsonpQueryParamNames(String[] jsonpQueryParamNames) {
+			this.jsonpQueryParamNames = jsonpQueryParamNames;
+		}
+	}
 }

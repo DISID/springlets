@@ -17,17 +17,18 @@ package io.springlets.web.autoconfigure;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
-
+import io.springlets.web.mvc.advice.JsonpAdvice;
 import io.springlets.web.mvc.advice.StringTrimmerAdvice;
 import io.springlets.web.mvc.config.SpringletsWebMvcConfiguration;
 import io.springlets.web.mvc.config.SpringletsWebMvcConfigurer;
 import io.springlets.web.mvc.config.SpringletsWebMvcSettings;
 import io.springlets.web.mvc.config.SpringletsWebMvcSettings.StringTrimmerAdviceSettings;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 
 /**
  * Tests for {@link SpringletsWebMvcConfiguration}
@@ -52,7 +53,8 @@ public class SpringletsWebMvcConfigurationTest {
   /**
    * Check if "springlets.mvc.advices.enabled" is not defined the
    * StringTrimmerAdvice is registered and empty-as-null is true.
-   * 
+   * JsonpAdvice is registered with 'callback' as jsonp query parameter
+   *
    * @throws Exception
    */
   @Test
@@ -64,17 +66,19 @@ public class SpringletsWebMvcConfigurationTest {
 
     // Exercise
     StringTrimmerAdvice advice = this.context.getBean(StringTrimmerAdvice.class);
+    JsonpAdvice jsonpAdvice = this.context.getBean(JsonpAdvice.class);
 
     // Verify
     assertThat(this.context.getBean(SpringletsWebMvcSettings.class)).isNotNull();
     assertThat(advice).isNotNull();
     assertThat(advice.isEmptyAsNull()).isEqualTo(true);
     assertThat(advice.getCharsToDelete()).isNull();
+    assertThat(jsonpAdvice).isNotNull();
   }
 
   /**
-   * Configure the {@link StringTrimmerAdvice} and check it has the right
-   * settings.
+   * Configure the {@link StringTrimmerAdvice} and the {@link JsonpAdvice} and check if
+   * they have the right settings.
    */
   @Test
   public void configureAdvice() {
@@ -86,12 +90,14 @@ public class SpringletsWebMvcConfigurationTest {
 
     // Exercise
     StringTrimmerAdvice advice = this.context.getBean(StringTrimmerAdvice.class);
+    JsonpAdvice jsonpAdvice = this.context.getBean(JsonpAdvice.class);
 
     // Verify
     assertThat(this.context.getBean(SpringletsWebMvcSettings.class)).isNotNull();
     assertThat(advice).isNotNull();
     assertThat(advice.isEmptyAsNull()).isEqualTo(false);
     assertThat(advice.getCharsToDelete()).isEqualTo("abc");
+    assertThat(jsonpAdvice).isNotNull();
   }
 
   /**

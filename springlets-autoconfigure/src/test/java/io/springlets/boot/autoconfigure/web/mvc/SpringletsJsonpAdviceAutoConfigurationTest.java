@@ -16,12 +16,14 @@
 package io.springlets.boot.autoconfigure.web.mvc;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.CoreMatchers.is;
-import static org.mockito.Matchers.isNull;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.hamcrest.core.StringContains.containsString;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import io.springlets.web.mvc.advice.JsonpAdvice;
+import io.springlets.web.mvc.advice.StringTrimmerAdvice;
 
 import org.junit.After;
 import org.junit.Before;
@@ -38,22 +40,22 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.core.env.Environment;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockServletContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
-import org.springframework.web.servlet.ModelAndView;
-
-import io.springlets.web.mvc.advice.StringTrimmerAdvice;
 
 /**
- * Tests for {@link SpringletsWebMvcAdvicesAutoConfiguration}
+ * Tests for {@link SpringletsJsonpAdviceAutoConfigurationTest}
  *
- * @author Enrique Ruiz at http://www.disid.com[DISID Corporation S.L.]
+ * @author Manuel Iboora at http://www.disid.com[DISID Corporation S.L.]
  */
-public class SpringletsWebMvcAdvicesAutoConfigurationTest {
+public class SpringletsJsonpAdviceAutoConfigurationTest {
 
   @Rule
   public final ExpectedException thrown = ExpectedException.none();
@@ -74,8 +76,8 @@ public class SpringletsWebMvcAdvicesAutoConfigurationTest {
 
   /**
    * The default value for `springlets.mvc.advices.enabled` is true, so
-   * check that if it is not defined the StringTrimmerAdvice is registered.
-   * 
+   * check that if it is not defined the JsonpAdvice is registered.
+   *
    * @throws Exception
    */
   @Test
@@ -85,16 +87,16 @@ public class SpringletsWebMvcAdvicesAutoConfigurationTest {
     registerAndRefreshContext();
 
     // Exercise
-    StringTrimmerAdvice advice = this.context.getBean(StringTrimmerAdvice.class);
+    JsonpAdvice jsonpAdvice = this.context.getBean(JsonpAdvice.class);
 
     // Verify
-    assertThat(advice).isNotNull();
+    assertThat(jsonpAdvice).isNotNull();
   }
 
   /**
    * Check if `springlets.mvc.advices.enabled` is false the
-   * StringTrimmerAdvice is not registered.
-   * 
+   * JsonpAdvice is not registered.
+   *
    * @throws Exception
    */
   @Test
@@ -108,70 +110,89 @@ public class SpringletsWebMvcAdvicesAutoConfigurationTest {
     registerAndRefreshContext("springlets.mvc.advices.enabled:false");
 
     // Exercise
-    this.context.getBean(StringTrimmerAdvice.class);
+    this.context.getBean(JsonpAdvice.class);
   }
 
   /**
-   * Enable the {@link StringTrimmerAdvice} and check it is in the
-   * {@link ApplicationContext}.
+   * Enable the {@link StringTrimmerAdvice} and check if it is
+   * in the {@link ApplicationContext}.
    */
   @Test
   public void enableAdvice() {
     registerAndRefreshContext("springlets.mvc.advices.enabled:true");
-    assertThat(this.context.getBean(StringTrimmerAdvice.class)).isNotNull();
+    assertThat(this.context.getBean(JsonpAdvice.class)).isNotNull();
   }
 
   /**
-   * Check the environment properties are used to setup the {@link StringTrimmerAdvice}
-   * 
-   * @throws Exception
-   */
-  @Test
-  public void overrideProperties() throws Exception {
-    registerAndRefreshContext("springlets.mvc.advices.enabled:true",
-        "springlets.mvc.advices.trimeditor.chars-to-delete:abc",
-        "springlets.mvc.advices.trimeditor.empty-as-null:true");
-
-    StringTrimmerAdvice advice = this.context.getBean(StringTrimmerAdvice.class);
-    assertThat(advice.getCharsToDelete()).isEqualTo("abc");
-    assertThat(advice.isEmptyAsNull()).isEqualTo(true);
-  }
-
-  /**
-   * Perform a POST request to check the {@link StringTrimmerAdvice} works.
-   * 
-   * Only the needed autoconfiguration is loaded in order to create 
-   * the Spring Web MVC artifacts to handle the HTTP request. 
-   * 
+   * Perform a GET request to check the {@link JsonpAdvice} works.
+   *
+   * Only the needed autoconfiguration is loaded in order to create
+   * the Spring Web MVC artifacts to handle the HTTP request.
+   *
    * @see MockServletContext
    * @see MockMvc
    */
   @Test
   public void registerAdvice() throws Exception {
-    EnvironmentTestUtils.addEnvironment(this.context, 
+    EnvironmentTestUtils.addEnvironment(this.context,
         "springlets.mvc.advices.enabled:true",
-        "springlets.mvc.advices.trimeditor.chars-to-delete:YOUR-",
-        "springlets.mvc.advices.trimeditor.empty-as-null:true");
+        "springlets.mvc.advices.jsonp.query-param-names:callback1,callback2");
     this.context.setServletContext(new MockServletContext());
     this.context.register(TestConfiguration.class);
     this.context.refresh();
 
     MockMvc mockMvc = MockMvcBuilders.webAppContextSetup(this.context).build();
-    mockMvc.perform(post("/persons").param("name", "YOUR-NAME").param("surname", "   "))
+
+    // only returns the invocation related with the first parameter
+    mockMvc.perform(get("/persons").param("callback1", "functionJs1").param("callback2", "functionJs2"))
         .andExpect(status().isOk())
-        .andExpect(model().attribute("name", is("NAME")))
-        .andExpect(model().attribute("surname", isNull()))
+        .andExpect(content().string(containsString("functionJs1({\"name\":\"name\",\"surname\":\"surname\"})")))
+        .andDo(print());
+
+    mockMvc.perform(get("/persons").param("callback2", "functionJs2"))
+        .andExpect(status().isOk())
+        .andExpect(content().string(containsString("functionJs2({\"name\":\"name\",\"surname\":\"surname\"})")))
+        .andDo(print());
+
+    mockMvc.perform(get("/persons"))
+    .andExpect(status().isOk())
+    .andExpect(content().string(containsString("{\"name\":\"name\",\"surname\":\"surname\"}")))
+    .andDo(print());
+  }
+
+  /**
+   * Perform a GET request to check the {@link JsonpAdvice} works
+   * with default values.
+   *
+   * Only the needed autoconfiguration is loaded in order to create
+   * the Spring Web MVC artifacts to handle the HTTP request.
+   *
+   * @see MockServletContext
+   * @see MockMvc
+   */
+  @Test
+  public void registerAdviceDefaultValues() throws Exception {
+    EnvironmentTestUtils.addEnvironment(this.context,
+        "springlets.mvc.advices.enabled:true");
+    this.context.setServletContext(new MockServletContext());
+    this.context.register(TestConfiguration.class);
+    this.context.refresh();
+
+    MockMvc mockMvc = MockMvcBuilders.webAppContextSetup(this.context).build();
+    mockMvc.perform(get("/persons").param("callback", "functionJs"))
+        .andExpect(status().isOk())
+        .andExpect(content().string(containsString("functionJs({\"name\":\"name\",\"surname\":\"surname\"})")))
         .andDo(print());
   }
 
   /**
    * Process the {@link SpringletsWebMvcAdvicesAutoConfiguration} class by the
-   * {@link ApplicationContext}. After the processing the {@link StringTrimmerAdvice}
+   * {@link ApplicationContext}. After the processing the {@link JsonpAdvice}
    * must be in the ApplicationContext.
-   * 
+   *
    * Additionally add (high priority) values to the {@link Environment} owned by the
    * {@link ApplicationContext}.
-   * 
+   *
    * @param env Strings following the pattern "property-name:property-value"
    * @see EnvironmentTestUtils#addEnvironment(String, org.springframework.core.env.ConfigurableEnvironment, String...)
    */
@@ -183,7 +204,7 @@ public class SpringletsWebMvcAdvicesAutoConfigurationTest {
 
   /**
    * Load needed Spring Web MVC artifacts.
-   * 
+   *
    * @see WebMvcAutoConfiguration
    * @see HttpMessageConvertersAutoConfiguration
    */
@@ -204,14 +225,10 @@ public class SpringletsWebMvcAdvicesAutoConfigurationTest {
   @Controller
   protected static class PersonsController {
 
-    @PostMapping("/persons")
-    public ModelAndView user(Person person) {
-      ModelAndView model = new ModelAndView("person/show");
-      model.addObject("name", person.getName());
-      model.addObject("surname", person.getSurname());
-      return model;
+    @GetMapping(value="/persons", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Person> getPerson() {
+    	return new ResponseEntity<Person>(new Person(), HttpStatus.OK);
     }
-
   }
 
   /**
@@ -220,6 +237,11 @@ public class SpringletsWebMvcAdvicesAutoConfigurationTest {
   protected static class Person {
     private String name;
     private String surname;
+
+    public Person() {
+	    this.name = "name";
+	    this.surname = "surname";
+	}
 
     public String getName() {
       return name;

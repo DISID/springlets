@@ -21,7 +21,7 @@
       <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
       <distribution>repo</distribution>
     </license>
-  </licenses>  
+  </licenses>
   <dependencies>
     <!--
     = About the dependencies
@@ -34,12 +34,12 @@
     OPTIONAL:
 
     * All the dependencies MUST BE optional = true, the starter will include the needed libraries
-    
+
     STARTERS:
 
-    * Never include dependencies to Spring Boot Starters, instead include each needed library 
+    * Never include dependencies to Spring Boot Starters, instead include each needed library
     -->
-     
+
     <!-- Spring dependencies -->
     <dependency>
       <groupId>org.springframework</groupId>
@@ -56,7 +56,7 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-webmvc</artifactId>
-      <scope>test</scope>
+      <optional>true</optional>
     </dependency>
 
   	<!-- 3rd party dependencies -->
@@ -65,7 +65,7 @@
 	  <artifactId>jackson-core</artifactId>
       <optional>true</optional>
     </dependency>
-    
+
     <dependency>
 	  <groupId>com.fasterxml.jackson.core</groupId>
 	  <artifactId>jackson-databind</artifactId>

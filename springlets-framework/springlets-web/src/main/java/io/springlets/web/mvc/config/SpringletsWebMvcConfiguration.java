@@ -15,21 +15,22 @@
  */
 package io.springlets.web.mvc.config;
 
-import java.util.Collections;
-import java.util.List;
+import io.springlets.web.mvc.advice.JsonpAdvice;
+import io.springlets.web.mvc.advice.StringTrimmerAdvice;
 
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import io.springlets.web.mvc.advice.StringTrimmerAdvice;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Configuration class to register the following beans:
- * 
+ *
  * * {@link StringTrimmerAdvice}.
- * 
+ *
  * @author Enrique Ruiz at http://www.disid.com[DISID Corporation S.L.]
  */
 @Configuration
@@ -37,7 +38,7 @@ public class SpringletsWebMvcConfiguration implements InitializingBean {
 
   /**
    * Each SpringletsWebMvcConfigurer will configure a feature of the Springlets Web MVC,
-   * i.e. SpringBootSpringletsWebMvcAdvicesConfigurer configures the 
+   * i.e. SpringBootSpringletsWebMvcAdvicesConfigurer configures the
    * StringTrimmerAdvice.
    */
   @Autowired(required = false)
@@ -58,6 +59,13 @@ public class SpringletsWebMvcConfiguration implements InitializingBean {
     trimmerAdvice.setCharsToDelete(properties.getTrimmerAdviceSettings().getCharsToDelete());
     trimmerAdvice.setEmptyAsNull(properties.getTrimmerAdviceSettings().isEmptyAsNull());
     return trimmerAdvice;
+  }
+
+  @Bean
+  public JsonpAdvice jsonpAdvice() {
+    SpringletsWebMvcSettings properties = config();
+    JsonpAdvice jsonpAdvice = new JsonpAdvice(properties.getJsonpAdviceSettings().getJsonpQueryParamNames());
+    return jsonpAdvice;
   }
 
   /**
