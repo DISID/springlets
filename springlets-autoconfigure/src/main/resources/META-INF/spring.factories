@@ -3,5 +3,6 @@ org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
 io.springlets.boot.autoconfigure.data.web.SpringletsDataArgumentResolversAutoConfiguration,\
 io.springlets.boot.autoconfigure.data.jpa.SpringletsDataJpaAuthenticationAuditorAutoConfiguration,\
 io.springlets.boot.autoconfigure.http.converter.json.SpringletsWebJacksonAutoConfiguration,\
-io.springlets.boot.autoconfigure.security.jpa.SpringletsSecurityJpaAutoConfiguration,\
 io.springlets.boot.autoconfigure.web.mvc.SpringletsWebMvcAdvicesAutoConfiguration
+# io.springlets.boot.autoconfigure.security.jpa.SpringletsSecurityJpaAuthenticationAutoConfiguration,\
+# io.springlets.boot.autoconfigure.web.mvc.SpringletsWebMvcAuthenticationAutoConfiguration,\

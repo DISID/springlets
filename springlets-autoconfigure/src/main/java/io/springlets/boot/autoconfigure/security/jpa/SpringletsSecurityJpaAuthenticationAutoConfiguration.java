@@ -16,20 +16,15 @@
 package io.springlets.boot.autoconfigure.security.jpa;
 
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
-import org.springframework.boot.autoconfigure.PropertyPlaceholderAutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
-import org.springframework.boot.autoconfigure.data.jpa.JpaRepositoriesAutoConfiguration;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 
-import io.springlets.security.jpa.config.EnableSpringletsSecurityJpa;
-import io.springlets.security.jpa.config.SpringletsSecurityJpaConfiguration;
+import io.springlets.security.jpa.config.EnableSpringletsSecurityJpaAuthentication;
+import io.springlets.security.jpa.config.SpringletsSecurityJpaAuthenticationConfiguration;
 
 /**
  * {@link ConfigurationProperties} for Springlets Web MVC.
@@ -38,17 +33,13 @@ import io.springlets.security.jpa.config.SpringletsSecurityJpaConfiguration;
  * 
  * @author Enrique Ruiz at http://www.disid.com[DISID Corporation S.L.]
  */
-//@AutoConfigureBefore(AuthenticationConfiguration.class)
-@AutoConfigureBefore(JpaBaseConfiguration.class)
-@ConditionalOnClass({SpringletsSecurityJpaConfiguration.class,
-    LocalContainerEntityManagerFactoryBean.class})
-@Configuration
-@ConfigurationProperties(prefix = "springlets.security.jpa")
-@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
-@EnableSpringletsSecurityJpa
-//@EntityScan("io.springlets.security")
-//@Import({PropertyPlaceholderAutoConfiguration.class, JpaRepositoriesAutoConfiguration.class})
-public class SpringletsSecurityJpaAutoConfiguration {
+//@AutoConfigureBefore(JpaBaseConfiguration.class)
+//@ConditionalOnClass({SpringletsSecurityJpaAuthenticationConfiguration.class,
+//    LocalContainerEntityManagerFactoryBean.class})
+//@Configuration
+//@ConfigurationProperties(prefix = "springlets.security.jpa")
+//@EnableSpringletsSecurityJpaAuthentication
+public class SpringletsSecurityJpaAuthenticationAutoConfiguration {
 
 
 }
