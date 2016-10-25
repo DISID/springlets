@@ -55,6 +55,7 @@ import javax.persistence.metamodel.SingularAttribute;
 public class QueryDslRepositorySupportExt<T> extends QueryDslRepositorySupport {
 
   private final Class<T> domainClass;
+  private final PathBuilder<Object> entityIdPath;
 
   /**
    * Creates a new {@link QueryDslRepositorySupport} instance for the given domain type.
@@ -64,6 +65,9 @@ public class QueryDslRepositorySupportExt<T> extends QueryDslRepositorySupport {
   public QueryDslRepositorySupportExt(Class<T> domainClass) {
     super(domainClass);
     this.domainClass = domainClass;
+    EntityType<T> entity = getEntityMetaModel();
+    SingularAttribute<?, ?> id = entity.getId(entity.getIdType().getJavaType());
+    entityIdPath = getBuilder().get(id.getName());
   }
 
   /**
@@ -161,11 +165,18 @@ public class QueryDslRepositorySupportExt<T> extends QueryDslRepositorySupport {
    */
   @SuppressWarnings({"rawtypes", "unchecked"})
   protected JPQLQuery<T> applyOrderById(JPQLQuery<T> query) {
-    EntityType<T> entity = getEntityMetaModel();
-    SingularAttribute<?, ?> id = entity.getId(entity.getIdType().getJavaType());
-    PathBuilder<Object> idPath = getBuilder().get(id.getName());
+    PathBuilder<Object> idPath = getEntityId();
 
     return query.orderBy(new OrderSpecifier(Order.ASC, idPath, NullHandling.NullsFirst));
+  }
+
+  /**
+   * Returns the path of entity identifier field
+   *
+   * @return path of entity Identifier
+   */
+  protected PathBuilder<Object> getEntityId() {
+    return entityIdPath;
   }
 
   private EntityType<T> getEntityMetaModel() {
@@ -251,10 +262,9 @@ public class QueryDslRepositorySupportExt<T> extends QueryDslRepositorySupport {
    * @param expression the entity or projection to build with the query data
    * @return the loaded data page
    */
-  protected <M> Page<M> loadPage(JPQLQuery<M> query, Pageable pageable, Expression<M> expression) {
-    query.select(expression);
+  protected <M> Page<M> loadPage(JPQLQuery<T> query, Pageable pageable, Expression<M> expression) {
     long totalFound = query.fetchCount();
-    List<M> results = query.fetch();
+    List<M> results = query.select(expression).fetch();
     return new PageImpl<M>(results, pageable, totalFound);
   }
 
