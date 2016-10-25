@@ -55,7 +55,7 @@ import javax.persistence.metamodel.SingularAttribute;
 public class QueryDslRepositorySupportExt<T> extends QueryDslRepositorySupport {
 
   private final Class<T> domainClass;
-  private final PathBuilder<Object> entityIdPath;
+  private PathBuilder<Object> entityIdPath = null;
 
   /**
    * Creates a new {@link QueryDslRepositorySupport} instance for the given domain type.
@@ -65,9 +65,6 @@ public class QueryDslRepositorySupportExt<T> extends QueryDslRepositorySupport {
   public QueryDslRepositorySupportExt(Class<T> domainClass) {
     super(domainClass);
     this.domainClass = domainClass;
-    EntityType<T> entity = getEntityMetaModel();
-    SingularAttribute<?, ?> id = entity.getId(entity.getIdType().getJavaType());
-    entityIdPath = getBuilder().get(id.getName());
   }
 
   /**
@@ -176,6 +173,11 @@ public class QueryDslRepositorySupportExt<T> extends QueryDslRepositorySupport {
    * @return path of entity Identifier
    */
   protected PathBuilder<Object> getEntityId() {
+    if (entityIdPath == null) {
+      EntityType<T> entity = getEntityMetaModel();
+      SingularAttribute<?, ?> id = entity.getId(entity.getIdType().getJavaType());
+      entityIdPath = getBuilder().get(id.getName());
+    }
     return entityIdPath;
   }
 
