@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.springlets.security.jpa.config;
+package io.springlets.security.config;
 
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.SecurityConfigurer;
@@ -27,13 +27,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import io.springlets.security.jpa.JpaUserDetailsService;
 
 /**
- * A {@link SecurityConfigurer} that registers the {@link JpaUserDetailsService}
- * as default {@link UserDetailsService}.
- * 
- * Also, the {@link AuthenticationManagerBuilder} will create automatically a 
- * {@link DaoAuthenticationProvider} that delegates in the given {@link JpaUserDetailsService}.
- * 
- * Based on https://github.com/spring-projects/spring-data-rest[Spring Data REST] project.
+ * A {@link SecurityConfigurer} that registers a InMemoryUserDetailsManager to have
+ * in memory authentication for easier development.
  * 
  * @author Enrique Ruiz at http://www.disid.com[DISID Corporation S.L.]
  */
@@ -42,18 +37,19 @@ class SpringletsSecurityInMemoryAuthenticationConfigurer extends GlobalAuthentic
   /**
    * {@inheritDoc}
    * 
-   * Initializes the default {@link UserDetailsService} causing the {@link AuthenticationManagerBuilder} 
-   * creates automatically the {@link DaoAuthenticationProvider} that delegates on the given
-   * {@link UserDetailsService}.
+   * Initializes the InMemoryUserDetailsManager with the following users:
    * 
-   * Also setup the {@link BCryptPasswordEncoder} to use with the {@link DaoAuthenticationProvider}
+   * * user/password, role USER
+   * * admin/password, role ADMIN
+   * 
+   * The method {@link AuthenticationManagerBuilder#inMemoryAuthentication()} is not
+   * used to avoid to override the default UserDetailsService. Note Springlets configure
+   * the JpaUserDetailsService as the default one.
+   * 
+   * Use the passwords as given, they aren't encrypted.
    */
   @Override
   public void init(AuthenticationManagerBuilder auth) throws Exception {
-
-    // No se usa     auth.inMemoryAuthentication().withUser()...
-    // porque sobrescribe el UserDetails por defecto, cosa que no se quiere
-    // pq el por defecto debe ser el JpaUserDetailsService
 
     // Añadir el AuthenticationProvider en memoria preconfigurado con un usuario
     // especifico de la aplicación que tendrá acceso a las vistas de monitorización

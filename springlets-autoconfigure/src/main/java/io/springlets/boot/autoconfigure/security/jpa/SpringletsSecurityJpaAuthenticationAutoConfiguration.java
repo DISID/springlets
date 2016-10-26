@@ -15,30 +15,26 @@
  */
 package io.springlets.boot.autoconfigure.security.jpa;
 
-import org.springframework.boot.autoconfigure.AutoConfigureBefore;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-import io.springlets.security.jpa.config.EnableSpringletsSecurityJpaAuthentication;
-import io.springlets.security.jpa.config.SpringletsSecurityJpaAuthenticationConfiguration;
+import io.springlets.security.config.EnableSpringletsSecurityAuthentication;
+import io.springlets.security.jpa.JpaUserDetailsService;
 
 /**
- * {@link ConfigurationProperties} for Springlets Web MVC.
- * 
- * Based on DevToolsProperties.
- * 
+ * @{@link SpringletsSecurityJpaAuthenticationAutoConfiguration Auto-configuration} to setup 
+ * Spring Security authentication based on JPA Authentication Provider.
+ *  
  * @author Enrique Ruiz at http://www.disid.com[DISID Corporation S.L.]
  */
-//@AutoConfigureBefore(JpaBaseConfiguration.class)
-//@ConditionalOnClass({SpringletsSecurityJpaAuthenticationConfiguration.class,
-//    LocalContainerEntityManagerFactoryBean.class})
-//@Configuration
-//@ConfigurationProperties(prefix = "springlets.security.jpa")
-//@EnableSpringletsSecurityJpaAuthentication
+@AutoConfigureAfter(JpaBaseConfiguration.class)
+@Configuration
+@EnableJpaRepositories(basePackageClasses = JpaUserDetailsService.class)
+@EntityScan(basePackageClasses = JpaUserDetailsService.class)
+@EnableSpringletsSecurityAuthentication
 public class SpringletsSecurityJpaAuthenticationAutoConfiguration {
 
 

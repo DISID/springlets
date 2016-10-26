@@ -13,34 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.springlets.boot.autoconfigure.web.mvc;
+package io.springlets.boot.autoconfigure.web;
 
-import javax.servlet.Servlet;
-
-import org.springframework.boot.autoconfigure.AutoConfigureBefore;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
-import org.springframework.boot.autoconfigure.web.WebMvcAutoConfiguration;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
-import org.springframework.web.servlet.DispatcherServlet;
 
 import io.springlets.boot.autoconfigure.security.jpa.SpringletsSecurityJpaAuthenticationAutoConfiguration;
 import io.springlets.security.web.config.EnableSpringletsWebSecurity;
 
 /**
- * {@link EnableAutoConfiguration Auto-configuration} to setup Spring Security
- * authentication.
+ * @{@link EnableSpringletsWebSecurity Auto-configuration} to setup 
+ * web authentication artifacts based on Spring Security:
+ * 
+ * * /login view resolver (the application must provide the login view template)
+ * * ...
  *  
  * @author Enrique Ruiz at http://www.disid.com[DISID Corporation S.L.]
  */
-//@Configuration
-//@ConditionalOnWebApplication
-//@ConditionalOnBean(SpringletsSecurityJpaAuthenticationAutoConfiguration.class)
-//@ConditionalOnClass({ Servlet.class, DispatcherServlet.class })
-//@EnableSpringletsWebSecurity
-public class SpringletsWebMvcAuthenticationAutoConfiguration {
+@AutoConfigureAfter(SpringletsSecurityJpaAuthenticationAutoConfiguration.class)
+@Configuration
+@ConditionalOnWebApplication
+@EnableSpringletsWebSecurity
+public class SpringletsWebAuthenticationAutoConfiguration {
 
 }
