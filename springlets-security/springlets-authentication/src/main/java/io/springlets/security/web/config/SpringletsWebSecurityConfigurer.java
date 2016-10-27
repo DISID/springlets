@@ -81,7 +81,7 @@ class SpringletsWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 
     http
       .authorizeRequests()
-        .antMatchers("/public/**", "/webjars/**", "/resources/**", "/static/**").permitAll()
+        .antMatchers("/public/**", "/webjars/**", "/resources/**", "/static/**", "/login/**").permitAll()
         .anyRequest().authenticated()
         .and()
       .formLogin()
