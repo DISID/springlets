@@ -16,6 +16,7 @@
 package io.springlets.boot.autoconfigure.security.jpa;
 
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration;
 import org.springframework.context.annotation.Configuration;
@@ -31,6 +32,7 @@ import io.springlets.security.jpa.JpaUserDetailsService;
  * @author Enrique Ruiz at http://www.disid.com[DISID Corporation S.L.]
  */
 @AutoConfigureAfter(JpaBaseConfiguration.class)
+@ConditionalOnClass(JpaUserDetailsService.class)
 @Configuration
 @EnableJpaRepositories(basePackageClasses = JpaUserDetailsService.class)
 @EntityScan(basePackageClasses = JpaUserDetailsService.class)
