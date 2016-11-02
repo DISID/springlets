@@ -1,9 +1,9 @@
 package io.springlets.mail.integration.mail.service;
 
-import io.springlets.mail.domain.DefaultMessage;
-import io.springlets.mail.integration.mail.api.EmailReceiverService;
+import io.springlets.mail.integration.mail.api.MailReceiverService;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -23,41 +23,41 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
 /**
- * = Implementation of {@link EmailReceiverService}
+ * = Implementation of {@link MailReceiverService}
  *
  * Make the receipt of emails.
  */
 @Service
-public class EmailReceiverServiceImpl implements EmailReceiverService {
+public class MailReceiverServiceImpl implements MailReceiverService {
 
-  @Value("${application.mail.inbox.host:}")
+  @Value("${springlets.mail.receiver.host:}")
   private String host;
 
-  @Value("${application.mail.inbox.port:}")
+  @Value("${springlets.mail.receiver.port:}")
   private String port;
 
-  @Value("${application.mail.inbox.protocol:}")
+  @Value("${springlets.mail.receiver.protocol:}")
   private String protocol;
 
-  @Value("${application.mail.inbox.user:}")
+  @Value("${springlets.mail.receiver.username:}")
   private String username;
 
-  @Value("${application.mail.inbox.password:}")
+  @Value("${springlets.mail.receiver.password:}")
   private String password;
 
-  @Value("${application.mail.inbox.starttls.enable:true}")
+  @Value("${springlets.mail.receiver.starttls.enable:true}")
   private String starttlsEnabled;
 
-  @Value("${application.mail.inbox.jndi.name:}")
+  @Value("${springlets.mail.receiver.jndi.name:}")
   private String jndiName;
 
   @Override
-  public List<DefaultMessage> getEmails()
+  public List<SimpleMailMessage> getEmails()
       throws MessagingException, IOException, NamingException {
     Session emailSession = null;
     Store store = null;
     Folder emailFolder = null;
-    List<DefaultMessage> receivedEmails = new ArrayList<DefaultMessage>();
+    List<SimpleMailMessage> receivedEmails = new ArrayList<SimpleMailMessage>();
     try {
       if (!StringUtils.isEmpty(jndiName)) {
         InitialContext ic = new InitialContext();
@@ -100,8 +100,11 @@ public class EmailReceiverServiceImpl implements EmailReceiverService {
         else if (content instanceof String) {
           body = (String) content;
         }
-        DefaultMessage email = new DefaultMessage(message.getSubject(), body,
-            message.getFrom()[0].toString());
+        SimpleMailMessage email = new SimpleMailMessage();
+        email.setSubject(message.getSubject());
+        email.setText(body);
+        email.setFrom(message.getFrom()[0].toString());
+        email.setSentDate(message.getSentDate());
         receivedEmails.add(email);
       }
     }

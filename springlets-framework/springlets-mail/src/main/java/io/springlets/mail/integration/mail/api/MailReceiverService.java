@@ -1,6 +1,7 @@
 package io.springlets.mail.integration.mail.api;
 
-import io.springlets.mail.domain.DefaultMessage;
+
+import org.springframework.mail.SimpleMailMessage;
 
 import java.io.IOException;
 import java.util.List;
@@ -13,7 +14,7 @@ import javax.naming.NamingException;
  *
  * Interface that adds support to receive emails
  */
-public interface EmailReceiverService {
+public interface MailReceiverService {
 
   /**
    * Get emails of configured account
@@ -23,7 +24,7 @@ public interface EmailReceiverService {
    * @throws IOException Exception produced when get an email
    * @throws NamingException Exception produced when use jndi connection
    */
-  public List<DefaultMessage> getEmails()
+  public List<SimpleMailMessage> getEmails()
       throws MessagingException, IOException, NamingException;
 
 }
