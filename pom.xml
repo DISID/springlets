@@ -91,6 +91,12 @@
 
       <dependency>
         <groupId>io.springlets</groupId>
+        <artifactId>springlets-mail</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>io.springlets</groupId>
         <artifactId>springlets-web</artifactId>
         <version>${project.version}</version>
       </dependency>

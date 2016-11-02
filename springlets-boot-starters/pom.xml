@@ -13,7 +13,7 @@
   <description>Springlets Spring Boot starters</description>
   <organization>
     <name>DISID Corporation</name>
-    <url>http://www.disid.com</url> 
+    <url>http://www.disid.com</url>
   </organization>
   <licenses>
     <license>
@@ -25,6 +25,7 @@
   <modules>
     <module>springlets-boot-starter-authentication</module>
     <module>springlets-boot-starter-data-jpa</module>
+    <module>springlets-boot-starter-mail</module>
     <module>springlets-boot-starter-web</module>
   </modules>
 </project>
