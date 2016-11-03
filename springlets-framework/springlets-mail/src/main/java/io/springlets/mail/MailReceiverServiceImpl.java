@@ -15,7 +15,8 @@
  */
 package io.springlets.mail;
 
-import org.springframework.beans.factory.annotation.Value;
+import io.springlets.mail.config.SpringletsMailSettings;
+
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -43,26 +44,11 @@ import javax.naming.NamingException;
 @Service
 public class MailReceiverServiceImpl implements MailReceiverService {
 
-  @Value("${springlets.mail.receiver.host:}")
-  private String host;
+  private SpringletsMailSettings mailSettings;
 
-  @Value("${springlets.mail.receiver.port:}")
-  private String port;
-
-  @Value("${springlets.mail.receiver.protocol:}")
-  private String protocol;
-
-  @Value("${springlets.mail.receiver.username:}")
-  private String username;
-
-  @Value("${springlets.mail.receiver.password:}")
-  private String password;
-
-  @Value("${springlets.mail.receiver.starttls.enable:true}")
-  private String starttlsEnabled;
-
-  @Value("${springlets.mail.receiver.jndi.name:}")
-  private String jndiName;
+  public MailReceiverServiceImpl(SpringletsMailSettings mailSettings) {
+ 	this.mailSettings = mailSettings;
+ }
 
   @Override
   public List<SimpleMailMessage> getEmails()
@@ -72,9 +58,9 @@ public class MailReceiverServiceImpl implements MailReceiverService {
     Folder emailFolder = null;
     List<SimpleMailMessage> receivedEmails = new ArrayList<SimpleMailMessage>();
     try {
-      if (!StringUtils.isEmpty(jndiName)) {
+      if (!StringUtils.isEmpty(mailSettings.getJndiName())) {
         InitialContext ic = new InitialContext();
-        emailSession = (Session) ic.lookup(jndiName);
+        emailSession = (Session) ic.lookup(mailSettings.getJndiName());
         store = emailSession.getStore();
         store.connect();
       }
@@ -82,16 +68,16 @@ public class MailReceiverServiceImpl implements MailReceiverService {
 
         // Set connection properties
         Properties properties = new Properties();
-        String prefix = "mail.".concat(protocol);
-        properties.put(String.format("%s.host", prefix), host);
-        properties.put(String.format("%s.port", prefix), port);
-        properties.put("mail.store.protocol", protocol);
-        properties.put(String.format("%s.starttls.enable", prefix), starttlsEnabled);
+        String prefix = "mail.".concat(mailSettings.getProtocol());
+        properties.put(String.format("%s.host", prefix), mailSettings.getHost());
+        properties.put(String.format("%s.port", prefix), mailSettings.getPort());
+        properties.put("mail.store.protocol", mailSettings.getProtocol());
+        properties.put(String.format("%s.starttls.enable", prefix), mailSettings.getStarttlsEnabled());
 
         // Create the session and the object Store to get the emails
         emailSession = Session.getDefaultInstance(properties);
         store = emailSession.getStore();
-        store.connect(username, password);
+        store.connect(mailSettings.getUsername(), mailSettings.getPassword());
       }
 
       // Get the folder that contains the emails and open it

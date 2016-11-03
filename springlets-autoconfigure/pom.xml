@@ -13,7 +13,7 @@
   <description>Springlets auto-configurators for Spring Boot</description>
   <organization>
     <name>DISID Corporation</name>
-    <url>http://www.disid.com</url> 
+    <url>http://www.disid.com</url>
   </organization>
   <licenses>
     <license>
@@ -35,10 +35,10 @@
     OPTIONAL:
 
     * All the dependencies MUST BE optional = true, the starter will include the needed libraries
-    
+
     STARTERS:
 
-    * Never include dependencies to Spring Boot Starters, instead include each needed library 
+    * Never include dependencies to Spring Boot Starters, instead include each needed library
     -->
 
     <!-- Spring dependencies -->
@@ -48,7 +48,7 @@
    	  <scope>test</scope>
       <optional>true</optional>
     </dependency>
-    
+
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-orm</artifactId>
@@ -66,13 +66,13 @@
       <artifactId>spring-webmvc</artifactId>
       <optional>true</optional>
     </dependency>
-    
+
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-test</artifactId>
       <scope>test</scope>
     </dependency>
-    
+
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-autoconfigure</artifactId>
@@ -84,25 +84,25 @@
       <artifactId>spring-boot-configuration-processor</artifactId>
       <optional>true</optional>
     </dependency>
-    
+
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-test</artifactId>
       <scope>test</scope>
     </dependency>
-    
+
  	<dependency>
 		<groupId>org.springframework.data</groupId>
 		<artifactId>spring-data-commons</artifactId>
 		<optional>true</optional>
 	</dependency>
-    
+
  	<dependency>
 		<groupId>org.springframework.data</groupId>
 		<artifactId>spring-data-jpa</artifactId>
 		<optional>true</optional>
 	</dependency>
-   
+
     <dependency>
       <groupId>org.springframework.security</groupId>
       <artifactId>spring-security-config</artifactId>
@@ -126,6 +126,12 @@
     <dependency>
       <groupId>io.springlets</groupId>
       <artifactId>springlets-data-jpa</artifactId>
+      <optional>true</optional>
+    </dependency>
+
+    <dependency>
+      <groupId>io.springlets</groupId>
+      <artifactId>springlets-mail</artifactId>
       <optional>true</optional>
     </dependency>
 
@@ -159,6 +165,7 @@
       <artifactId>hibernate-validator</artifactId>
       <optional>true</optional>
     </dependency>
+
 
   </dependencies>
 

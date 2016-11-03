@@ -5,4 +5,5 @@ io.springlets.boot.autoconfigure.data.jpa.SpringletsDataJpaAuthenticationAuditor
 io.springlets.boot.autoconfigure.http.converter.json.SpringletsWebJacksonAutoConfiguration,\
 io.springlets.boot.autoconfigure.security.jpa.SpringletsSecurityJpaAuthenticationAutoConfiguration,\
 io.springlets.boot.autoconfigure.web.SpringletsWebAuthenticationAutoConfiguration,\
-io.springlets.boot.autoconfigure.web.mvc.SpringletsWebMvcAdvicesAutoConfiguration
+io.springlets.boot.autoconfigure.web.mvc.SpringletsWebMvcAdvicesAutoConfiguration,\
+io.springlets.boot.autoconfigure.mail.SpringletsMailAutoConfiguration
