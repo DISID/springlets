@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>io.springlets</groupId>
+    <artifactId>springlets-boot-starters</artifactId>
+    <version>1.0.0.BUILD-SNAPSHOT</version>
+  </parent>
+  <artifactId>springlets-boot-starter-webflow</artifactId>
+  <packaging>jar</packaging>
+  <name>Springlets Spring Boot starter for WebFlow</name>
+  <description>Springlets Spring Boot starter to autoconfigure WebFlow utilities</description>
+  <organization>
+    <name>DISID Corporation</name>
+    <url>http://www.disid.com</url>
+  </organization>
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
+  <dependencies>
+    <!--
+    = About the dependencies
+
+    ORDER CRITERIA:
+
+    * Three dependency groups: first spring dependencies, next own dependencies and finally the external ones.
+    * Inside a group: alphabetical order, ordering first by groupId, then by artifactId.
+    -->
+    
+    <!-- Spring dependencies -->
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.webflow</groupId>
+      <artifactId>spring-webflow</artifactId>
+    </dependency>
+    
+    <!-- Springlets dependencies -->
+
+    <dependency>
+      <groupId>io.springlets</groupId>
+      <artifactId>springlets-autoconfigure</artifactId>
+    </dependency>
+     
+    <dependency>
+      <groupId>io.springlets</groupId>
+      <artifactId>springlets-webflow</artifactId>
+    </dependency>
+
+    <!-- 3rd party dependencies -->
+
+    <dependency>
+    	<groupId>com.fasterxml.jackson.core</groupId>
+    	<artifactId>jackson-databind</artifactId>
+    </dependency>
+
+  </dependencies>
+</project>
