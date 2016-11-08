@@ -27,5 +27,6 @@
     <module>springlets-boot-starter-data-jpa</module>
     <module>springlets-boot-starter-mail</module>
     <module>springlets-boot-starter-web</module>
+    <module>springlets-boot-starter-webflow</module>
   </modules>
 </project>

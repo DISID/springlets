@@ -68,6 +68,12 @@
     </dependency>
 
     <dependency>
+      <groupId>org.springframework.webflow</groupId>
+      <artifactId>spring-webflow</artifactId>
+      <optional>true</optional>
+    </dependency>
+
+    <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-test</artifactId>
       <scope>test</scope>
@@ -138,6 +144,12 @@
     <dependency>
       <groupId>io.springlets</groupId>
       <artifactId>springlets-web</artifactId>
+      <optional>true</optional>
+    </dependency>
+
+    <dependency>
+      <groupId>io.springlets</groupId>
+      <artifactId>springlets-webflow</artifactId>
       <optional>true</optional>
     </dependency>
 
