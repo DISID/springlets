@@ -30,6 +30,7 @@ import java.util.List;
  * Configuration class to register the following beans:
  *
  * * {@link StringTrimmerAdvice}.
+ * * {@link JsonpAdvice}.
  *
  * @author Enrique Ruiz at http://www.disid.com[DISID Corporation S.L.]
  */
