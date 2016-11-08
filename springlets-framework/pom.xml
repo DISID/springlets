@@ -25,5 +25,6 @@
   <modules>
     <module>springlets-web</module>
     <module>springlets-mail</module>
+    <module>springlets-jms</module>
   </modules>
 </project>

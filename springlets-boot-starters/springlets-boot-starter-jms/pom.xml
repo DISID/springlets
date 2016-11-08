@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>io.springlets</groupId>
+    <artifactId>springlets-boot-starters</artifactId>
+    <version>1.0.0.BUILD-SNAPSHOT</version>
+  </parent>
+  <artifactId>springlets-boot-starter-jms</artifactId>
+  <packaging>jar</packaging>
+  <name>Springlets Spring Boot starter for jms support</name>
+  <description>Springlets Spring Boot starter for autoconfiguration of additional jms support</description>
+  <organization>
+    <name>DISID Corporation</name>
+    <url>http://www.disid.com</url>
+  </organization>
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
+  <dependencies>
+    <!--
+    = About the dependencies
+
+    ORDER CRITERIA:
+
+    * Three dependency groups: first spring dependencies, next own dependencies and finally the external ones.
+    * Inside a group: alphabetical order, ordering first by groupId, then by artifactId.
+    -->
+
+    <!-- Spring dependencies -->
+
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-jms</artifactId>
+    </dependency>
+
+    <!-- Springlets dependencies -->
+
+    <dependency>
+      <groupId>io.springlets</groupId>
+      <artifactId>springlets-jms</artifactId>
+    </dependency>
+
+    <!-- 3rd party dependencies -->
+    <dependency>
+      <groupId>javax.jms</groupId>
+      <artifactId>jms-api</artifactId>
+    </dependency>
+
+  </dependencies>
+</project>

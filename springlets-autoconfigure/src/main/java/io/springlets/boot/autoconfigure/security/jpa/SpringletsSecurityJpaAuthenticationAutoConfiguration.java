@@ -26,9 +26,9 @@ import io.springlets.security.config.EnableSpringletsSecurityAuthentication;
 import io.springlets.security.jpa.JpaUserDetailsService;
 
 /**
- * @{@link SpringletsSecurityJpaAuthenticationAutoConfiguration Auto-configuration} to setup 
+ * @{@link SpringletsSecurityJpaAuthenticationAutoConfiguration Auto-configuration} to setup
  * Spring Security authentication based on JPA Authentication Provider.
- *  
+ *
  * @author Enrique Ruiz at http://www.disid.com[DISID Corporation S.L.]
  */
 @AutoConfigureAfter(JpaBaseConfiguration.class)
@@ -38,6 +38,4 @@ import io.springlets.security.jpa.JpaUserDetailsService;
 @EntityScan(basePackageClasses = JpaUserDetailsService.class)
 @EnableSpringletsSecurityAuthentication
 public class SpringletsSecurityJpaAuthenticationAutoConfiguration {
-
-
 }

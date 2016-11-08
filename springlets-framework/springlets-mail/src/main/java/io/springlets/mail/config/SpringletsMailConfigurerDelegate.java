@@ -30,8 +30,8 @@ class SpringletsMailConfigurerDelegate implements SpringletsMailConfigurer {
 	private final Iterable<SpringletsMailConfigurer> delegates;
 
 	/**
-	 * Creates a new {@link RepositoryRestConfigurerDelegate} for the given
-	 * {@link RepositoryRestConfigurer}s.
+	 * Creates a new {@link SpringletsMailConfigurerDelegate} for the given
+	 * {@link SpringletsMailConfigurer}s.
 	 *
 	 * @param delegates must not be {@literal null}.
 	 */

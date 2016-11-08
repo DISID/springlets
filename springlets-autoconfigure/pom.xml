@@ -137,6 +137,12 @@
 
     <dependency>
       <groupId>io.springlets</groupId>
+      <artifactId>springlets-jms</artifactId>
+      <optional>true</optional>
+    </dependency>
+
+    <dependency>
+      <groupId>io.springlets</groupId>
       <artifactId>springlets-mail</artifactId>
       <optional>true</optional>
     </dependency>
@@ -157,6 +163,12 @@
     <dependency>
 	  <groupId>com.fasterxml.jackson.core</groupId>
 	  <artifactId>jackson-databind</artifactId>
+      <optional>true</optional>
+    </dependency>
+
+    <dependency>
+      <groupId>javax.jms</groupId>
+      <artifactId>jms-api</artifactId>
       <optional>true</optional>
     </dependency>
 

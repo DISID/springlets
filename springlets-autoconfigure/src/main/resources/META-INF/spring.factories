@@ -7,4 +7,5 @@ io.springlets.boot.autoconfigure.security.jpa.SpringletsSecurityJpaAuthenticatio
 io.springlets.boot.autoconfigure.web.SpringletsWebAuthenticationAutoConfiguration,\
 io.springlets.boot.autoconfigure.web.mvc.SpringletsWebMvcAdvicesAutoConfiguration,\
 io.springlets.boot.autoconfigure.webflow.SpringletsWebFlowAutoConfiguration,\
-io.springlets.boot.autoconfigure.mail.SpringletsMailAutoConfiguration
+io.springlets.boot.autoconfigure.mail.SpringletsMailAutoConfiguration,\
+io.springlets.boot.autoconfigure.jms.SpringletsJmsAutoConfiguration

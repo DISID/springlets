@@ -27,9 +27,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Configuration class to register the following beans:
- *
- * * {@link StringTrimmerAdvice}.
+ * Configuration class to register {@link MailReceiverService}.
  *
  * @author Manuel Iborra at http://www.disid.com[DISID Corporation S.L.]
  */
