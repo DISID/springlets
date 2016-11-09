@@ -120,7 +120,7 @@ public class Select2Data<T> {
   }
 
   /**
-   * Pagination information for the response data for a select2 component.
+   * Pagination information for a select2 component response data.
    * @author Cèsar Ordiñana at http://www.disid.com[DISID Corporation S.L.]
    */
   protected static class Pagination {
