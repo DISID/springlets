@@ -18,7 +18,7 @@ package io.springlets.boot.autoconfigure.jms;
 import io.springlets.jms.config.EnableSpringletsJms;
 import io.springlets.jms.config.SpringletsJmsConfiguration;
 
-import org.springframework.boot.autoconfigure.AutoConfigureBefore;
+import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -27,7 +27,6 @@ import org.springframework.context.annotation.Configuration;
 
 import javax.jms.ConnectionFactory;
 import javax.jms.Destination;
-
 /**
  * {@link EnableAutoConfiguration Auto-configuration} for Springlets jms
  * integration.
@@ -39,7 +38,7 @@ import javax.jms.Destination;
  *
  * @author Manuel Iborra at http://www.disid.com[DISID Corporation S.L.]
  */
-@AutoConfigureBefore(JmsAutoConfiguration.class)
+@AutoConfigureAfter(JmsAutoConfiguration.class)
 @ConditionalOnClass(SpringletsJmsConfiguration.class)
 @ConditionalOnBean({ConnectionFactory.class, Destination.class})
 @Configuration

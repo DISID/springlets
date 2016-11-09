@@ -49,9 +49,17 @@ public class JmsMessageSenderService {
 	private DestinationResolver destinationResolver;
 
 	@Autowired
-	@Lazy
 	private MessageConverter messageConverter;
 
+	/**
+	 * Converts and sends the object established into second parameter to Queue
+	 * defined by name established in 'queueName' parameter.
+	 * {@link SimpleMessageConverter} is used for conversion.
+	 *
+	 * @param queueName Queue which will receive the message
+	 * @param objToSend Object to send
+	 * @throws JMSException
+	 */
 	public void convertAndSend(String queueName, Object objToSend) throws JMSException {
 		Connection connection = this.connectionFactory.createConnection();
 		try {
@@ -65,11 +73,11 @@ public class JmsMessageSenderService {
 
 				MessageProducer messageProducer = session.createProducer(theQueue);
 
+				// Convert the object
 				MessageConverter msgConverter = this.messageConverter;
 				if (msgConverter == null) {
 					msgConverter = new SimpleMessageConverter();
 				}
-
 				Message message = msgConverter.toMessage(objToSend, session);
 
 				// Start Queue connection

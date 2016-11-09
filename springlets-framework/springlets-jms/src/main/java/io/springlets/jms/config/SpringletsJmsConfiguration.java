@@ -19,7 +19,8 @@ import io.springlets.jms.JmsMessageSenderService;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.jms.annotation.EnableJms;
+import org.springframework.jms.support.converter.MessageConverter;
+import org.springframework.jms.support.converter.SimpleMessageConverter;
 
 /**
  * Configuration class to register {@link JmsMessageSenderService}.
@@ -27,9 +28,28 @@ import org.springframework.jms.annotation.EnableJms;
  * @author Manuel Iborra at http://www.disid.com[DISID Corporation S.L.]
  */
 @Configuration
-@EnableJms
-public class SpringletsJmsConfiguration{
+public class SpringletsJmsConfiguration {
 
+	/**
+	 *
+	 * {@link MessageConverter} bean configured with
+	 * {@link SimpleMessageConverter} implementation.
+	 *
+	 * If you want to replace the default MessageConverter completely, define
+	 * a @{@link Bean} of that type and mark it as @{@link Primary}.
+	 *
+	 * @return SimpleMessageConverter
+	 */
+	@Bean
+	public MessageConverter messageConverter() {
+		return new SimpleMessageConverter();
+	}
+
+	/**
+	 * Service to send JMS messages
+	 *
+	 * @return {@link JmsMessageSenderService}
+	 */
 	@Bean
 	public JmsMessageSenderService jmsMessageSendingService() {
 		return new JmsMessageSenderService();
