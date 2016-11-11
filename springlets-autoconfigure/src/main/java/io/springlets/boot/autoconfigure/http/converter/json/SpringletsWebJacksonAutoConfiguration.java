@@ -15,11 +15,6 @@
  */
 package io.springlets.boot.autoconfigure.http.converter.json;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import io.springlets.http.converter.json.BindingResultModule;
-import io.springlets.web.config.EnableSpringletsWebJacksonSupport;
-
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -27,6 +22,12 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration;
 import org.springframework.context.annotation.Configuration;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module;
+
+import io.springlets.http.converter.json.BindingResultModule;
+import io.springlets.web.config.EnableSpringletsWebJacksonSupport;
 
 /**
  * {@link EnableAutoConfiguration Auto-configuration} for Springlets Web Jackson support.
@@ -38,7 +39,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @EnableSpringletsWebJacksonSupport
 @ConditionalOnWebApplication
-@ConditionalOnClass({BindingResultModule.class, ObjectMapper.class})
+@ConditionalOnClass({BindingResultModule.class, ObjectMapper.class, Hibernate5Module.class})
 @ConditionalOnMissingBean(BindingResultModule.class)
 @AutoConfigureAfter(JacksonAutoConfiguration.class)
 public class SpringletsWebJacksonAutoConfiguration {
