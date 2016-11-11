@@ -28,7 +28,7 @@ import io.springlets.security.jpa.config.SpringletsSecurityJpaAuthenticationConf
 /**
  * Configuration to setup Spring Security
  * authentication.
- *  
+ *
  * @author Enrique Ruiz at http://www.disid.com[DISID Corporation S.L.]
  */
 @Configuration
@@ -45,6 +45,17 @@ public class SpringletsWebSecurityConfiguration {
   @Order(Ordered.HIGHEST_PRECEDENCE)
   public SpringletsWebSecurityConfigurer springletsWebSecurityConfigurer() {
     return new SpringletsWebSecurityConfigurer();
+  }
+
+  /**
+   * Initialize {@link SpringletsSecurityMDCUserNameFilter} filter to incorporate the username
+   * in log messages.
+   *
+   * @return the filter SpringletsSecurityMDCUserNameFilter
+   */
+  @Bean
+  public SpringletsSecurityMDCUserNameFilter registerMDCUserNameFilter() {
+    return new SpringletsSecurityMDCUserNameFilter();
   }
 
 }
