@@ -17,18 +17,18 @@ package io.springlets.web.autoconfigure;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import io.springlets.web.mvc.advice.JsonpAdvice;
-import io.springlets.web.mvc.advice.StringTrimmerAdvice;
-import io.springlets.web.mvc.config.SpringletsWebMvcConfiguration;
-import io.springlets.web.mvc.config.SpringletsWebMvcConfigurer;
-import io.springlets.web.mvc.config.SpringletsWebMvcSettings;
-import io.springlets.web.mvc.config.SpringletsWebMvcSettings.StringTrimmerAdviceSettings;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
+
+import io.springlets.web.mvc.advice.JsonpAdvice;
+import io.springlets.web.mvc.advice.StringTrimmerAdvice;
+import io.springlets.web.mvc.config.SpringletsWebMvcConfiguration;
+import io.springlets.web.mvc.config.SpringletsWebMvcProperties;
 
 /**
  * Tests for {@link SpringletsWebMvcConfiguration}
@@ -37,7 +37,8 @@ import org.springframework.web.context.support.AnnotationConfigWebApplicationCon
  */
 public class SpringletsWebMvcConfigurationTest {
 
-  private AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
+  private AnnotationConfigWebApplicationContext context =
+      new AnnotationConfigWebApplicationContext();
 
   @Before
   public void setupContext() {}
@@ -61,6 +62,7 @@ public class SpringletsWebMvcConfigurationTest {
   public void defaultConfiguration() throws Exception {
 
     // Setup
+    this.context.register(SpringletsWebMvcProperties.class);
     this.context.register(SpringletsWebMvcConfiguration.class);
     this.context.refresh();
 
@@ -69,7 +71,7 @@ public class SpringletsWebMvcConfigurationTest {
     JsonpAdvice jsonpAdvice = this.context.getBean(JsonpAdvice.class);
 
     // Verify
-    assertThat(this.context.getBean(SpringletsWebMvcSettings.class)).isNotNull();
+    assertThat(this.context.getBean(SpringletsWebMvcProperties.class)).isNotNull();
     assertThat(advice).isNotNull();
     assertThat(advice.isEmptyAsNull()).isEqualTo(true);
     assertThat(advice.getCharsToDelete()).isNull();
@@ -84,7 +86,7 @@ public class SpringletsWebMvcConfigurationTest {
   public void configureAdvice() {
 
     // Setup
-    this.context.register(DummyConfigurer.class);
+    this.context.register(DummyPropertiesConfiguration.class);
     this.context.register(SpringletsWebMvcConfiguration.class);
     this.context.refresh();
 
@@ -93,7 +95,7 @@ public class SpringletsWebMvcConfigurationTest {
     JsonpAdvice jsonpAdvice = this.context.getBean(JsonpAdvice.class);
 
     // Verify
-    assertThat(this.context.getBean(SpringletsWebMvcSettings.class)).isNotNull();
+    assertThat(this.context.getBean(SpringletsWebMvcProperties.class)).isNotNull();
     assertThat(advice).isNotNull();
     assertThat(advice.isEmptyAsNull()).isEqualTo(false);
     assertThat(advice.getCharsToDelete()).isEqualTo("abc");
@@ -101,21 +103,19 @@ public class SpringletsWebMvcConfigurationTest {
   }
 
   /**
-   * Test Configurer.
+   * Test Configuration.
    */
-  protected static class DummyConfigurer implements SpringletsWebMvcConfigurer {
+  @Configuration
+  protected static class DummyPropertiesConfiguration {
     public boolean emptyAsNull = false;
     public String charsToDelete = "abc";
 
-    public DummyConfigurer() {
-    }
-
-    @Override
-    public void configureSpringletsWebMvcSettings(SpringletsWebMvcSettings config) {
-      StringTrimmerAdviceSettings settings = new StringTrimmerAdviceSettings();
-      settings.setCharsToDelete(this.charsToDelete);
-      settings.setEmptyAsNull(this.emptyAsNull);
-      config.setTrimmerAdviceSettings(settings);
+    @Bean
+    public SpringletsWebMvcProperties springletsWebMvcProperties() {
+      SpringletsWebMvcProperties properties = new SpringletsWebMvcProperties();
+      properties.getAdvices().getTrimeditor().setCharsToDelete(this.charsToDelete);
+      properties.getAdvices().getTrimeditor().setEmptyAsNull(this.emptyAsNull);
+      return properties;
     }
   }
 }

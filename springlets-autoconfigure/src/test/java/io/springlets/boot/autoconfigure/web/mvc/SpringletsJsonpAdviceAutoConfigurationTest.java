@@ -186,7 +186,7 @@ public class SpringletsJsonpAdviceAutoConfigurationTest {
   }
 
   /**
-   * Process the {@link SpringletsWebMvcAdvicesAutoConfiguration} class by the
+   * Process the {@link SpringletsWebMvcAutoConfiguration} class by the
    * {@link ApplicationContext}. After the processing the {@link JsonpAdvice}
    * must be in the ApplicationContext.
    *
@@ -198,7 +198,7 @@ public class SpringletsJsonpAdviceAutoConfigurationTest {
    */
   private void registerAndRefreshContext(String... env) {
     EnvironmentTestUtils.addEnvironment(this.context, env);
-    this.context.register(SpringletsWebMvcAdvicesAutoConfiguration.class);
+    this.context.register(SpringletsWebMvcAutoConfiguration.class);
     this.context.refresh();
   }
 
@@ -210,7 +210,7 @@ public class SpringletsJsonpAdviceAutoConfigurationTest {
    */
   @Configuration
   @ImportAutoConfiguration({WebMvcAutoConfiguration.class,
-      HttpMessageConvertersAutoConfiguration.class, SpringletsWebMvcAdvicesAutoConfiguration.class})
+      HttpMessageConvertersAutoConfiguration.class, SpringletsWebMvcAutoConfiguration.class})
   protected static class TestConfiguration {
 
     @Bean

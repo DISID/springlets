@@ -165,7 +165,7 @@ public class SpringletsStringTrimmerAdviceAutoConfigurationTest {
   }
 
   /**
-   * Process the {@link SpringletsWebMvcAdvicesAutoConfiguration} class by the
+   * Process the {@link SpringletsWebMvcAutoConfiguration} class by the
    * {@link ApplicationContext}. After the processing the {@link StringTrimmerAdvice}
    * must be in the ApplicationContext.
    *
@@ -173,11 +173,11 @@ public class SpringletsStringTrimmerAdviceAutoConfigurationTest {
    * {@link ApplicationContext}.
    *
    * @param env Strings following the pattern "property-name:property-value"
-   * @see EnvironmentTestUtils#addEnvironment(String, org.springframework.core.env.ConfigurableEnvironment, String...)
+   * @see EnvironmentTestUtils#addEnvironment(ConfigurableEnvironment, String...)
    */
   private void registerAndRefreshContext(String... env) {
     EnvironmentTestUtils.addEnvironment(this.context, env);
-    this.context.register(SpringletsWebMvcAdvicesAutoConfiguration.class);
+    this.context.register(SpringletsWebMvcAutoConfiguration.class);
     this.context.refresh();
   }
 
@@ -189,7 +189,7 @@ public class SpringletsStringTrimmerAdviceAutoConfigurationTest {
    */
   @Configuration
   @ImportAutoConfiguration({WebMvcAutoConfiguration.class,
-      HttpMessageConvertersAutoConfiguration.class, SpringletsWebMvcAdvicesAutoConfiguration.class})
+      HttpMessageConvertersAutoConfiguration.class, SpringletsWebMvcAutoConfiguration.class})
   protected static class TestConfiguration {
 
     @Bean
