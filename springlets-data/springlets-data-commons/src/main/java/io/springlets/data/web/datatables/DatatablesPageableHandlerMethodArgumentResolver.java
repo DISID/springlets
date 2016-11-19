@@ -29,8 +29,9 @@ import org.springframework.web.method.support.ModelAndViewContainer;
  * to set the parameter names used by the datatables components, and creates
  * a {@link DatatablesPageable} pageable.
  * 
+ * See {@link https://datatables.net/manual/server-side}
+ *
  * @author Cèsar Ordiñana at http://www.disid.com[DISID Corporation S.L.]
- * @see https://datatables.net/manual/server-side
  */
 public class DatatablesPageableHandlerMethodArgumentResolver
     extends PageableHandlerMethodArgumentResolver {
