@@ -17,20 +17,17 @@ package io.springlets.boot.autoconfigure.web.mvc;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.core.StringContains.containsString;
+import static org.junit.Assert.assertNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import io.springlets.web.mvc.advice.JsonpAdvice;
-import io.springlets.web.mvc.advice.StringTrimmerAdvice;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.boot.autoconfigure.web.HttpMessageConvertersAutoConfiguration;
 import org.springframework.boot.autoconfigure.web.WebMvcAutoConfiguration;
@@ -49,6 +46,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
+
+import io.springlets.web.mvc.advice.JsonpAdvice;
+import io.springlets.web.mvc.advice.StringTrimmerAdvice;
 
 /**
  * Tests for {@link SpringletsJsonpAdviceAutoConfigurationTest}
@@ -102,15 +102,14 @@ public class SpringletsJsonpAdviceAutoConfigurationTest {
   @Test
   public void disabledAdvice() {
 
-    // Verify
-    this.thrown.expect(NoSuchBeanDefinitionException.class);
-    this.thrown.expectMessage("No qualifying bean of type [");
-
     // Setup
     registerAndRefreshContext("springlets.mvc.advices.enabled:false");
 
     // Exercise
-    this.context.getBean(JsonpAdvice.class);
+    JsonpAdvice advice = this.context.getBean(JsonpAdvice.class);
+
+    // Verify
+    assertNull(advice);
   }
 
   /**

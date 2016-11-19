@@ -15,9 +15,11 @@
  */
 package io.springlets.web.mvc.config;
 
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 
 import io.springlets.web.mvc.advice.JsonpAdvice;
 import io.springlets.web.mvc.advice.StringTrimmerAdvice;
@@ -35,19 +37,47 @@ public class SpringletsWebMvcConfiguration { // implements InitializingBean {
 
   @Autowired(required = false)
   private SpringletsWebMvcProperties properties;
-  
+
+  /**
+   * Create and register a {@link StringTrimmerAdvice} bean configured with {@link #properties}.
+   * 
+   * Note that {@link #properties} is null when the property `springlets.mvc.advices.enabled`
+   * is false, in that case this method return null.
+   * 
+   * By returning null causes that the method {@link AnnotationConfigWebApplicationContext#getBean(Class)}
+   * returns null in spite of throwing the {@link BeansException} exception.
+   * 
+   * @return the StringTrimmerAdvice
+   */
   @Bean
   public StringTrimmerAdvice stringTrimmerAdvice() {
+    if (properties == null) {
+      return null;
+    }
     StringTrimmerAdvice trimmerAdvice = new StringTrimmerAdvice();
     trimmerAdvice.setCharsToDelete(properties.getAdvices().getTrimeditor().getCharsToDelete());
     trimmerAdvice.setEmptyAsNull(properties.getAdvices().getTrimeditor().isEmptyAsNull());
     return trimmerAdvice;
   }
 
+  /**
+   * Create and register a {@link JsonpAdvice} bean configured with {@link #properties}.
+   * 
+   * Note that {@link #properties} is null when the property `springlets.mvc.advices.enabled`
+   * is false, in that case this method return null.
+   * 
+   * By returning null causes that the method {@link AnnotationConfigWebApplicationContext#getBean(Class)}
+   * returns null in spite of throwing the {@link BeansException} exception.
+   * 
+   * @return the StringTrimmerAdvice
+   */
   @Bean
   public JsonpAdvice jsonpAdvice() {
-    JsonpAdvice jsonpAdvice = new JsonpAdvice(
-        properties.getAdvices().getJsonp().getQueryParamNames());
+    if (properties == null) {
+      return null;
+    }
+    JsonpAdvice jsonpAdvice =
+        new JsonpAdvice(properties.getAdvices().getJsonp().getQueryParamNames());
     return jsonpAdvice;
   }
 }

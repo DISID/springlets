@@ -17,6 +17,7 @@ package io.springlets.boot.autoconfigure.web.mvc;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertNull;
 import static org.mockito.Matchers.isNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -28,7 +29,6 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.boot.autoconfigure.web.HttpMessageConvertersAutoConfiguration;
 import org.springframework.boot.autoconfigure.web.WebMvcAutoConfiguration;
@@ -37,6 +37,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.Environment;
 import org.springframework.mock.web.MockServletContext;
 import org.springframework.stereotype.Controller;
@@ -100,15 +101,14 @@ public class SpringletsStringTrimmerAdviceAutoConfigurationTest {
   @Test
   public void disabledAdvice() {
 
-    // Verify
-    this.thrown.expect(NoSuchBeanDefinitionException.class);
-    this.thrown.expectMessage("No qualifying bean of type [");
-
     // Setup
     registerAndRefreshContext("springlets.mvc.advices.enabled:false");
 
     // Exercise
-    this.context.getBean(StringTrimmerAdvice.class);
+    StringTrimmerAdvice advice = this.context.getBean(StringTrimmerAdvice.class);
+
+    // Verify
+    assertNull(advice);
   }
 
   /**
