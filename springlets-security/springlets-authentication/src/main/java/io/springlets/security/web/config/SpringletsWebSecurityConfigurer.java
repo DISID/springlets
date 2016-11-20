@@ -16,9 +16,6 @@
 
 package io.springlets.security.web.config;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -26,8 +23,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.header.writers.StaticHeadersWriter;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 /**
  * 
@@ -102,18 +97,4 @@ class SpringletsWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
       .accessDeniedHandler(new SpringletsSecurityWebAccessDeniedHandlerImpl());
 
   }
-
-  /**
-   * El método heredado {@link WebSecurityConfigurerAdapter#authenticationManagerBean()}
-   * no registra el {@link AuthenticationManager} en el contexto de Spring.
-   *
-   * El objeto de este método es obtener el {@link AuthenticationManager} del padre y
-   * registrarlo en el contexto de Spring.
-   */
-//  @Bean
-//  @Override
-//  public AuthenticationManager authenticationManagerBean() throws Exception {
-//    return super.authenticationManagerBean();
-//  }
-
 }
