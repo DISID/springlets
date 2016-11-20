@@ -21,7 +21,6 @@ import org.springframework.context.annotation.Import;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
 
 import io.springlets.security.jpa.config.SpringletsSecurityJpaAuthenticationConfiguration;
 
@@ -35,11 +34,6 @@ import io.springlets.security.jpa.config.SpringletsSecurityJpaAuthenticationConf
 @EnableWebSecurity
 @Import(SpringletsSecurityJpaAuthenticationConfiguration.class)
 public class SpringletsWebSecurityConfiguration {
-
-//  @Bean
-//  public SpringSecurityDialect securityDialect() {
-//    return new SpringSecurityDialect();
-//  }
 
   @Bean
   @Order(Ordered.HIGHEST_PRECEDENCE)
