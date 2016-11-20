@@ -16,15 +16,23 @@
 
 package io.springlets.security.config;
 
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.core.env.MapPropertySource;
+import org.springframework.core.env.MutablePropertySources;
 import org.springframework.security.config.annotation.SecurityConfigurer;
+import org.springframework.security.config.annotation.SecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configurers.GlobalAuthenticationConfigurerAdapter;
 import org.springframework.security.config.annotation.authentication.configurers.provisioning.InMemoryUserDetailsManagerConfigurer;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
-import io.springlets.security.jpa.JpaUserDetailsService;
 
 /**
  * A {@link SecurityConfigurer} that registers a InMemoryUserDetailsManager to have
@@ -32,7 +40,24 @@ import io.springlets.security.jpa.JpaUserDetailsService;
  * 
  * @author Enrique Ruiz at http://www.disid.com[DISID Corporation S.L.]
  */
-class SpringletsSecurityInMemoryAuthenticationConfigurer extends GlobalAuthenticationConfigurerAdapter {
+class SpringletsSecurityInMemoryAuthenticationConfigurer
+    extends GlobalAuthenticationConfigurerAdapter implements ApplicationContextAware {
+
+  private static final Logger LOG =
+      LoggerFactory.getLogger(SpringletsSecurityInMemoryAuthenticationConfigurer.class);
+
+  private ConfigurableApplicationContext applicationContext;
+
+  private SpringletsSecurityProperties securityProperties;
+
+  public SpringletsSecurityInMemoryAuthenticationConfigurer(SpringletsSecurityProperties properties) {
+    this.securityProperties = properties;
+  }
+
+  @Override
+  public void setApplicationContext(ApplicationContext ctx) throws BeansException {
+    this.applicationContext = (ConfigurableApplicationContext) ctx;
+  }
 
   /**
    * {@inheritDoc}
@@ -42,28 +67,44 @@ class SpringletsSecurityInMemoryAuthenticationConfigurer extends GlobalAuthentic
    * * user/password, role USER
    * * admin/password, role ADMIN
    * 
-   * The method {@link AuthenticationManagerBuilder#inMemoryAuthentication()} is not
-   * used to avoid to override the default UserDetailsService. Note Springlets configure
-   * the JpaUserDetailsService as the default one.
+   * Neither the method {@link AuthenticationManagerBuilder#inMemoryAuthentication()} 
+   * nor {@link AuthenticationManagerBuilder#apply(SecurityConfigurerAdapter)} 
+   * are used to avoid to override the default UserDetailsService. Note that Springlets 
+   * configure the JpaUserDetailsService as the default one.
    * 
    * Use the passwords as given, they aren't encrypted.
    */
   @Override
   public void init(AuthenticationManagerBuilder auth) throws Exception {
 
-    // Añadir el AuthenticationProvider en memoria preconfigurado con un usuario
-    // especifico de la aplicación que tendrá acceso a las vistas de monitorización
-    // como /healthcheck
+    // clear credentials after success authentication
+    auth.eraseCredentials(securityProperties.getAuth().getInMemory().isEraseCredentials());
+
+    // Configure a in memory AuthenticationProvider with two users
     InMemoryUserDetailsManagerConfigurer<AuthenticationManagerBuilder> inMemAuthProvConfigurer =
         new InMemoryUserDetailsManagerConfigurer<AuthenticationManagerBuilder>();
 
-    inMemAuthProvConfigurer
-      .withUser("user").password("password").roles("USER");
+    String userPassw = UUID.randomUUID().toString();
+    inMemAuthProvConfigurer.withUser("user").password(userPassw).roles("USER");
 
-    inMemAuthProvConfigurer
-      .withUser("admin").password("password").roles("USER", "ADMIN");
+    String adminPassw = UUID.randomUUID().toString();
+    inMemAuthProvConfigurer.withUser("admin").password(adminPassw).roles("USER",
+        "ADMIN");
+
+    LOG.info("\n\nDefault security users [USERNAME : PASSWORD : ROLES]:\n"
+            .concat("\n  [user  : {} : ROLE_USER]\n")
+            .concat("\n  [admin : {} : ROLE_USER, ROLE_ADMIN]\n"), userPassw , adminPassw);
+
+    // Add users credentials to Environment for dev purposes
+
+    Map<String, Object> map = new HashMap<String, Object>();
+    map.put("springlets.security.auth.in-memory.enabled", true);
+    map.put("springlets.security.auth.in-memory.user.name", "user");
+    map.put("springlets.security.auth.in-memory.user.password", userPassw);
+
+    MutablePropertySources sources = this.applicationContext.getEnvironment().getPropertySources();
+    sources.addLast(new MapPropertySource("springlets", map));
 
     inMemAuthProvConfigurer.configure(auth);
   }
-
 }

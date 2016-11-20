@@ -17,18 +17,23 @@ package io.springlets.boot.autoconfigure.security.jpa;
 
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import io.springlets.security.config.EnableSpringletsSecurityAuthentication;
+import io.springlets.security.config.SpringletsSecurityProperties;
 import io.springlets.security.jpa.JpaUserDetailsService;
 
 /**
  * @{@link SpringletsSecurityJpaAuthenticationAutoConfiguration Auto-configuration} to setup
  * Spring Security authentication based on JPA Authentication Provider.
  *
+ * @see EnableSpringletsSecurityAuthentication
  * @author Enrique Ruiz at http://www.disid.com[DISID Corporation S.L.]
  */
 @AutoConfigureAfter(JpaBaseConfiguration.class)
@@ -38,4 +43,11 @@ import io.springlets.security.jpa.JpaUserDetailsService;
 @EntityScan(basePackageClasses = JpaUserDetailsService.class)
 @EnableSpringletsSecurityAuthentication
 public class SpringletsSecurityJpaAuthenticationAutoConfiguration {
+
+  @Bean
+  @ConditionalOnProperty(prefix = "springlets.security.auth.in-memory", name = "enabled", matchIfMissing = true)
+  @ConfigurationProperties(prefix = "springlets.security")
+  public SpringletsSecurityProperties springletsSecurityProperties() {
+      return new SpringletsSecurityProperties();
+  }
 }
