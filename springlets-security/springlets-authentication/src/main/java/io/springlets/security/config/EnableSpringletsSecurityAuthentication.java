@@ -41,7 +41,8 @@ import io.springlets.security.jpa.config.SpringletsSecurityJpaAuthenticationConf
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE, ElementType.ANNOTATION_TYPE})
 @Inherited
-@Import({EnableSpringletsSecurityAuthentication.SpringletsSecurityJpaAuthenticationImportSelector.class})
+@Import({
+    EnableSpringletsSecurityAuthentication.SpringletsSecurityJpaAuthenticationImportSelector.class})
 public @interface EnableSpringletsSecurityAuthentication {
 
   /**
@@ -53,7 +54,8 @@ public @interface EnableSpringletsSecurityAuthentication {
    * 
    * @author Enrique Ruiz at http://www.disid.com[DISID Corporation S.L.]
    */
-  static class SpringletsSecurityJpaAuthenticationImportSelector implements BeanFactoryAware, ImportSelector {
+  static class SpringletsSecurityJpaAuthenticationImportSelector
+      implements BeanFactoryAware, ImportSelector {
 
     /** Owning BeanFactory */
     private BeanFactory beanFactory;
@@ -65,8 +67,8 @@ public @interface EnableSpringletsSecurityAuthentication {
 
       // JPA authentication configuration
       try {
-        jpaConfigurerPresent =
-            this.beanFactory.getBean(SpringletsSecurityJpaAuthenticationConfiguration.class) != null;
+        jpaConfigurerPresent = this.beanFactory
+            .getBean(SpringletsSecurityJpaAuthenticationConfiguration.class) != null;
       } catch (NoSuchBeanDefinitionException ex) {
         jpaConfigurerPresent = false;
       }
@@ -80,13 +82,13 @@ public @interface EnableSpringletsSecurityAuthentication {
 
       try {
         inMemConfigurerPresent =
-            this.beanFactory.getBean(SpringletsSecurityAuthenticationConfiguration.class) != null;
+            this.beanFactory.getBean(SpringletsSecurityConfiguration.class) != null;
       } catch (NoSuchBeanDefinitionException ex) {
         inMemConfigurerPresent = false;
       }
 
       if (!inMemConfigurerPresent) {
-        imports.add(SpringletsSecurityAuthenticationConfiguration.class.getName());
+        imports.add(SpringletsSecurityConfiguration.class.getName());
       }
 
       return imports.toArray(new String[imports.size()]);
