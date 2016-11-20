@@ -33,9 +33,6 @@ package io.springlets.web.mvc.config;
  * * `advices.trimeditor`
  * * `advices.jsonp`
  * 
- * Tha
- *  properties.
- * 
  * @author Enrique Ruiz at http://www.disid.com[DISID Corporation S.L.]
  */
 public class SpringletsWebMvcProperties {
@@ -147,7 +144,5 @@ public class SpringletsWebMvcProperties {
     public void setQueryParamNames(String[] queryParamNames) {
       this.queryParamNames = queryParamNames;
     }
-
   }
-
 }
