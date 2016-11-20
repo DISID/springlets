@@ -33,15 +33,19 @@ import io.springlets.web.mvc.advice.StringTrimmerAdvice;
  * @author Enrique Ruiz at http://www.disid.com[DISID Corporation S.L.]
  */
 @Configuration
-public class SpringletsWebMvcConfiguration { // implements InitializingBean {
+public class SpringletsWebMvcConfiguration {
+
+  private SpringletsWebMvcProperties mvcProperties;
 
   @Autowired(required = false)
-  private SpringletsWebMvcProperties properties;
+  public void setSpringletsWebMvcProperties(SpringletsWebMvcProperties properties) {
+    this.mvcProperties = properties;
+  }
 
   /**
-   * Create and register a {@link StringTrimmerAdvice} bean configured with {@link #properties}.
+   * Create and register a {@link StringTrimmerAdvice} bean configured with {@link #mvcProperties}.
    * 
-   * Note that {@link #properties} is null when the property `springlets.mvc.advices.enabled`
+   * Note that {@link #mvcProperties} is null when the property `springlets.mvc.advices.enabled`
    * is false, in that case this method return null.
    * 
    * By returning null causes that the method {@link AnnotationConfigWebApplicationContext#getBean(Class)}
@@ -51,19 +55,19 @@ public class SpringletsWebMvcConfiguration { // implements InitializingBean {
    */
   @Bean
   public StringTrimmerAdvice stringTrimmerAdvice() {
-    if (properties == null) {
+    if (mvcProperties == null) {
       return null;
     }
     StringTrimmerAdvice trimmerAdvice = new StringTrimmerAdvice();
-    trimmerAdvice.setCharsToDelete(properties.getAdvices().getTrimeditor().getCharsToDelete());
-    trimmerAdvice.setEmptyAsNull(properties.getAdvices().getTrimeditor().isEmptyAsNull());
+    trimmerAdvice.setCharsToDelete(mvcProperties.getAdvices().getTrimeditor().getCharsToDelete());
+    trimmerAdvice.setEmptyAsNull(mvcProperties.getAdvices().getTrimeditor().isEmptyAsNull());
     return trimmerAdvice;
   }
 
   /**
-   * Create and register a {@link JsonpAdvice} bean configured with {@link #properties}.
+   * Create and register a {@link JsonpAdvice} bean configured with {@link #mvcProperties}.
    * 
-   * Note that {@link #properties} is null when the property `springlets.mvc.advices.enabled`
+   * Note that {@link #mvcProperties} is null when the property `springlets.mvc.advices.enabled`
    * is false, in that case this method return null.
    * 
    * By returning null causes that the method {@link AnnotationConfigWebApplicationContext#getBean(Class)}
@@ -73,11 +77,11 @@ public class SpringletsWebMvcConfiguration { // implements InitializingBean {
    */
   @Bean
   public JsonpAdvice jsonpAdvice() {
-    if (properties == null) {
+    if (mvcProperties == null) {
       return null;
     }
     JsonpAdvice jsonpAdvice =
-        new JsonpAdvice(properties.getAdvices().getJsonp().getQueryParamNames());
+        new JsonpAdvice(mvcProperties.getAdvices().getJsonp().getQueryParamNames());
     return jsonpAdvice;
   }
 }
