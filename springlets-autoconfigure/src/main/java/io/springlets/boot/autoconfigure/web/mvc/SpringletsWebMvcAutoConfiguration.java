@@ -15,47 +15,37 @@
  */
 package io.springlets.boot.autoconfigure.web.mvc;
 
+import io.springlets.web.mvc.support.SimpleControllerMethodLinkBuilderFactory;
+import io.springlets.web.mvc.util.ControllerMethodLinkBuilderFactory;
+import io.springlets.web.mvc.util.MethodLinkFactory;
+
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.autoconfigure.web.WebMvcAutoConfiguration;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import io.springlets.web.mvc.config.EnableSpringletsWebMvcAdvices;
-import io.springlets.web.mvc.config.SpringletsWebMvcConfiguration;
-import io.springlets.web.mvc.config.SpringletsWebMvcProperties;
 
 /**
  * {@link EnableAutoConfiguration Auto-configuration} for Springlets Web MVC
  * integration.
  * 
- * Activates when the application is a web application and no
- * {@link SpringletsWebMvcConfiguration} is found.
+ * Activates when the application is a web application.
  * 
- * Once in effect, the auto-configuration allows to configure any property of
- * {@link SpringletsWebMvcConfiguration} using the `springlets.mvc` prefix 
- * 
- * @author Enrique Ruiz at http://www.disid.com[DISID Corporation S.L.]
+ * @author Cèsar Ordiñana at http://www.disid.com[DISID Corporation S.L.]
  */
-@AutoConfigureBefore(WebMvcAutoConfiguration.class)
-@ConditionalOnClass(SpringletsWebMvcConfiguration.class)
-@ConditionalOnMissingBean(SpringletsWebMvcConfiguration.class)
 @ConditionalOnWebApplication
+@AutoConfigureBefore(WebMvcAutoConfiguration.class)
 @Configuration
-@EnableConfigurationProperties
-@EnableSpringletsWebMvcAdvices
 public class SpringletsWebMvcAutoConfiguration {
 
   @Bean
-  @ConditionalOnProperty(prefix = "springlets.mvc.advices", name = "enabled", matchIfMissing = true)
-  @ConfigurationProperties(prefix = "springlets.mvc")
-  public SpringletsWebMvcProperties springletsWebMvcProperties() {
-      return new SpringletsWebMvcProperties();
+  public ControllerMethodLinkBuilderFactory linkBuilder(MethodLinkFactory<?>[] factories) {
+    SimpleControllerMethodLinkBuilderFactory registry =
+        new SimpleControllerMethodLinkBuilderFactory();
+    for (int i = 0; i < factories.length; i++) {
+      registry.register(factories[i]);
+    }
+    return registry;
   }
 }

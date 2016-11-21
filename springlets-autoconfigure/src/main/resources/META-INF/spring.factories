@@ -1,11 +1,12 @@
 # Auto Configure
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-io.springlets.boot.autoconfigure.data.web.SpringletsDataArgumentResolversAutoConfiguration,\
 io.springlets.boot.autoconfigure.data.jpa.SpringletsDataJpaAuthenticationAuditorAutoConfiguration,\
+io.springlets.boot.autoconfigure.data.web.SpringletsDataArgumentResolversAutoConfiguration,\
+io.springlets.boot.autoconfigure.jms.SpringletsJmsAutoConfiguration,\
 io.springlets.boot.autoconfigure.http.converter.json.SpringletsWebJacksonAutoConfiguration,\
+io.springlets.boot.autoconfigure.mail.SpringletsMailAutoConfiguration,\
 io.springlets.boot.autoconfigure.security.jpa.SpringletsSecurityJpaAuthenticationAutoConfiguration,\
 io.springlets.boot.autoconfigure.web.SpringletsWebAuthenticationAutoConfiguration,\
+io.springlets.boot.autoconfigure.web.mvc.SpringletsWebMvcAdvicesAutoConfiguration,\
 io.springlets.boot.autoconfigure.web.mvc.SpringletsWebMvcAutoConfiguration,\
-io.springlets.boot.autoconfigure.webflow.SpringletsWebFlowAutoConfiguration,\
-io.springlets.boot.autoconfigure.mail.SpringletsMailAutoConfiguration,\
-io.springlets.boot.autoconfigure.jms.SpringletsJmsAutoConfiguration
+io.springlets.boot.autoconfigure.webflow.SpringletsWebFlowAutoConfiguration
