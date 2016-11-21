@@ -30,4 +30,5 @@ tmp/**/*
 .settings/
 .loadpath
 .externalToolBuilders/
- 
+.factorypath
+
