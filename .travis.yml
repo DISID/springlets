@@ -3,5 +3,6 @@ jdk:
   - oraclejdk8
   - oraclejdk7
   - openjdk7
+script: ./mvnw test -DskipRelease
 after_success:
   - bash <(curl -s https://codecov.io/bash)
