@@ -43,8 +43,7 @@ Springlets uses GitHub's integrated issue tracking system to record bugs and fea
 
 == Building from Source
 
-You don't need to build from source to use Springlets (binaries in
-http://repo.spring.io[repo.spring.io]), but if you want to try out the latest and
+You don't need to build from source to use Springlets, but if you want to try out the latest and
 greatest, Springlets can be easily built with the
 https://github.com/takari/maven-wrapper[maven wrapper]. You also need JDK 1.7 or JDK 1.8.
 
