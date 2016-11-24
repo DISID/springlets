@@ -91,7 +91,7 @@ Autoconfiguration starters for Spring Boot projects.
 
 The Springlets project uses and depends on a lot of Spring related projects, as well as other ones. We would like to thank all those projects and the people working on them, not only for the effort made to provide such excellent libraries and utilities, but also for the guidance and examples given on how to manage an open source Java project.
 
-Also, this README.adoc file has been written based on the one included in the "Spring Boot project":github.com/spring-projects/spring-boot .
+Also, this README.adoc file has been written based on the one included in the github.com/spring-projects/spring-boot[Spring Boot project] .
 
 == License
 
