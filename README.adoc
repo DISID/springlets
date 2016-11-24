@@ -1,15 +1,36 @@
 = Springlets image:https://travis-ci.org/DISID/springlets.svg?branch=master["Build Status", link="https://travis-ci.org/DISID/springlets"]
 
-Springlets provides a series of heterogeneus small utilities and Spring Boot starters not available in the main Spring projects: Spring Framework, Spring Data, Spring Boot, ...
+Springlets provides a series of heterogeneus utilities and Spring Boot starters not currently available in the Spring projects like Spring Framework, Spring Data or Spring Boot, as well as other open source projects used in Java web projects.
+
+Our goal in Springlets is to follow the conventions used in the Spring projects (naming, versioning, project structure, ...) as close as possible. As a matter of fact, you can easily view to which Spring project are related most Springlet modules, as their name has been created by replacing the _spring_ prefix with _springlets_.
+
+The Springlets 1.x versions will be associated to the Spring IO platform Athens releases. As a result, Springlets 1.x will depend on the Spring Framework 4.3 releases. 
+Also JDK 7 and 8 is supported.
 
 == Installation and Getting Started
 
-TODO
+The Springlets libraries are released in the Maven central repository, so to use them in a Java project you just have to add them as dependencies if you use a build tool that supports it, like maven or graddle.
+
+As an example, to add the Springlets webflow starter to a project with Maven, you would add the following dependency into the _dependencies_ section of the _pom.xml_ file:
+
+[source,xml,indent=0]
+----
+<dependency>
+    <groupId>io.springlets</groupId>
+    <artifactId>springlets-boot-starter-webflow</artifactId>
+    <version>1.0.0.RELEASE</version>
+</dependency>
+----
 
 == Getting help
-Having trouble with Springlets ? We'd like to help!
 
-TODO
+If you have any trouble using any of the Springlets modules:
+
+* Report bugs with Springlets at https://github.com/DISID/springlets/issues
+
+* As most Springlets modules provide utilities based on Spring projects, take a look at the related Spring project reference documentation. In the http://spring.io web-site you will find a lot of excellent reference documentation and getting started guides of the Spring projects.
+
+* Ask a question in http://stackoverflow.com. The _springlets_ tag is still not available, but you can use the Spring project tag related to the Springlet module you are using.
 
 == Reporting Issues
 
@@ -22,11 +43,18 @@ Springlets uses GitHub's integrated issue tracking system to record bugs and fea
 
 == Building from Source
 
-TODO
+You don't need to build from source to use Springlets (binaries in
+http://repo.spring.io[repo.spring.io]), but if you want to try out the latest and
+greatest, Springlets can be easily built with the
+https://github.com/takari/maven-wrapper[maven wrapper]. You also need JDK 1.7 or JDK 1.8.
 
-=== Building reference documentation
+[indent=0]
+----
+	$ ./mvnw clean install
+----
 
-TODO
+If you want to build with the regular `mvn` command, you will need
+http://maven.apache.org/run-maven/index.html[Maven v3.3.1 or above].
 
 === Project versioning
 
@@ -34,23 +62,37 @@ Springlets project follows the https://github.com/spring-projects/spring-build-g
 
 == Modules
 
-There are a number of modules in Springlets, here is a quick overview:
+These are main modules included in Springlets:
 
-=== spring-boot
+=== springlets-framework
 
-TODO
+It provides utilities related to the Spring Framework project. The included submodules are related to different Spring Framework modules, with configuration and utilities to:
 
-=== spring-data
+* springlets-jms: send and receive JMS messages.
+* springlets-mail: send and receive email messages.
+* springlets-web: activate support for JSONP, additional Jackson properties, return BindingResults in JSON requests, build links to controllers, ...
 
-TODO
+=== springlets-data
 
-=== spring-framework
+Utilities related to the Spring Data modules. Integration of Javascript components with Spring Data commons page and sort elements.
 
-TODO
+=== springlets-security
 
-=== spring-security
+Configuration and utilities related to Spring Security.
 
-TODO
+=== springlets-webflow
+
+Configuration and utilities related to Spring Webflow.
+
+=== springlets-boot-starters
+
+Autoconfiguration starters for Spring Boot projects.
+
+== Acknowledgments
+
+The Springlets project uses and depends on a lot of Spring related projects, as well as other ones. We would like to thank all those projects and the people working on them, not only for the effort made to provide such excellent libraries and utilities, but also for the guidance and examples given on how to manage an open source Java project.
+
+Also, this README.adoc file has been written based on the one included in the "Spring Boot project":github.com/spring-projects/spring-boot .
 
 == License
 
