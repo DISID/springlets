@@ -23,6 +23,7 @@
     </license>
   </licenses>
   <modules>
+    <module>springlets-context</module>
     <module>springlets-web</module>
     <module>springlets-mail</module>
     <module>springlets-jms</module>
