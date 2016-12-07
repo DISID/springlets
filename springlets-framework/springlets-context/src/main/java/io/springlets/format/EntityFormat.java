@@ -68,6 +68,10 @@ import java.util.Locale;
  * provided, the {@link #message()} expression for the current or the default
  * locale will be used. If not available, the {@link #expression()} will be applied
  * instead.
+ * 
+ * IMPORTANT: Take into account this annotation is provided to be used for rendering only.
+ * It doesn't support parsing a text to create the value with the SpEL expression,
+ * so don't rely on it, for example, to recreate the value in your forms.
  *
  * @author Cèsar Ordiñana at http://www.disid.com[DISID Corporation S.L.]
  */
@@ -75,7 +79,7 @@ import java.util.Locale;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE, ElementType.METHOD, ElementType.FIELD, ElementType.PARAMETER,
     ElementType.ANNOTATION_TYPE})
-public @interface SpElFormat {
+public @interface EntityFormat {
 
   /**
    * Expression format in SpEl to apply to a field, parameter or method return

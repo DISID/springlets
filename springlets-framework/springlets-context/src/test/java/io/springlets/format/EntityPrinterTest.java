@@ -16,18 +16,10 @@
 package io.springlets.format;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.when;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.context.MessageSource;
 import org.springframework.expression.ExpressionParser;
 import org.springframework.expression.common.TemplateParserContext;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
@@ -35,63 +27,52 @@ import org.springframework.expression.spel.standard.SpelExpressionParser;
 import java.util.Locale;
 
 /**
- * Unit tests for the {@link SpElMessagePrinter} class.
+ * Unit tests for the {@link EntityPrinter} class.
  * @author Cèsar Ordiñana at http://www.disid.com[DISID Corporation S.L.]
  */
-@RunWith(MockitoJUnitRunner.class)
-public class SpElMessagePrinterTest {
+public class EntityPrinterTest {
 
-  private static final String TO_STRING_EXPRESSION = "#{toString()}";
+  private static final String TO_STRING = "A string";
 
-  private static final String TO_STRING_VALUE = "A string";
-
-  private SpElMessagePrinter printer;
+  private EntityPrinter printer;
   private ExpressionParser parser = new SpelExpressionParser();
   private TemplateParserContext context = new TemplateParserContext();
   private TestObject testObject = new TestObject();
-  private Locale locale = Locale.getDefault();
-
-  @Mock
-  private MessageSource messageSource;
 
   @Rule
   public ExpectedException thown = ExpectedException.none();
 
   @Test
-  public void shouldPrintToStringWithNullMessageCode() {
+  public void shouldPrintToStringWithEmptyExpression() {
     // Prepare
-    printer = new SpElMessagePrinter(null, messageSource, parser, context);
+    printer = new EntityPrinter("", parser, context);
 
     // Exercise
-    String result = printer.print(testObject, locale);
+    String result = printer.print(testObject, Locale.getDefault());
 
     // Validate
-    assertThat(result).isNotEmpty().isEqualTo(TO_STRING_VALUE);
+    assertThat(result).isNotEmpty().isEqualTo(TO_STRING);
   }
 
   @Test
-  public void shouldPrintToStringWithEmptyMessage() {
+  public void shouldPrintToStringWithNullExpression() {
     // Prepare
-    when(messageSource.getMessage(anyString(), any(Object[].class), anyString(), eq(locale)))
-        .thenReturn(TO_STRING_EXPRESSION);
-    printer = new SpElMessagePrinter("empty", messageSource, parser, context);
+    printer = new EntityPrinter(null, parser, context);
 
     // Exercise
-    String result = printer.print(testObject, locale);
+    String result = printer.print(testObject, Locale.getDefault());
 
     // Validate
-    assertThat(result).isNotEmpty().isEqualTo(TO_STRING_VALUE);
+    assertThat(result).isNotEmpty().isEqualTo(TO_STRING);
   }
 
   @Test
   public void shouldPrintUsingExpression() {
     // Prepare
-    when(messageSource.getMessage("message", null, TO_STRING_EXPRESSION, locale))
-        .thenReturn("#{field1} - #{field2}");
-    printer = new SpElMessagePrinter("message", messageSource, parser, context);
+    printer = new EntityPrinter("#{field1} - #{field2}", parser, context);
 
     // Exercise
-    String result = printer.print(testObject, locale);
+    String result = printer.print(testObject, Locale.getDefault());
 
     // Validate
     assertThat(result).isNotEmpty().isEqualTo(testObject.field1 + " - " + testObject.field2);
@@ -103,7 +84,7 @@ public class SpElMessagePrinterTest {
 
     @Override
     public String toString() {
-      return TO_STRING_VALUE;
+      return TO_STRING;
     }
   }
 

@@ -30,7 +30,7 @@ import java.util.Locale;
  * 
  * @author Cèsar Ordiñana at http://www.disid.com[DISID Corporation S.L.]
  */
-public abstract class AbstractSpElPrinter implements Printer<Object> {
+public abstract class AbstractEntityPrinter implements Printer<Object> {
 
   private String expression;
   private ExpressionParser parser;
@@ -41,7 +41,7 @@ public abstract class AbstractSpElPrinter implements Printer<Object> {
    * Creates a new instance with the given expression in SpEL format.
    * @param expression expression to generate a String from the provided objects
    */
-  public AbstractSpElPrinter(String expression) {
+  public AbstractEntityPrinter(String expression) {
     this(expression, new SpelExpressionParser());
   }
 
@@ -50,7 +50,7 @@ public abstract class AbstractSpElPrinter implements Printer<Object> {
    * @param expression expression to generate a String from the provided objects
    * @param parser to parse the expression
    */
-  public AbstractSpElPrinter(String expression, ExpressionParser parser) {
+  public AbstractEntityPrinter(String expression, ExpressionParser parser) {
     this(expression, parser, new TemplateParserContext());
   }
 
@@ -60,7 +60,7 @@ public abstract class AbstractSpElPrinter implements Printer<Object> {
    * @param parser to parse the expression
    * @param templateParserContext context to use to parse the expression
    */
-  public AbstractSpElPrinter(String expression, ExpressionParser parser,
+  public AbstractEntityPrinter(String expression, ExpressionParser parser,
       TemplateParserContext templateParserContext) {
     this.expression = expression;
     this.parser = parser;

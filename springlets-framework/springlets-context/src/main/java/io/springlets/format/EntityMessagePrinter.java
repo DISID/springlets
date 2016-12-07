@@ -28,7 +28,7 @@ import java.util.Locale;
  * 
  * @author Cèsar Ordiñana at http://www.disid.com[DISID Corporation S.L.]
  */
-public class SpElMessagePrinter extends AbstractSpElPrinter {
+public class EntityMessagePrinter extends AbstractEntityPrinter {
 
   private final MessageSource messageSource;
 
@@ -40,7 +40,7 @@ public class SpElMessagePrinter extends AbstractSpElPrinter {
    * @param parser to parse the expression
    * @param templateParserContext context to use to parse the expression
    */
-  public SpElMessagePrinter(String messageCode, MessageSource messageSource,
+  public EntityMessagePrinter(String messageCode, MessageSource messageSource,
       ExpressionParser parser, TemplateParserContext templateParserContext) {
     super(messageCode, parser, templateParserContext);
     this.messageSource = messageSource;

@@ -27,7 +27,7 @@ import java.util.Locale;
  * 
  * @author Cèsar Ordiñana at http://www.disid.com[DISID Corporation S.L.]
  */
-public class SpElPrinter extends AbstractSpElPrinter {
+public class EntityPrinter extends AbstractEntityPrinter {
 
   private final Expression expression;
 
@@ -37,7 +37,7 @@ public class SpElPrinter extends AbstractSpElPrinter {
    * @param parser to parse the expression
    * @param templateParserContext context to use to parse the expression
    */
-  public SpElPrinter(String expression, ExpressionParser parser,
+  public EntityPrinter(String expression, ExpressionParser parser,
       TemplateParserContext templateParserContext) {
     super(expression, parser, templateParserContext);
     this.expression = parseExpression(getExpressionOrDefault());
