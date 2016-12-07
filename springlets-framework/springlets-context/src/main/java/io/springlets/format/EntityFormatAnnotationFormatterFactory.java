@@ -84,39 +84,27 @@ public class EntityFormatAnnotationFormatterFactory extends EmbeddedValueResolut
 
   @Override
   public Printer<?> getPrinter(EntityFormat annotation, Class<?> fieldType) {
-    String messageCode = getExpressionMessageCode(annotation, fieldType);
-    if (StringUtils.isEmpty(messageCode)) {
-      String expression = getExpression(annotation, fieldType);
-      return new EntityPrinter(expression, PARSER, PARSER_CONTEXT);
+    // First use the message code at the field level
+    String messageCode = getFieldMessageCode(annotation);
+    if (!StringUtils.isEmpty(messageCode)) {
+      return createMessagePrinter(messageCode);
     }
 
-    return new EntityMessagePrinter(messageCode, messageSource, PARSER, PARSER_CONTEXT);
-  }
-
-  private String getExpressionMessageCode(EntityFormat annotation, Class<?> fieldType) {
-    EntityFormat processedAnnotation = AnnotationUtils.getAnnotation(annotation, EntityFormat.class);
-    String message = processedAnnotation.message();
-    if (StringUtils.isEmpty(message)) {
-      EntityFormat classFormatAnnotation =
-          AnnotatedElementUtils.findMergedAnnotation(fieldType, EntityFormat.class);
-      if (classFormatAnnotation != null) {
-        message = classFormatAnnotation.message();
-      }
+    // Then the expression at the field level
+    String expression = getFieldExpression(annotation);
+    if (!StringUtils.isEmpty(expression)) {
+      return createPrinter(expression);
     }
-    return message;
-  }
 
-  private String getExpression(EntityFormat annotation, Class<?> fieldType) {
-    EntityFormat processedAnnotation = AnnotationUtils.getAnnotation(annotation, EntityFormat.class);
-    String expression = processedAnnotation.expression();
-    if (StringUtils.isEmpty(expression)) {
-      EntityFormat classFormatAnnotation =
-          AnnotatedElementUtils.findMergedAnnotation(fieldType, EntityFormat.class);
-      if (classFormatAnnotation != null) {
-        expression = classFormatAnnotation.expression();
-      }
+    // Then the message code at the class level
+    messageCode = getClassMessageCode(fieldType);
+    if (!StringUtils.isEmpty(messageCode)) {
+      return createMessagePrinter(messageCode);
     }
-    return expression;
+
+    // Then the expression at the class level
+    expression = getClassExpression(fieldType);
+    return createPrinter(expression);
   }
 
   @SuppressWarnings({"rawtypes"})
@@ -143,6 +131,36 @@ public class EntityFormatAnnotationFormatterFactory extends EmbeddedValueResolut
     }
 
     return new EntityParser<>(resolver, conversionService);
+  }
+
+  private String getFieldMessageCode(EntityFormat annotation) {
+    EntityFormat processedAnnotation = AnnotationUtils.getAnnotation(annotation, EntityFormat.class);
+    return processedAnnotation.message();
+  }
+
+  private String getClassMessageCode(Class<?> fieldType) {
+    EntityFormat classFormatAnnotation =
+        AnnotatedElementUtils.findMergedAnnotation(fieldType, EntityFormat.class);
+    return classFormatAnnotation == null ? null : classFormatAnnotation.message();
+  }
+
+  private String getFieldExpression(EntityFormat annotation) {
+    EntityFormat processedAnnotation = AnnotationUtils.getAnnotation(annotation, EntityFormat.class);
+    return processedAnnotation.expression();
+  }
+
+  private String getClassExpression(Class<?> fieldType) {
+    EntityFormat classFormatAnnotation =
+        AnnotatedElementUtils.findMergedAnnotation(fieldType, EntityFormat.class);
+    return classFormatAnnotation == null ? null : classFormatAnnotation.expression();
+  }
+
+  private EntityPrinter createPrinter(String expression) {
+    return new EntityPrinter(expression, PARSER, PARSER_CONTEXT);
+  }
+
+  private EntityMessagePrinter createMessagePrinter(String messageCode) {
+    return new EntityMessagePrinter(messageCode, messageSource, PARSER, PARSER_CONTEXT);
   }
 
 }
