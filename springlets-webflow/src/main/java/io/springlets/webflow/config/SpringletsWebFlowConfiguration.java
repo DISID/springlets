@@ -17,6 +17,7 @@ package io.springlets.webflow.config;
 
 import java.util.Arrays;
 
+import org.springframework.beans.factory.SmartInitializingSingleton;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.binding.convert.service.DefaultConversionService;
@@ -24,6 +25,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.convert.ConversionService;
+import org.springframework.util.ClassUtils;
 import org.springframework.validation.Validator;
 import org.springframework.web.servlet.HandlerAdapter;
 import org.springframework.web.servlet.HandlerMapping;
@@ -33,14 +35,19 @@ import org.springframework.webflow.config.AbstractFlowConfiguration;
 import org.springframework.webflow.definition.FlowDefinition;
 import org.springframework.webflow.definition.registry.FlowDefinitionRegistry;
 import org.springframework.webflow.engine.builder.support.FlowBuilderServices;
+import org.springframework.webflow.engine.impl.FlowExecutionImplFactory;
+import org.springframework.webflow.execution.factory.ConditionalFlowExecutionListenerLoader;
+import org.springframework.webflow.execution.factory.FlowExecutionListenerCriteria;
+import org.springframework.webflow.execution.factory.FlowExecutionListenerCriteriaFactory;
 import org.springframework.webflow.executor.FlowExecutor;
+import org.springframework.webflow.executor.FlowExecutorImpl;
 import org.springframework.webflow.mvc.builder.MvcViewFactoryCreator;
 import org.springframework.webflow.mvc.servlet.FlowHandlerAdapter;
 import org.springframework.webflow.mvc.servlet.FlowHandlerMapping;
 import org.springframework.webflow.security.SecurityFlowExecutionListener;
 import org.thymeleaf.spring4.SpringTemplateEngine;
-import org.thymeleaf.spring4.webflow.view.FlowAjaxThymeleafView;
 import org.thymeleaf.spring4.webflow.view.AjaxThymeleafViewResolver;
+import org.thymeleaf.spring4.webflow.view.FlowAjaxThymeleafView;
 
 import io.springlets.webflow.binding.convert.StringToNullConverter;
 
@@ -83,7 +90,7 @@ public class SpringletsWebFlowConfiguration extends AbstractFlowConfiguration {
 
   /**
    * {@link FlowExecutor} bean configured with the default flow definitions provided 
-   * by {@link #flowRegistry()} plus security enabled by {@link #securityFlowExecutionListener()}.
+   * by {@link #flowRegistry()}.
    * 
    * If you want to replace the default FlowExecutor completely, define 
    * a @{@link Bean} of that type and mark it as @{@link Primary}.
@@ -92,21 +99,7 @@ public class SpringletsWebFlowConfiguration extends AbstractFlowConfiguration {
    */
   @Bean
   public FlowExecutor flowExecutor() {
-    return getFlowExecutorBuilder(flowRegistry())
-        .addFlowExecutionListener(securityFlowExecutionListener(), "*").build();
-  }
-
-  /**
-   * Flow security integration with Spring Security.
-   * 
-   * If you want to replace the default SecurityFlowExecutionListener completely, define 
-   * a @{@link Bean} of that type and mark it as @{@link Primary}.
-   * 
-   * @return the security flow execution listener
-   */
-  @Bean
-  public SecurityFlowExecutionListener securityFlowExecutionListener() {
-    return new SecurityFlowExecutionListener();
+    return getFlowExecutorBuilder(flowRegistry()).build();
   }
 
   /**
@@ -151,7 +144,7 @@ public class SpringletsWebFlowConfiguration extends AbstractFlowConfiguration {
   }
 
   // === Spring MVC request handler artifacts for Spring WebFlow
-  
+
   /**
    * Creates the native Spring MVC-based views using the {@link #ajaxThymeleafViewResolver()}.
    *
@@ -160,7 +153,8 @@ public class SpringletsWebFlowConfiguration extends AbstractFlowConfiguration {
   @Bean
   public MvcViewFactoryCreator mvcViewFactoryCreator() {
     MvcViewFactoryCreator mvcViewFactoryCreator = new MvcViewFactoryCreator();
-    mvcViewFactoryCreator.setViewResolvers(Arrays.<ViewResolver>asList(ajaxThymeleafViewResolver()));
+    mvcViewFactoryCreator
+        .setViewResolvers(Arrays.<ViewResolver>asList(ajaxThymeleafViewResolver()));
     return mvcViewFactoryCreator;
   }
 
@@ -216,6 +210,68 @@ public class SpringletsWebFlowConfiguration extends AbstractFlowConfiguration {
     resolver.setCharacterEncoding(UTF8);
     resolver.setCache(!this.development);
     return resolver;
+  }
+
+  /**
+   * An {@link SmartInitializingSingleton} is a callback interface triggered at the end of the 
+   * singleton pre-instantiation phase during BeanFactory bootstrap.
+   * 
+   * This interface is indicated for performing some initialization after the 
+   * regular singleton instantiation algorithm, avoiding side effects with accidental early 
+   * initialization.
+   * 
+   * This implementation will autowire the {@link SecurityFlowExecutionListener}
+   * into the {@link FlowExecutor} when the Spring Security dependency is on the classpath 
+   * by checking whether the `EnableWebSecurity` is present and can be loaded.
+   * 
+   * If present, the {@link FlowExecutor} bean will be configured with the 
+   * security enabled by {@link #securityFlowExecutionListener()}.
+   * 
+   * @return the flow executor
+   * @see ClassUtils
+   */
+  protected static class SecurityConfigurationListener implements SmartInitializingSingleton {
+
+    @Autowired
+    private FlowExecutor flowExecutor;
+
+    @Override
+    public void afterSingletonsInstantiated() {
+      if (ClassUtils.isPresent(
+          "org.springframework.security.config.annotation.web.configuration.EnableWebSecurity",
+          null)) {
+        configureSecurity();
+      }
+    }
+
+    /**
+     * Setup the {@link FlowExecutor} with the {@link SecurityFlowExecutionListener}.
+     */
+    private void configureSecurity() {
+      if (flowExecutor instanceof FlowExecutorImpl) {
+        FlowExecutorImpl flowImpl = (FlowExecutorImpl) flowExecutor;
+        FlowExecutionImplFactory exeFactory =
+            (FlowExecutionImplFactory) flowImpl.getExecutionFactory();
+        exeFactory.setExecutionListenerLoader(getFlowExecutionListener());
+      }
+    }
+
+    /**
+     * Create the {@link SecurityFlowExecutionListener} for all flows.
+     * @return
+     */
+    private ConditionalFlowExecutionListenerLoader getFlowExecutionListener() {
+      // * means "all flows"
+      FlowExecutionListenerCriteria listenerCriteria =
+          new FlowExecutionListenerCriteriaFactory().getListenerCriteria("*");
+
+      ConditionalFlowExecutionListenerLoader listenerLoader =
+          new ConditionalFlowExecutionListenerLoader();
+      listenerLoader.addListener(new SecurityFlowExecutionListener(), listenerCriteria);
+
+      return listenerLoader;
+    }
+
   }
 
 }
