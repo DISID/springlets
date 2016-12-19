@@ -49,6 +49,11 @@
      
     <dependency>
       <groupId>io.springlets</groupId>
+      <artifactId>springlets-context</artifactId>
+    </dependency>
+     
+    <dependency>
+      <groupId>io.springlets</groupId>
       <artifactId>springlets-data-commons</artifactId>
     </dependency>
      

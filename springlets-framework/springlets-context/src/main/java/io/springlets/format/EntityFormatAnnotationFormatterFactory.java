@@ -21,6 +21,7 @@ import org.springframework.context.support.EmbeddedValueResolutionSupport;
 import org.springframework.core.annotation.AnnotatedElementUtils;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.core.convert.ConversionService;
+import org.springframework.core.convert.converter.ConditionalGenericConverter;
 import org.springframework.expression.common.TemplateParserContext;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
 import org.springframework.format.AnnotationFormatterFactory;
@@ -57,6 +58,8 @@ public class EntityFormatAnnotationFormatterFactory extends EmbeddedValueResolut
 
   private final Map<Class<?>, EntityResolver<?, ?>> entity2Resolver;
 
+  private String defaultExpression;
+
   static {
     Set<Class<?>> fieldTypes = new HashSet<Class<?>>(1);
     fieldTypes.add(Object.class);
@@ -72,8 +75,20 @@ public class EntityFormatAnnotationFormatterFactory extends EmbeddedValueResolut
    */
   public EntityFormatAnnotationFormatterFactory(MessageSource messageSource,
       ListableBeanFactory beanFactory, ConversionService conversionService) {
+    this(messageSource, beanFactory, conversionService, "#{toString()}");
+  }
+
+  /**
+   * Creates a new factory with the given {@link MessageSource} to get messages
+   * depending on the locale.
+   * @param messageSource to get i18n messages from
+   */
+  public EntityFormatAnnotationFormatterFactory(MessageSource messageSource,
+      ListableBeanFactory beanFactory, ConversionService conversionService,
+      String defaultExpression) {
     this.messageSource = messageSource;
     this.conversionService = conversionService;
+    this.defaultExpression = defaultExpression;
     this.entity2Resolver = loadEntityResolvers(beanFactory);
   }
 
@@ -85,37 +100,36 @@ public class EntityFormatAnnotationFormatterFactory extends EmbeddedValueResolut
   @Override
   public Printer<?> getPrinter(EntityFormat annotation, Class<?> fieldType) {
     // First use the message code at the field level
-    String messageCode = getFieldMessageCode(annotation);
+    EntityFormat fieldAnnotation = AnnotationUtils.getAnnotation(annotation, EntityFormat.class);
+
+    String messageCode = fieldAnnotation.message();
     if (!StringUtils.isEmpty(messageCode)) {
       return createMessagePrinter(messageCode);
     }
 
     // Then the expression at the field level
-    String expression = getFieldExpression(annotation);
+    String expression = fieldAnnotation.expression();
     if (!StringUtils.isEmpty(expression)) {
       return createPrinter(expression);
     }
 
-    // Then the message code at the class level
-    messageCode = getClassMessageCode(fieldType);
-    if (!StringUtils.isEmpty(messageCode)) {
-      return createMessagePrinter(messageCode);
+    // If no message code or expression is provided at the field level, try with the annotation
+    // at the class level
+    EntityFormat classAnnotation =
+        AnnotatedElementUtils.findMergedAnnotation(fieldType, EntityFormat.class);
+
+    if (classAnnotation != null) {
+      // Then the message code at the class level
+      messageCode = classAnnotation.message();
+      if (!StringUtils.isEmpty(messageCode)) {
+        return createMessagePrinter(messageCode);
+      }
+
+      // Then the expression at the class level
+      expression = classAnnotation.expression();
     }
 
-    // Then the expression at the class level
-    expression = getClassExpression(fieldType);
     return createPrinter(expression);
-  }
-
-  @SuppressWarnings({"rawtypes"})
-  public static Map<Class<?>, EntityResolver<?, ?>> loadEntityResolvers(
-      ListableBeanFactory beanFactory) {
-    Map<String, EntityResolver> entityServices = beanFactory.getBeansOfType(EntityResolver.class);
-    Map<Class<?>, EntityResolver<?, ?>> entity2Resolver = new HashMap<>(entityServices.size());
-    for (EntityResolver entityResolver : entityServices.values()) {
-      entity2Resolver.put(entityResolver.getEntityType(), entityResolver);
-    }
-    return entity2Resolver;
   }
 
   @Override
@@ -133,34 +147,34 @@ public class EntityFormatAnnotationFormatterFactory extends EmbeddedValueResolut
     return new EntityParser<>(resolver, conversionService);
   }
 
-  private String getFieldMessageCode(EntityFormat annotation) {
-    EntityFormat processedAnnotation = AnnotationUtils.getAnnotation(annotation, EntityFormat.class);
-    return processedAnnotation.message();
+  /**
+   * Creates a converter of entities to {@link String}, based on the {@link EntityFormat}
+   * annotation provided at the class level.
+   * 
+   * @return the entity to String converter
+   */
+  public ConditionalGenericConverter getToStringConverter() {
+    return new EntityToStringConverter(PARSER, PARSER_CONTEXT, messageSource);
   }
 
-  private String getClassMessageCode(Class<?> fieldType) {
-    EntityFormat classFormatAnnotation =
-        AnnotatedElementUtils.findMergedAnnotation(fieldType, EntityFormat.class);
-    return classFormatAnnotation == null ? null : classFormatAnnotation.message();
-  }
-
-  private String getFieldExpression(EntityFormat annotation) {
-    EntityFormat processedAnnotation = AnnotationUtils.getAnnotation(annotation, EntityFormat.class);
-    return processedAnnotation.expression();
-  }
-
-  private String getClassExpression(Class<?> fieldType) {
-    EntityFormat classFormatAnnotation =
-        AnnotatedElementUtils.findMergedAnnotation(fieldType, EntityFormat.class);
-    return classFormatAnnotation == null ? null : classFormatAnnotation.expression();
+  @SuppressWarnings({"rawtypes"})
+  private static Map<Class<?>, EntityResolver<?, ?>> loadEntityResolvers(
+      ListableBeanFactory beanFactory) {
+    Map<String, EntityResolver> entityServices = beanFactory.getBeansOfType(EntityResolver.class);
+    Map<Class<?>, EntityResolver<?, ?>> entity2Resolver = new HashMap<>(entityServices.size());
+    for (EntityResolver entityResolver : entityServices.values()) {
+      entity2Resolver.put(entityResolver.getEntityType(), entityResolver);
+    }
+    return entity2Resolver;
   }
 
   private EntityPrinter createPrinter(String expression) {
-    return new EntityPrinter(expression, PARSER, PARSER_CONTEXT);
+    return new EntityPrinter(expression, PARSER, PARSER_CONTEXT, defaultExpression);
   }
 
   private EntityMessagePrinter createMessagePrinter(String messageCode) {
-    return new EntityMessagePrinter(messageCode, messageSource, PARSER, PARSER_CONTEXT);
+    return new EntityMessagePrinter(messageCode, messageSource, PARSER, PARSER_CONTEXT,
+        defaultExpression);
   }
 
 }

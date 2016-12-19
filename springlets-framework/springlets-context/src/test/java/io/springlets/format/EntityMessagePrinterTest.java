@@ -60,7 +60,7 @@ public class EntityMessagePrinterTest {
   @Test
   public void shouldPrintToStringWithNullMessageCode() {
     // Prepare
-    printer = new EntityMessagePrinter(null, messageSource, parser, context);
+    printer = new EntityMessagePrinter(null, messageSource, parser, context, TO_STRING_EXPRESSION);
 
     // Exercise
     String result = printer.print(testObject, locale);
@@ -74,7 +74,8 @@ public class EntityMessagePrinterTest {
     // Prepare
     when(messageSource.getMessage(anyString(), any(Object[].class), anyString(), eq(locale)))
         .thenReturn(TO_STRING_EXPRESSION);
-    printer = new EntityMessagePrinter("empty", messageSource, parser, context);
+    printer =
+        new EntityMessagePrinter("empty", messageSource, parser, context, TO_STRING_EXPRESSION);
 
     // Exercise
     String result = printer.print(testObject, locale);
@@ -86,9 +87,10 @@ public class EntityMessagePrinterTest {
   @Test
   public void shouldPrintUsingExpression() {
     // Prepare
-    when(messageSource.getMessage("message", null, TO_STRING_EXPRESSION, locale))
+    when(messageSource.getMessage("message", null, null, locale))
         .thenReturn("#{field1} - #{field2}");
-    printer = new EntityMessagePrinter("message", messageSource, parser, context);
+    printer =
+        new EntityMessagePrinter("message", messageSource, parser, context, TO_STRING_EXPRESSION);
 
     // Exercise
     String result = printer.print(testObject, locale);

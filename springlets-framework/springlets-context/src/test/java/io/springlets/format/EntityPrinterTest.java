@@ -32,6 +32,8 @@ import java.util.Locale;
  */
 public class EntityPrinterTest {
 
+  private static final String TO_STRING_EXPRESSION = "#{toString()}";
+
   private static final String TO_STRING = "A string";
 
   private EntityPrinter printer;
@@ -45,7 +47,7 @@ public class EntityPrinterTest {
   @Test
   public void shouldPrintToStringWithEmptyExpression() {
     // Prepare
-    printer = new EntityPrinter("", parser, context);
+    printer = new EntityPrinter("", parser, context, TO_STRING_EXPRESSION);
 
     // Exercise
     String result = printer.print(testObject, Locale.getDefault());
@@ -57,7 +59,7 @@ public class EntityPrinterTest {
   @Test
   public void shouldPrintToStringWithNullExpression() {
     // Prepare
-    printer = new EntityPrinter(null, parser, context);
+    printer = new EntityPrinter(null, parser, context, TO_STRING_EXPRESSION);
 
     // Exercise
     String result = printer.print(testObject, Locale.getDefault());
@@ -69,7 +71,7 @@ public class EntityPrinterTest {
   @Test
   public void shouldPrintUsingExpression() {
     // Prepare
-    printer = new EntityPrinter("#{field1} - #{field2}", parser, context);
+    printer = new EntityPrinter("#{field1} - #{field2}", parser, context, TO_STRING_EXPRESSION);
 
     // Exercise
     String result = printer.print(testObject, Locale.getDefault());

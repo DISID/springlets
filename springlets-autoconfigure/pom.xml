@@ -125,6 +125,12 @@
 
     <dependency>
       <groupId>io.springlets</groupId>
+      <artifactId>springlets-context</artifactId>
+      <optional>true</optional>
+    </dependency>
+
+    <dependency>
+      <groupId>io.springlets</groupId>
       <artifactId>springlets-data-commons</artifactId>
       <optional>true</optional>
     </dependency>

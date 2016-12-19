@@ -27,7 +27,7 @@ import java.util.Locale;
  */
 public class EntityParser<T, ID> implements Parser<T> {
 
-  private EntityResolver<T, ID> entityService;
+  private EntityResolver<T, ID> entityResolver;
   private ConversionService conversionService;
 
   /**
@@ -36,15 +36,15 @@ public class EntityParser<T, ID> implements Parser<T> {
    * @param conversionService used to convert from String to the identifier type
    */
   public EntityParser(EntityResolver<T, ID> resolver, ConversionService conversionService) {
-    this.entityService = resolver;
+    this.entityResolver = resolver;
     this.conversionService = conversionService;
   }
 
   @Override
   public T parse(String text, Locale locale) throws ParseException {
-    ID idValue = conversionService.convert(text, entityService.getIdType());
+    ID idValue = conversionService.convert(text, entityResolver.getIdType());
 
-    return entityService.findOne(idValue);
+    return entityResolver.findOne(idValue);
   }
 
 }

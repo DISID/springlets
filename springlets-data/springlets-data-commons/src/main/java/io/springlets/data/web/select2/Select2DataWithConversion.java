@@ -15,55 +15,56 @@
  */
 package io.springlets.data.web.select2;
 
+import org.springframework.core.convert.ConversionService;
 import org.springframework.data.domain.Page;
 import org.springframework.expression.Expression;
 import org.springframework.expression.ExpressionParser;
 import org.springframework.expression.common.TemplateParserContext;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
+import org.springframework.util.Assert;
 
 /**
  * Response data for data requests performed by a select2 javascript component. 
  * This class will be converted to JSON, so the property names must follow the
  * name of the properties expected by select2.
  * 
- * This class uses an expression to convert the data to a String.
+ * This class uses the {@link ConversionService} to convert the data to String.
  * 
  * @author Cèsar Ordiñana at http://www.disid.com[DISID Corporation S.L.]
  * @see https://select2.github.io/examples.html#data-ajax
  *
  * @param <T> Response data type
  */
-public class Select2Data<T> extends Select2DataSupport<T> {
+public class Select2DataWithConversion<T> extends Select2DataSupport<T> {
 
+  private final ConversionService conversionService;
   private final Expression parseIdExpression;
-  private final Expression parseTextExpression;
 
   /**
    * Create a response for select2 with data obtained from a request.
-   * Uses SpEL expression templates 
-   * (http://docs.spring.io/spring/docs/current/spring-framework-reference/html/expressions.html#expressions-templating)
-   * to create the select2 data properties
-   * ('id' and 'text') from the attributes of the data bean to return  
    *
    * @param page the data to show
    * @param idExpression the SpEl expression for the id field
-   * @param textExpression the SpEl expression for the text field
+   * @param conversionService to convert the data to String
    */
-  public Select2Data(Page<T> page, String idExpression, String textExpression) {
+  public Select2DataWithConversion(Page<T> page, String idExpression,
+      ConversionService conversionService) {
     super(page);
+    Assert.notNull(page, "A ConversionService is required");
 
+    this.conversionService = conversionService;
     TemplateParserContext templateParserContext = new TemplateParserContext();
     ExpressionParser parser = new SpelExpressionParser();
     parseIdExpression = parser.parseExpression(idExpression, templateParserContext);
-    parseTextExpression = parser.parseExpression(textExpression, templateParserContext);
   }
 
+  @Override
   protected String getAsString(T element) {
-    return parseTextExpression.getValue(element, String.class);
+    return conversionService.convert(element, String.class);
   }
 
+  @Override
   protected String getIdAsString(T element) {
     return parseIdExpression.getValue(element, String.class);
   }
-
 }

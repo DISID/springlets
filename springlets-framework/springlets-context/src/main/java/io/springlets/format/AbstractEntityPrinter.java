@@ -15,12 +15,9 @@
  */
 package io.springlets.format;
 
-import org.springframework.expression.Expression;
 import org.springframework.expression.ExpressionParser;
 import org.springframework.expression.common.TemplateParserContext;
-import org.springframework.expression.spel.standard.SpelExpressionParser;
 import org.springframework.format.Printer;
-import org.springframework.util.StringUtils;
 
 import java.util.Locale;
 
@@ -30,29 +27,8 @@ import java.util.Locale;
  * 
  * @author Cèsar Ordiñana at http://www.disid.com[DISID Corporation S.L.]
  */
-public abstract class AbstractEntityPrinter implements Printer<Object> {
-
-  private String expression;
-  private ExpressionParser parser;
-  private TemplateParserContext templateParserContext;
-  private String defaultExpression = "#{toString()}";
-
-  /**
-   * Creates a new instance with the given expression in SpEL format.
-   * @param expression expression to generate a String from the provided objects
-   */
-  public AbstractEntityPrinter(String expression) {
-    this(expression, new SpelExpressionParser());
-  }
-
-  /**
-   * Creates a new instance with the given expression and expression parser.
-   * @param expression expression to generate a String from the provided objects
-   * @param parser to parse the expression
-   */
-  public AbstractEntityPrinter(String expression, ExpressionParser parser) {
-    this(expression, parser, new TemplateParserContext());
-  }
+public abstract class AbstractEntityPrinter extends EntityExpressionSupport
+    implements Printer<Object> {
 
   /**
    * Creates a new instance with the given expression and expression parser.
@@ -60,73 +36,15 @@ public abstract class AbstractEntityPrinter implements Printer<Object> {
    * @param parser to parse the expression
    * @param templateParserContext context to use to parse the expression
    */
-  public AbstractEntityPrinter(String expression, ExpressionParser parser,
-      TemplateParserContext templateParserContext) {
-    this.expression = expression;
-    this.parser = parser;
-    this.templateParserContext = templateParserContext;
-  }
-
-  /**
-   * Returns the expression to generate the String
-   * @return the expression
-   */
-  public String getExpression() {
-    return expression;
-  }
-
-  /**
-   * Returns the default expression to use when the provided one is null or empty.
-   * @return the default expression
-   */
-  public String getDefaultExpression() {
-    return defaultExpression;
-  }
-
-  /**
-   * Sets the default expression to use when the provided one is null or empty.
-   * @param defaultExpression the defaultExpression to set
-   */
-  public void setDefaultExpression(String defaultExpression) {
-    this.defaultExpression = defaultExpression;
-  }
-
-  /**
-   * Returns the expression, or the default one if it is empty or null.
-   * @return the expression to use
-   */
-  public String getExpressionOrDefault() {
-    return StringUtils.isEmpty(getExpression()) ? getDefaultExpression() : getExpression();
-  }
-
-  /**
-   * Returns a {@link ExpressionParser} instance to parse the expression
-   * @return the parser for the expression
-   */
-  public ExpressionParser getParser() {
-    return parser;
-  }
-
-  /**
-   * Returns the {@link TemplateParserContext} to use to parse the expression.
-   * @return the templateParserContext
-   */
-  public TemplateParserContext getTemplateParserContext() {
-    return templateParserContext;
+  public AbstractEntityPrinter(ExpressionParser parser, TemplateParserContext templateParserContext,
+      String defaultExpression) {
+    super(parser, templateParserContext, defaultExpression);
   }
 
   @Override
   public String print(Object object, Locale locale) {
-    return parseExpression(locale).getValue(object, String.class);
-  }
-
-  /**
-   * Parses the given expression.
-   * @param expression text of the expression to parse
-   * @return the parsed expression
-   */
-  protected Expression parseExpression(String expression) {
-    return getParser().parseExpression(expression, getTemplateParserContext());
+    String expression = getExpression(locale);
+    return convertToString(object, getExpressionOrDefault(expression));
   }
 
   /**
@@ -134,5 +52,5 @@ public abstract class AbstractEntityPrinter implements Printer<Object> {
    * @param locale to get the expression for
    * @return the parsed expression
    */
-  protected abstract Expression parseExpression(Locale locale);
+  protected abstract String getExpression(Locale locale);
 }

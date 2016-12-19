@@ -16,7 +16,6 @@
 package io.springlets.format;
 
 import org.springframework.context.MessageSource;
-import org.springframework.expression.Expression;
 import org.springframework.expression.ExpressionParser;
 import org.springframework.expression.common.TemplateParserContext;
 
@@ -31,6 +30,7 @@ import java.util.Locale;
 public class EntityMessagePrinter extends AbstractEntityPrinter {
 
   private final MessageSource messageSource;
+  private final String messageCode;
 
   /**
    * Creates a new instance with the given expression and expression parser.
@@ -41,15 +41,15 @@ public class EntityMessagePrinter extends AbstractEntityPrinter {
    * @param templateParserContext context to use to parse the expression
    */
   public EntityMessagePrinter(String messageCode, MessageSource messageSource,
-      ExpressionParser parser, TemplateParserContext templateParserContext) {
-    super(messageCode, parser, templateParserContext);
+      ExpressionParser parser, TemplateParserContext templateParserContext,
+      String defaultExpression) {
+    super(parser, templateParserContext, defaultExpression);
+    this.messageCode = messageCode;
     this.messageSource = messageSource;
   }
 
   @Override
-  protected Expression parseExpression(Locale locale) {
-    String expressionMessage = getExpression() == null ? getDefaultExpression()
-        : messageSource.getMessage(getExpression(), null, getDefaultExpression(), locale);
-    return parseExpression(expressionMessage);
+  protected String getExpression(Locale locale) {
+    return messageSource.getMessage(messageCode, null, null, locale);
   }
 }

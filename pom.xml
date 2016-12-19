@@ -81,6 +81,12 @@
 
       <dependency>
         <groupId>io.springlets</groupId>
+        <artifactId>springlets-context</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>io.springlets</groupId>
         <artifactId>springlets-data-commons</artifactId>
         <version>${project.version}</version>
       </dependency>
