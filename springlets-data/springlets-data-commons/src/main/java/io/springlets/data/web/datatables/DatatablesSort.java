@@ -22,9 +22,9 @@ import java.util.List;
 /**
  * Extends {@link Sort} to be used with the datatables sorting parameters.
  * This way you can use this information to create Spring Data queries.
+ * See {@link https://datatables.net/manual/server-side}
  * 
  * @author Cèsar Ordiñana at http://www.disid.com[DISID Corporation S.L.]
- * @see https://datatables.net/manual/server-side
  */
 public class DatatablesSort extends Sort {
 

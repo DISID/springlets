@@ -24,9 +24,9 @@ import org.springframework.data.domain.Pageable;
  * This way you can use this information to create Spring Data queries.
  * 
  * For instance, datatables works with row positions, not with page numbers.
+ * See {@link https://datatables.net/manual/server-side}
  * 
  * @author Cèsar Ordiñana at http://www.disid.com[DISID Corporation S.L.]
- * @see https://datatables.net/manual/server-side
  */
 public class DatatablesPageable extends PageRequest {
 

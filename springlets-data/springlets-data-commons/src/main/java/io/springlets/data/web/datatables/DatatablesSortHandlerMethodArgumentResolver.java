@@ -38,9 +38,9 @@ import java.util.regex.Pattern;
  *
  * If those parameters are not available, it delegates in the default
  * Spring Data resolver implementation.
+ * See {@link https://datatables.net/manual/server-side}
  * 
  * @author Cèsar Ordiñana at http://www.disid.com[DISID Corporation S.L.]
- * @see https://datatables.net/manual/server-side
  */
 public class DatatablesSortHandlerMethodArgumentResolver extends SortHandlerMethodArgumentResolver {
 
@@ -146,6 +146,7 @@ public class DatatablesSortHandlerMethodArgumentResolver extends SortHandlerMeth
      * @return the position given in the column order, or -1 if it is not
      * a valid number or the format is not the expected one 
      */
+
     static int getColumnPosition(String paramName) {
       Matcher matcher = PATTERN.matcher(paramName);
       while (matcher.find()) {
@@ -157,7 +158,6 @@ public class DatatablesSortHandlerMethodArgumentResolver extends SortHandlerMeth
       }
       return -1;
     }
-
     /**
      * Returns the name of the property whose datatables column is available
      * into the list of the columns to order by, in the given position.

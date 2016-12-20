@@ -19,7 +19,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import io.springlets.data.web.datatables.DatatablesSortHandlerMethodArgumentResolver.SortParametersParser;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
@@ -36,9 +35,6 @@ public class SortParametersParserTest {
 
   private static final int MAXIMUM_COLUMN_COUNT = 10;
   private SortParametersParser parser;
-
-  @Before
-  public void setUp() throws Exception {}
 
   @Test
   public void checkExpectedColumnCountWithOneColumnIsExpected() {

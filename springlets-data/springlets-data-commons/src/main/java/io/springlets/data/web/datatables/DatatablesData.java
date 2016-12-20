@@ -20,12 +20,11 @@ import org.springframework.data.domain.Page;
 import java.util.List;
 
 /**
- * Response data for data requests performed by adatatables component. 
+ * Response data for data requests performed by datatables component. 
  * This class will be converted to JSON, so the property names must follow the
  * name of the properties expected by datatables.
  * 
  * @author Cèsar Ordiñana at http://www.disid.com[DISID Corporation S.L.]
- * @see https://datatables.net/manual/server-side
  *
  * @param <T> Response data type
  */
@@ -34,7 +33,7 @@ public class DatatablesData<T> {
   private List<T> data;
   private Long recordsTotal;
   private Long recordsFiltered;
-  private Integer draw;
+  private final Integer draw;
   private String error;
 
   /**
@@ -73,11 +72,8 @@ public class DatatablesData<T> {
    */
   public DatatablesData(List<T> data, Long recordsTotal, Long recordsFiltered, Integer draw,
       String error) {
+    this(recordsTotal, recordsFiltered, draw, error);
     this.data = data;
-    this.recordsTotal = recordsTotal;
-    this.recordsFiltered = recordsFiltered;
-    this.draw = draw;
-    this.error = error;
   }
 
   /**
@@ -90,6 +86,13 @@ public class DatatablesData<T> {
    */
   public DatatablesData(Page<T> dataPage, Long recordsTotal, Integer draw) {
     this(dataPage.getContent(), recordsTotal, dataPage.getTotalElements(), draw);
+  }
+
+  protected DatatablesData(Long recordsTotal, Long recordsFiltered, Integer draw, String error) {
+    this.recordsTotal = recordsTotal;
+    this.recordsFiltered = recordsFiltered;
+    this.draw = draw;
+    this.error = error;
   }
 
   public List<T> getData() {

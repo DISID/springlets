@@ -17,6 +17,8 @@ package io.springlets.data.web.datatables;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import io.springlets.data.web.datatables.Datatables.ColumnParamType;
+
 import org.junit.Test;
 
 /**
@@ -50,6 +52,52 @@ public class DatatablesTest {
   public void testColumnNameParameter() {
     assertThat(Datatables.columnNameParameter("0")).as("Valid column name parameter")
         .isEqualTo("columns[0][data]");
+  }
+
+  /**
+   * Test method for {@link io.springlets.data.web.datatables.Datatables#isColumn(String)}.
+   */
+  @Test
+  public void testIsColumn() {
+    assertThat(Datatables.isColumn("columns[1][data]")).as("Is a column parameter").isEqualTo(true);
+    assertThat(Datatables.isColumn("columns[1][name]")).as("Is a column parameter").isEqualTo(true);
+    assertThat(Datatables.isColumn("other[1][data]")).as("Is not a column parameter")
+        .isEqualTo(false);
+  }
+
+  /**
+   * Test method for {@link io.springlets.data.web.datatables.Datatables#columnIndex(String)}.
+   */
+  @Test
+  public void testColumnIndex() {
+    assertThat(Datatables.columnIndex("columns[1][data]")).as("Column parameter with index")
+        .isEqualTo(1);
+    assertThat(Datatables.columnIndex("columns[3][name]")).as("Column parameter with index")
+        .isEqualTo(3);
+    assertThat(Datatables.columnIndex("other[1][data]")).as("Not a column parameter").isEqualTo(-1);
+    assertThat(Datatables.columnIndex("columns[badnumber][name]"))
+        .as("Column parameter with invalid index").isEqualTo(-1);
+  }
+
+  /**
+   * Test method for {@link io.springlets.data.web.datatables.Datatables#columnParameterType(String)}.
+   */
+  @Test
+  public void testColumnParameterType() {
+    assertThat(Datatables.columnParameterType("columns[1][data]")).as("Column data parameter")
+        .isEqualTo(ColumnParamType.DATA);
+    assertThat(Datatables.columnParameterType("columns[1][name]")).as("Column name parameter")
+        .isEqualTo(ColumnParamType.NAME);
+    assertThat(Datatables.columnParameterType("columns[1][orderable]"))
+        .as("Column is orderable parameter").isEqualTo(ColumnParamType.ORDERABLE);
+    assertThat(Datatables.columnParameterType("columns[1][searchable]"))
+        .as("Column is searchable parameter").isEqualTo(ColumnParamType.SEARCHABLE);
+    assertThat(Datatables.columnParameterType("columns[1][search][value]"))
+        .as("Column search value parameter").isEqualTo(ColumnParamType.SEARCH);
+    assertThat(Datatables.columnParameterType("columns[1][search][regex]"))
+        .as("Column search is regex parameter").isEqualTo(ColumnParamType.REGEX);
+    assertThat(Datatables.columnParameterType("columns[1][other]")).as("Column data parameter")
+        .isNull();
   }
 
 }

@@ -16,6 +16,7 @@
 package io.springlets.data.web.config;
 
 import io.springlets.data.web.GlobalSearchHandlerMethodArgumentResolver;
+import io.springlets.data.web.datatables.DatatablesColumnsHandlerMethodArgumentResolver;
 import io.springlets.data.web.datatables.DatatablesPageableHandlerMethodArgumentResolver;
 import io.springlets.data.web.datatables.DatatablesSortHandlerMethodArgumentResolver;
 
@@ -49,10 +50,16 @@ public class SpringletsDataWebConfiguration extends WebMvcConfigurerAdapter {
     return new DatatablesSortHandlerMethodArgumentResolver();
   }
 
+  @Bean
+  public DatatablesColumnsHandlerMethodArgumentResolver datatablesColumnsResolver() {
+    return new DatatablesColumnsHandlerMethodArgumentResolver();
+  }
+
   public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
     argumentResolvers.add(globalSearchResolver());
     argumentResolvers.add(datatablesPageableResolver());
     argumentResolvers.add(datatablesSortResolver());
+    argumentResolvers.add(datatablesColumnsResolver());
   }
 
 }
