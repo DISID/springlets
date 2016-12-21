@@ -58,10 +58,12 @@ public class EntityToStringConverter extends EntityExpressionSupport
     EntityFormat format = getAnnotation(sourceType.getType());
 
     String expressionTxt = getDefaultExpression();
-    if (!StringUtils.isEmpty(format.message())) {
-      expressionTxt = messageSource.getMessage(format.message(), null, null, getCurrentLocale());
-    } else if (!StringUtils.isEmpty(format.expression())) {
-      expressionTxt = format.expression();
+    if (format != null) {
+      if (!StringUtils.isEmpty(format.message())) {
+        expressionTxt = messageSource.getMessage(format.message(), null, null, getCurrentLocale());
+      } else if (!StringUtils.isEmpty(format.expression())) {
+        expressionTxt = format.expression();
+      }
     }
 
     return convertToString(source, expressionTxt);
