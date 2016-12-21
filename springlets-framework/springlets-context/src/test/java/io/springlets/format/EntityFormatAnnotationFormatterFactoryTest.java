@@ -128,7 +128,6 @@ public class EntityFormatAnnotationFormatterFactoryTest {
   /**
    * Test method for {@link io.springlets.format.EntityFormatAnnotationFormatterFactory#getParser(io.springlets.format.EntityFormat, java.lang.Class)}.
    */
-  @SuppressWarnings("unchecked")
   @Test(expected = IllegalArgumentException.class)
   public void shouldThrowExceptionGettingParserIfAnnotationIsNull() {
     // Exercise
@@ -138,7 +137,6 @@ public class EntityFormatAnnotationFormatterFactoryTest {
   /**
    * Test method for {@link io.springlets.format.EntityFormatAnnotationFormatterFactory#getParser(io.springlets.format.EntityFormat, java.lang.Class)}.
    */
-  @SuppressWarnings("unchecked")
   @Test(expected = IllegalArgumentException.class)
   public void shouldThrowExceptionGettingParserIfFieldClassIsNull() {
     // Exercise
