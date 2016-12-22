@@ -17,6 +17,7 @@ package io.springlets.format.config;
 
 import io.springlets.format.EntityFormat;
 import io.springlets.format.EntityFormatAnnotationFormatterFactory;
+import io.springlets.format.EnumToMessageConverter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -60,6 +61,7 @@ public class SpringletsEntityFormatWebConfiguration extends WebMvcConfigurerAdap
     registry.addFormatterForFieldAnnotation(factory);
 
     registry.addConverter(factory.getToStringConverter());
+    registry.addConverter(new EnumToMessageConverter(messageSource));
   }
 
 }
