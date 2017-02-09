@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 the original author or authors.
+ * Copyright 2016-2017 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,29 +19,32 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 
 import io.springlets.web.mvc.advice.JsonpAdvice;
 import io.springlets.web.mvc.advice.StringTrimmerAdvice;
+import io.springlets.web.mvc.advice.ValidatorAdvice;
 
 /**
  * Configuration class to register the following beans:
  *
  * * {@link StringTrimmerAdvice}.
  * * {@link JsonpAdvice}.
+ * * {@link ValidatorAdvice}.
  *
  * @author Enrique Ruiz at http://www.disid.com[DISID Corporation S.L.]
+ * @author Juan Carlos García at http://www.disid.com[DISID Corporation S.L.]
  */
 @Configuration
 public class SpringletsWebMvcConfiguration {
 
-  private SpringletsWebMvcProperties mvcProperties;
-
   @Autowired(required = false)
-  public void setSpringletsWebMvcProperties(SpringletsWebMvcProperties properties) {
-    this.mvcProperties = properties;
-  }
-
+  private SpringletsWebMvcProperties mvcProperties;
+  
+  @Autowired(required = false)
+  private LocalValidatorFactoryBean localValidator;
+  
   /**
    * Create and register a {@link StringTrimmerAdvice} bean configured with {@link #mvcProperties}.
    * 
@@ -83,5 +86,22 @@ public class SpringletsWebMvcConfiguration {
     JsonpAdvice jsonpAdvice =
         new JsonpAdvice(mvcProperties.getAdvices().getJsonp().getQueryParamNames());
     return jsonpAdvice;
+  }
+  
+  /**
+   * Create and register a {@link ValidatorAdvice} bean configured with {@link #localValidator}.
+   * 
+   * Note that {@link #localValidator} has been annotated with `@Autowired` and 
+   * marked as not required so if the {@link LocalValidatorFactoryBean} has not been registered in the 
+   * Spring context a new instance of LocalValidatorFactoryBean will be used.
+   * 
+   * @return the ValidatorAdvice
+   */
+  @Bean
+  public ValidatorAdvice validatorAdvice() {
+	  if(localValidator == null){
+		  localValidator = new LocalValidatorFactoryBean();
+	  }
+	  return new ValidatorAdvice(localValidator);
   }
 }

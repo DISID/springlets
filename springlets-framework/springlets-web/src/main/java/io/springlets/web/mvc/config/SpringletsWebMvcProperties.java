@@ -90,7 +90,7 @@ public class SpringletsWebMvcProperties {
       return jsonp;
     }
 
-    public void setTrimeditor(JsonpAdviceProperties jsonpProperties) {
+    public void setJsonp(JsonpAdviceProperties jsonpProperties) {
       this.jsonp = jsonpProperties;
     }
   }

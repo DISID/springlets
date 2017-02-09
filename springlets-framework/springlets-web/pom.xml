@@ -58,7 +58,13 @@
       <artifactId>spring-webmvc</artifactId>
       <optional>true</optional>
     </dependency>
-
+    
+    <!-- Springlets dependencies -->
+    <dependency>
+      <groupId>io.springlets</groupId>
+      <artifactId>springlets-context</artifactId>
+    </dependency>
+    
   	<!-- 3rd party dependencies -->
     <dependency>
 	  <groupId>com.fasterxml.jackson.core</groupId>
@@ -83,7 +89,13 @@
       <artifactId>javax.servlet-api</artifactId>
       <optional>true</optional>
     </dependency>
-
+    
+    <dependency>
+      <groupId>javax.validation</groupId>
+	    <artifactId>validation-api</artifactId>
+	    <optional>true</optional>
+	  </dependency>
+	  
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>

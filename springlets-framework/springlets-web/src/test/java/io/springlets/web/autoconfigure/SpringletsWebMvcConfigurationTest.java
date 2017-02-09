@@ -23,10 +23,12 @@ import org.junit.Test;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 
 import io.springlets.web.mvc.advice.JsonpAdvice;
 import io.springlets.web.mvc.advice.StringTrimmerAdvice;
+import io.springlets.web.mvc.advice.ValidatorAdvice;
 import io.springlets.web.mvc.config.SpringletsWebMvcConfiguration;
 import io.springlets.web.mvc.config.SpringletsWebMvcProperties;
 
@@ -34,6 +36,7 @@ import io.springlets.web.mvc.config.SpringletsWebMvcProperties;
  * Tests for {@link SpringletsWebMvcConfiguration}
  *
  * @author Enrique Ruiz at http://www.disid.com[DISID Corporation S.L.]
+ * @author Juan Carlos García at http://www.disid.com[DISID Corporation S.L.]
  */
 public class SpringletsWebMvcConfigurationTest {
 
@@ -69,6 +72,7 @@ public class SpringletsWebMvcConfigurationTest {
     // Exercise
     StringTrimmerAdvice advice = this.context.getBean(StringTrimmerAdvice.class);
     JsonpAdvice jsonpAdvice = this.context.getBean(JsonpAdvice.class);
+    ValidatorAdvice validatorAdvice = this.context.getBean(ValidatorAdvice.class);
 
     // Verify
     assertThat(this.context.getBean(SpringletsWebMvcProperties.class)).isNotNull();
@@ -76,11 +80,12 @@ public class SpringletsWebMvcConfigurationTest {
     assertThat(advice.isEmptyAsNull()).isEqualTo(true);
     assertThat(advice.getCharsToDelete()).isNull();
     assertThat(jsonpAdvice).isNotNull();
+    assertThat(validatorAdvice).isNotNull();
   }
 
   /**
-   * Configure the {@link StringTrimmerAdvice} and the {@link JsonpAdvice} and check if
-   * they have the right settings.
+   * Configure the {@link StringTrimmerAdvice}, the {@link JsonpAdvice} and the
+   * {@link ValidatorAdvice} and check if they have the right settings.
    */
   @Test
   public void configureAdvice() {
@@ -93,6 +98,7 @@ public class SpringletsWebMvcConfigurationTest {
     // Exercise
     StringTrimmerAdvice advice = this.context.getBean(StringTrimmerAdvice.class);
     JsonpAdvice jsonpAdvice = this.context.getBean(JsonpAdvice.class);
+    ValidatorAdvice validatorAdvice = this.context.getBean(ValidatorAdvice.class);
 
     // Verify
     assertThat(this.context.getBean(SpringletsWebMvcProperties.class)).isNotNull();
@@ -100,6 +106,7 @@ public class SpringletsWebMvcConfigurationTest {
     assertThat(advice.isEmptyAsNull()).isEqualTo(false);
     assertThat(advice.getCharsToDelete()).isEqualTo("abc");
     assertThat(jsonpAdvice).isNotNull();
+    assertThat(validatorAdvice).isNotNull();
   }
 
   /**
