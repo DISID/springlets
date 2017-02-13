@@ -41,6 +41,7 @@
     <module>springlets-security</module>
     <module>springlets-webflow</module>
     <module>springlets-autoconfigure</module>
+    <module>springlets-test-autoconfigure</module>
     <module>springlets-boot-starters</module>
   </modules>
 
@@ -108,6 +109,12 @@
         <artifactId>springlets-mail</artifactId>
         <version>${project.version}</version>
       </dependency>
+
+	    <dependency>
+	      <groupId>io.springlets</groupId>
+	      <artifactId>springlets-test-autoconfigure</artifactId>
+        <version>${project.version}</version>
+	    </dependency>
 
       <dependency>
         <groupId>io.springlets</groupId>

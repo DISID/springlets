@@ -4,13 +4,13 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>io.springlets</groupId>
-    <artifactId>springlets-framework</artifactId>
+    <artifactId>springlets-parent</artifactId>
     <version>1.2.0.BUILD-SNAPSHOT</version>
   </parent>
-  <artifactId>springlets-context</artifactId>
+  <artifactId>springlets-test-autoconfigure</artifactId>
   <packaging>jar</packaging>
-  <name>Springlets for Spring Framework context</name>
-  <description>Springlets for Spring Framework context</description>
+  <name>Springlets Test AutoConfiguration</name>
+  <description>Springlets tests auto-configurators for Spring Boot adding new test slice annotation taking into account the Springlets libraries</description>
   <organization>
     <name>DISID Corporation</name>
     <url>http://www.disid.com</url>
@@ -22,6 +22,7 @@
       <distribution>repo</distribution>
     </license>
   </licenses>
+
   <dependencies>
     <!--
     = About the dependencies
@@ -43,27 +44,45 @@
     <!-- Spring dependencies -->
     <dependency>
       <groupId>org.springframework</groupId>
-      <artifactId>spring-test</artifactId>
-      <scope>test</scope>
+      <artifactId>spring-web</artifactId>
     </dependency>
 
     <dependency>
       <groupId>org.springframework</groupId>
-      <artifactId>spring-context</artifactId>
-      <optional>true</optional>
+      <artifactId>spring-webmvc</artifactId>
     </dependency>
-    
+
     <dependency>
       <groupId>org.springframework</groupId>
-      <artifactId>spring-webmvc</artifactId>
-      <optional>true</optional>
+      <artifactId>spring-test</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-test-autoconfigure</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.data</groupId>
+      <artifactId>spring-data-commons</artifactId>
+    </dependency>
+
+    <!-- Springlets dependencies -->
+    <dependency>
+      <groupId>io.springlets</groupId>
+      <artifactId>springlets-data-commons</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>io.springlets</groupId>
+      <artifactId>springlets-web</artifactId>
     </dependency>
 
     <!-- 3rd party dependencies -->
     <dependency>
-      <groupId>javax.validation</groupId>
-      <artifactId>validation-api</artifactId>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
     </dependency>
-
   </dependencies>
+
 </project>

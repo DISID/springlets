@@ -1,0 +1,3 @@
+# AutoConfigureSpringletsWebMvc auto-configuration imports
+io.springlets.boot.test.autoconfigure.web.servlet.AutoConfigureSpringletsWebMvc=\
+io.springlets.boot.autoconfigure.web.mvc.SpringletsWebMvcAutoConfiguration

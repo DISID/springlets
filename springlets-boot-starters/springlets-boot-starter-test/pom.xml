@@ -4,13 +4,13 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>io.springlets</groupId>
-    <artifactId>springlets-framework</artifactId>
+    <artifactId>springlets-boot-starters</artifactId>
     <version>1.2.0.BUILD-SNAPSHOT</version>
   </parent>
-  <artifactId>springlets-context</artifactId>
+  <artifactId>springlets-boot-starter-test</artifactId>
   <packaging>jar</packaging>
-  <name>Springlets for Spring Framework context</name>
-  <description>Springlets for Spring Framework context</description>
+  <name>Springlets Spring Boot starter for tests</name>
+  <description>Springlets Spring Boot starter for autoconfiguration of additional testing utilities</description>
   <organization>
     <name>DISID Corporation</name>
     <url>http://www.disid.com</url>
@@ -22,6 +22,7 @@
       <distribution>repo</distribution>
     </license>
   </licenses>
+
   <dependencies>
     <!--
     = About the dependencies
@@ -30,40 +31,23 @@
 
     * Three dependency groups: first spring dependencies, next own dependencies and finally the external ones.
     * Inside a group: alphabetical order, ordering first by groupId, then by artifactId.
-
-    OPTIONAL:
-
-    * All the dependencies MUST BE optional = true, the starter will include the needed libraries
-
-    STARTERS:
-
-    * Never include dependencies to Spring Boot Starters, instead include each needed library
     -->
-
+    
     <!-- Spring dependencies -->
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-test</artifactId>
-      <scope>test</scope>
-    </dependency>
 
     <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-context</artifactId>
-      <optional>true</optional>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
     </dependency>
     
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-webmvc</artifactId>
-      <optional>true</optional>
-    </dependency>
+    <!-- Springlets dependencies -->
 
-    <!-- 3rd party dependencies -->
     <dependency>
-      <groupId>javax.validation</groupId>
-      <artifactId>validation-api</artifactId>
+      <groupId>io.springlets</groupId>
+      <artifactId>springlets-test-autoconfigure</artifactId>
     </dependency>
+     
+    <!-- 3rd party dependencies -->
 
   </dependencies>
 </project>
