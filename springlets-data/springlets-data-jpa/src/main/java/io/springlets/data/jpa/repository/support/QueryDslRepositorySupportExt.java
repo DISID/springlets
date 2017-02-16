@@ -28,6 +28,8 @@ import com.querydsl.jpa.JPQLQuery;
 
 import io.springlets.data.domain.GlobalSearch;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -53,6 +55,8 @@ import javax.persistence.metamodel.SingularAttribute;
  * @author Cèsar Ordiñana at http://www.disid.com[DISID Corporation S.L.]
  */
 public class QueryDslRepositorySupportExt<T> extends QueryDslRepositorySupport {
+
+  private static final Logger LOG = LoggerFactory.getLogger(QueryDslRepositorySupportExt.class);
 
   private final Class<T> domainClass;
   private PathBuilder<Object> entityIdPath = null;
@@ -128,10 +132,21 @@ public class QueryDslRepositorySupportExt<T> extends QueryDslRepositorySupport {
       List<Sort.Order> mappedOrders = new ArrayList<Sort.Order>();
       for (Sort.Order order : sort) {
         Path<?>[] paths = attributeMapping.get(order.getProperty());
+        if (paths == null) {
+          LOG.warn(
+              "Trying to apply pagination for a property (%1) not included in the attributeMapping",
+              order.getProperty());
+          continue;
+        }
         for (Path<?> path : paths) {
           Sort.Order mappedOrder = new Sort.Order(order.getDirection(), preparePropertyPath(path));
           mappedOrders.add(mappedOrder);
         }
+      }
+      if (mappedOrders.size() == 0) {
+        // No properties to order by are available, so don't apply ordering and return the query
+        // as it is
+        return query;
       }
       mappedPageable =
           new PageRequest(pageable.getPageNumber(), pageable.getPageSize(), new Sort(mappedOrders));
