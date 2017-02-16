@@ -92,7 +92,7 @@ public class QueryDslRepositorySupportExtTest {
    * Test method for {@link io.springlets.data.jpa.repository.support.QueryDslRepositorySupportExt#applyPagination(org.springframework.data.domain.Pageable, com.querydsl.jpa.JPQLQuery, java.util.Map)}.
    */
   @Test
-  public void applyPaginationWithPageableHavingAnEmptySortSholdNotFail() {
+  public void applyPaginationWithPageableHavingAnEmptySortShouldNotFail() {
     // Prepare
     Map<String, Path<?>[]> attributeMapping = new HashMap<>();
     when(pageable.getSort()).thenReturn(sort);
@@ -103,4 +103,18 @@ public class QueryDslRepositorySupportExtTest {
     support.applyPagination(pageable, null, attributeMapping);
   }
 
+  /**
+   * Test method for {@link io.springlets.data.jpa.repository.support.QueryDslRepositorySupportExt#applyPagination(org.springframework.data.domain.Pageable, com.querydsl.jpa.JPQLQuery, java.util.Map)}.
+   */
+  @Test
+  public void applyPaginationWithNullPageableShouldNotFail() {
+    // Prepare
+    Map<String, Path<?>[]> attributeMapping = new HashMap<>();
+    when(pageable.getSort()).thenReturn(sort);
+    when(sort.iterator()).thenReturn(iterator);
+    when(iterator.hasNext()).thenReturn(false);
+
+    // Exercise & verify
+    support.applyPagination(null, null, attributeMapping);
+  }
 }

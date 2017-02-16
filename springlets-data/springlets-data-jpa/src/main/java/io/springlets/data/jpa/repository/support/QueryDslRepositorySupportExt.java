@@ -126,6 +126,10 @@ public class QueryDslRepositorySupportExt<T> extends QueryDslRepositorySupport {
   protected JPQLQuery<T> applyPagination(Pageable pageable, JPQLQuery<T> query,
       Map<String, Path<?>[]> attributeMapping) {
 
+    if (pageable == null) {
+      return query;
+    }
+
     Pageable mappedPageable = null;
     Sort sort = pageable.getSort();
     if (sort != null) {
