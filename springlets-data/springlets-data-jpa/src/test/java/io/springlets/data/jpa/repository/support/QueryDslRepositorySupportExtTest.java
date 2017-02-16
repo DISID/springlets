@@ -18,6 +18,7 @@ package io.springlets.data.jpa.repository.support;
 import static org.mockito.Mockito.when;
 
 import com.querydsl.core.types.Path;
+import com.querydsl.jpa.JPQLQuery;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -60,7 +61,12 @@ public class QueryDslRepositorySupportExtTest {
    */
   @Before
   public void setUp() throws Exception {
-    support = new QueryDslRepositorySupportExt<>(Object.class);
+    support = new QueryDslRepositorySupportExt<Object>(Object.class) {
+      @Override
+      protected JPQLQuery<Object> applyPagination(Pageable pageable, JPQLQuery<Object> query) {
+        return query;
+      }
+    };
   }
 
   /**
@@ -73,9 +79,25 @@ public class QueryDslRepositorySupportExtTest {
 
     Map<String, Path<?>[]> attributeMapping = new HashMap<>();
     when(pageable.getSort()).thenReturn(sort);
+    when(pageable.getPageSize()).thenReturn(1);
     when(sort.iterator()).thenReturn(iterator);
     when(iterator.hasNext()).thenReturn(true).thenReturn(false);
     when(iterator.next()).thenReturn(order).thenThrow(new NoSuchElementException());
+
+    // Exercise & verify
+    support.applyPagination(pageable, null, attributeMapping);
+  }
+
+  /**
+   * Test method for {@link io.springlets.data.jpa.repository.support.QueryDslRepositorySupportExt#applyPagination(org.springframework.data.domain.Pageable, com.querydsl.jpa.JPQLQuery, java.util.Map)}.
+   */
+  @Test
+  public void applyPaginationWithPageableHavingAnEmptySortSholdNotFail() {
+    // Prepare
+    Map<String, Path<?>[]> attributeMapping = new HashMap<>();
+    when(pageable.getSort()).thenReturn(sort);
+    when(sort.iterator()).thenReturn(iterator);
+    when(iterator.hasNext()).thenReturn(false);
 
     // Exercise & verify
     support.applyPagination(pageable, null, attributeMapping);

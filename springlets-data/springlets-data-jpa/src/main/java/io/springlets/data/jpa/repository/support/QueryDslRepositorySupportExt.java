@@ -131,16 +131,19 @@ public class QueryDslRepositorySupportExt<T> extends QueryDslRepositorySupport {
     if (sort != null) {
       List<Sort.Order> mappedOrders = new ArrayList<Sort.Order>();
       for (Sort.Order order : sort) {
-        Path<?>[] paths = attributeMapping.get(order.getProperty());
-        if (paths == null) {
+        if (!attributeMapping.containsKey(order.getProperty())) {
           LOG.warn(
-              "Trying to apply pagination for a property (%1) not included in the attributeMapping",
+              "The property (%1) is not included in the attributeMapping, will order "
+                  + "using the property as it is",
               order.getProperty());
-          continue;
-        }
-        for (Path<?> path : paths) {
-          Sort.Order mappedOrder = new Sort.Order(order.getDirection(), preparePropertyPath(path));
-          mappedOrders.add(mappedOrder);
+          mappedOrders.add(order);
+        } else {
+          Path<?>[] paths = attributeMapping.get(order.getProperty());
+          for (Path<?> path : paths) {
+            Sort.Order mappedOrder =
+                new Sort.Order(order.getDirection(), preparePropertyPath(path));
+            mappedOrders.add(mappedOrder);
+          }
         }
       }
       if (mappedOrders.size() == 0) {
