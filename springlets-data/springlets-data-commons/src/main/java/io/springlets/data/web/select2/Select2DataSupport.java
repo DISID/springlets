@@ -90,7 +90,24 @@ public abstract class Select2DataSupport<T> {
      * @since 1.2.0
      */
     private final T info;
+    
+    public Data(String id, String text){
+    	this.id = id;
+    	this.text = text;
+    	this.info = null;
+    }
 
+    /**
+     * Extra constructor that allows to provide the entire 
+     * element
+     * 
+     * @since 1.2.0
+     * 
+     * @param id
+     * @param text
+     * @param element
+     * 
+     */
     public Data(String id, String text, T element) {
       this.id = id;
       this.text = text;
@@ -137,7 +154,7 @@ public abstract class Select2DataSupport<T> {
   protected Data<T> createData(T element) {
     String id = getIdAsString(element);
     String text = getAsString(element);
-    return new Data<T>(id, text, element);
+    return new Data<T>(id, text);
   }
 
   protected abstract String getAsString(T element);

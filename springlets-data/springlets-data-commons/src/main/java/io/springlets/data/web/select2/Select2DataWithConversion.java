@@ -39,6 +39,7 @@ public class Select2DataWithConversion<T> extends Select2DataSupport<T> {
 
   private final ConversionService conversionService;
   private final Expression parseIdExpression;
+  private boolean includeEntireElement;
 
   /**
    * Create a response for select2 with data obtained from a request.
@@ -56,6 +57,39 @@ public class Select2DataWithConversion<T> extends Select2DataSupport<T> {
     TemplateParserContext templateParserContext = new TemplateParserContext();
     ExpressionParser parser = new SpelExpressionParser();
     parseIdExpression = parser.parseExpression(idExpression, templateParserContext);
+    // By default, the entire element will not be included in the response
+    this.includeEntireElement = false;
+  }
+  
+  /**
+   * Create a response for select2 with data obtained from a request and indicates
+   * if the entire element should be included in the response.
+   *
+   * @since 1.2.0
+   *
+   * @param page the data to show
+   * @param idExpression the SpEl expression for the id field
+   * @param conversionService to convert the data to String
+   * @param includeEntireElement boolean that indicates if the JSON response must contain the
+   *  entire element or only include the `id` and `text` select2 default fields. DEFAULT: false
+   */
+  public Select2DataWithConversion(Page<T> page, String idExpression,
+	      ConversionService conversionService, boolean includeEntireElement) {
+	  this(page, idExpression, conversionService);
+	  this.includeEntireElement = includeEntireElement;
+  }
+  
+  
+  @Override
+  protected Data<T> createData(T element) {
+	String id = getIdAsString(element);
+	String text = getAsString(element);
+	
+	if(includeEntireElement){
+		return new Data<T>(id, text, element);
+	}
+	
+	return new Data<T>(id, text);
   }
 
   @Override
