@@ -58,11 +58,11 @@ public abstract class Select2DataSupport<T> {
    * Returns the data to return to a select2 component.
    * @return the data
    */
-  public List<Data> getResults() {
+  public List<Data<T>> getResults() {
     List<T> content = page.getContent();
-    List<Data> results = new ArrayList<Data>(content.size());
+    List<Data<T>> results = new ArrayList<Data<T>>(content.size());
     for (int i = 0; i < content.size(); i++) {
-      Data data = createData(content.get(i));
+      Data<T> data = createData(content.get(i));
       results.add(data);
     }
     return results;
@@ -79,14 +79,22 @@ public abstract class Select2DataSupport<T> {
   /**
    * Data to be returned to the 
    * @author Cèsar Ordiñana at http://www.disid.com[DISID Corporation S.L.]
+   * @author Juan Carlos García at http://www.disid.com[DISID Corporation S.L.]
    */
-  protected static class Data {
+  protected static class Data<T> {
     private final String id;
     private final String text;
+    
+    /**
+     * Contains all the information about the element.
+     * @since 1.2.0
+     */
+    private final T info;
 
-    public Data(String id, String text) {
+    public Data(String id, String text, T element) {
       this.id = id;
       this.text = text;
+      this.info = element;
     }
 
     public String getId() {
@@ -95,6 +103,10 @@ public abstract class Select2DataSupport<T> {
 
     public String getText() {
       return text;
+    }
+    
+    public T getInfo() {
+      return info;
     }
   }
 
@@ -122,10 +134,10 @@ public abstract class Select2DataSupport<T> {
     }
   }
 
-  protected Data createData(T element) {
+  protected Data<T> createData(T element) {
     String id = getIdAsString(element);
     String text = getAsString(element);
-    return new Data(id, text);
+    return new Data<T>(id, text, element);
   }
 
   protected abstract String getAsString(T element);
