@@ -42,6 +42,8 @@ import java.util.Map;
 @RunWith(MockitoJUnitRunner.class)
 public class SimpleMethodLinkBuilderTest {
 
+  private static final String THEURI = "theuri";
+
   private static final String VARIABLE_VALUE = "a value";
 
   private static final String VARIABLE_NAME = "var";
@@ -112,6 +114,56 @@ public class SimpleMethodLinkBuilderTest {
   @Test(expected = IllegalArgumentException.class)
   public void testNullLinkFactoryThrowsException() {
     new SimpleMethodLinkBuilder<>(null, METHOD_NAME, null, null);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void argWithNegativeIndexShouldThrowException() {
+    builder.arg(-1, new Object());
+  }
+
+  @Test
+  public void toUriStringShouldCallSameMethodInUriComponents() {
+    // Setup
+    when(linkFactory.toUri(eq(METHOD_NAME), isNull(Object[].class),
+        anyMapOf(String.class, Object.class))).thenReturn(uriMethod);
+
+    when(uriMethod.toUriString()).thenReturn(THEURI);
+
+    // Exercise
+    String uri = builder.toUriString();
+
+    // Verify
+    assertThat(uri).isNotNull().isEqualTo(THEURI);
+  }
+
+  @Test
+  public void toPathShouldCallSameMethodInUriComponents() {
+    // Setup
+    when(linkFactory.toUri(eq(METHOD_NAME), isNull(Object[].class),
+        anyMapOf(String.class, Object.class))).thenReturn(uriMethod);
+
+    when(uriMethod.getPath()).thenReturn(THEURI);
+
+    // Exercise
+    String path = builder.toPath();
+
+    // Verify
+    assertThat(path).isNotNull().isEqualTo(THEURI);
+  }
+
+  @Test
+  public void toStringShouldReturnToPathValue() {
+    // Setup
+    when(linkFactory.toUri(eq(METHOD_NAME), isNull(Object[].class),
+        anyMapOf(String.class, Object.class))).thenReturn(uriMethod);
+
+    when(uriMethod.getPath()).thenReturn(THEURI);
+
+    // Exercise
+    String path = builder.toString();
+
+    // Verify
+    assertThat(path).isNotNull().isEqualTo(THEURI);
   }
 
   private ArgumentMatcher<Object[]> isParametersOfOneElement() {
