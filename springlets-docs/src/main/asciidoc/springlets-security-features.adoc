@@ -1,0 +1,53 @@
+[[security-features]]
+== Springlets for Spring Security features
+
+[source,java,indent=0]
+----
+include::{code-examples}/builder/SpringApplicationBuilderExample.java[tag=hierarchy]
+----
+
+NOTE: There are some restrictions when creating an `ApplicationContext` hierarchy, e.g.
+Web components *must* be contained within the child context, and the same `Environment`
+will be used for both parent and child contexts. See the
+{dc-spring-boot}/builder/SpringApplicationBuilder.{dc-ext}[`SpringApplicationBuilder`
+Javadoc] for full details.
+
+In addition to the usual Spring Framework events, such as
+{spring-javadoc}/context/event/ContextRefreshedEvent.{dc-ext}[`ContextRefreshedEvent`],
+a `SpringApplication` sends some additional application events.
+
+[NOTE]
+====
+Some events are actually triggered before the `ApplicationContext` is created so you
+cannot register a listener on those as a `@Bean`. You can register them via the
+`SpringApplication.addListeners(...)` or `SpringApplicationBuilder.listeners(...)`
+methods.
+====
+
+[indent=0]
+----
+	org.springframework.context.ApplicationListener=com.example.project.MyListener
+----
+
+TIP: You often won't need to use application events, but it can be handy to know that they
+exist. Internally, Spring Boot uses events to handle a variety of tasks.
+
+[source,java,indent=0]
+----
+	import org.springframework.boot.*
+	import org.springframework.beans.factory.annotation.*
+	import org.springframework.stereotype.*
+
+	@Component
+	public class MyBean {
+
+		@Autowired
+		public MyBean(ApplicationArguments args) {
+			boolean debug = args.containsOption("debug");
+			List<String> files = args.getNonOptionArgs();
+			// if run with "--debug logfile.txt" debug=true, files=["logfile.txt"]
+		}
+
+	}
+----
+

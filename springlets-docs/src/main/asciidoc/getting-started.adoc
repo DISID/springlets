@@ -1,0 +1,79 @@
+[[getting-started]]
+= Getting started
+
+[partintro]
+--
+If you're just getting started with Springlets, or 'Spring' in general, this is the section
+for you! Here we answer the basic "`what?`", "`how?`" and "`why?`" questions. You'll
+find a gentle introduction to Spring Boot along with installation instructions.
+We'll then build our first Spring Boot application, discussing some core principles as
+we go.
+--
+
+
+[[getting-started-introducing-springlets]]
+== Introducing Springlets
+
+Springlets provides a series of heterogeneus utilities and Spring Boot starters not currently
+available in the Spring projects like Spring Framework, Spring Data or Spring Boot, as well 
+as other open source projects used in Java web projects.
+
+Our goal in Springlets is to follow the conventions used in the Spring projects (naming, 
+versioning, project structure, …) as close as possible. As a matter of fact, you can 
+easily view to which Spring project are related most Springlet modules, as their name has been
+created by replacing the spring prefix with springlets.
+
+
+[[getting-started-system-requirements]]
+== System Requirements
+
+The Springlets 1.x versions will be associated to the Spring IO platform Athens releases.
+As a result, Springlets 1.x will depend on the Spring Framework 4.3 releases. Also JDK 7 and 8
+are supported.
+
+Dependencies are provided through Maven Central to be used in Maven (3.2+), but other tools
+like can be also used.
+
+For other requirements, just take a look at the related Spring projects requirements.
+
+[[getting-started-installing-springlets]]
+== Installing Springlets
+Springlets can be used with "`classic`" Java development tools. 
+Regardless, you will need http://www.java.com[Java SDK v1.7] or higher. You
+should check your current Java installation before you begin:
+
+[indent=0]
+----
+	$ java -version
+----
+
+[[getting-started-installation-instructions-for-java]]
+=== Installation instructions for the Java developer
+You can use Springlets in the same way as any standard Java library. Simply include the
+appropriate `+springlets-*.jar+` files on your classpath.
+
+Although you _could_ just copy the Springlets jars, we generally recommend that you use a
+build tool that supports dependency management (such as Maven or Gradle).
+
+
+
+[[getting-started-maven-installation]]
+==== Maven installation
+Springlets is compatible with Apache Maven 3.2 or above. If you don't already have Maven
+installed you can follow the instructions at http://maven.apache.org.
+
+TIP: On many operating systems Maven can be installed via a package manager. If you're an
+OSX Homebrew user try `brew install maven`. Ubuntu users can run
+`sudo apt-get install maven`.
+
+Springlets dependencies use the `io.springlets` `groupId`. Depending on your project's 
+needs, you just have to select which springlets dependency have to include in your project.
+
+
+[[getting-started-upgrading-from-an-earlier-version]]
+=== Upgrading from an earlier version of Springlets
+If you are upgrading from an earlier release of Springlets check the "`release notes`"
+hosted on the {github-wiki}[project wiki]. You'll find upgrade instructions along with
+a list of "`new and noteworthy`" features for each release.
+
+

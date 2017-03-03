@@ -1,0 +1,18 @@
+[[springlets-features]]
+= Springlets features
+
+[partintro]
+--
+This section dives into the details of Springlets. Here you can learn about the key
+features that you will want to use and customize. If you haven't already, you might want
+to read the _<<getting-started.adoc#getting-started>>_ and
+_<<using-springlets.adoc#using-springlets>>_ sections so that you have a good grounding
+of the basics.
+--
+
+include::springlets-framework-features.adoc[]
+include::springlets-data-features.adoc[]
+include::springlets-security-features.adoc[]
+include::springlets-webflow-features.adoc[]
+include::springlets-boot-features.adoc[]
+

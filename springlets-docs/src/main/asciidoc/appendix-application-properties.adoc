@@ -1,0 +1,63 @@
+:numbered!:
+[appendix]
+[[common-application-properties]]
+== Common application properties
+If you use the Springlets for Spring Boot features, 
+various properties can be specified inside your `application.properties`/`application.yml`
+file or as command line switches. This section provides a list of common Springlets
+for Spring Boot properties and references to the underlying classes that consume them.
+
+WARNING: This sample file is meant as a guide only. Do **not** copy/paste the entire
+content into your application; rather pick only the properties that you need.
+
+[source,properties,indent=0,subs="verbatim,attributes,macros"]
+----
+	# ===================================================================
+	# COMMON SPRINGLETS PROPERTIES
+	#
+	# This sample file is provided as a guideline. Do NOT copy it in its
+	# entirety to your own application.               ^^^
+	# ===================================================================
+
+	# ----------------------------------------
+	# SPRINGLETS FRAMEWORK PROPERTIES
+	# ----------------------------------------
+
+	# EMAIL
+    springlets.mail.receiver.enabled=true # Enable email receiving support 
+    springlets.mail.receiver.host=  # Email server host 
+    springlets.mail.receiver.port=  # Email server port 
+    springlets.mail.receiver.protocol=  # Email server protocol 
+    springlets.mail.receiver.username=  # User to login in the email server 
+    springlets.mail.receiver.password=  # Password to login in the email server
+    springlets.mail.receiver.starttls-enabled=  # Enables the use of the STARTTLS to connect to the email server 
+    springlets.mail.receiver.jndi-name=  # JNDI name. When set, takes precedence to others mail settings.
+
+    # WEB CONTROLLER ADVICES
+    springlets.mvc.advices.enabled=true # Enable Springlets Spring MVC Controller advices
+    
+    # Trimeditor advice configuration
+    springlets.mvc.advices.trimeditor.empty-as-null=true # If an empty parameter value is to be transformed into `null`
+    springlets.mvc.advices.trimeditor.chars-to-delete= # Set of characters to delete, in addition to trimming the parameter value. Useful for deleting unwanted line breaks: e.g. "\r\n\f" will delete all new lines and line feeds in a String.
+
+    # JsonP advice configuration
+    springlets.mvc.advices.jsonp.query-param-names=callback # Supported list of comma separated Jsonp parameter names
+
+	# ----------------------------------------
+	# SPRINGLETS DATA PROPERTIES
+	# ----------------------------------------
+
+	# ----------------------------------------
+	# SPRINGLETS SECURITY PROPERTIES
+	# ----------------------------------------
+
+    # IN MEMORY AUTHENTICATION
+    springlets.security.auth.in-memory.enabled=false # Enable the in memory spring security authentication
+    springlets.security.auth.in-memory.erase-credentials=false # If authentication credentials must be erased from memory once the authentication process has finished
+     
+
+	# ----------------------------------------
+	# SPRINGLETS WEBFLOW PROPERTIES
+	# ----------------------------------------
+
+----

@@ -1,0 +1,52 @@
+= Springlets Reference Guide
+Cèsar Ordiñana
+:doctype: book
+:toc:
+:toclevels: 4
+:source-highlighter: prettify
+:numbered:
+:icons: font
+:hide-uri-scheme:
+:springlets-repo: snapshot
+:github-tag: master
+:springlets-docs-version: current
+:spring-boot-docs: http://docs.spring.io/spring-boot/docs/{spring-boot-docs-version}/reference
+:spring-boot-docs-current: http://docs.spring.io/spring-boot/docs/current/reference
+:github-repo: disid/springlets
+:github-raw: https://raw.github.com/{github-repo}/{github-tag}
+:github-code: https://github.com/{github-repo}/tree/{github-tag}
+:github-wiki: https://github.com/{github-repo}/wiki
+:github-master-code: https://github.com/{github-repo}/tree/master
+:sc-ext: java
+:sc-springlets-autoconfigure: {github-code}/springlets-autoconfigure/src/main/java/io/springlets/boot/autoconfigure
+:sc-springlets-test-autoconfigure: {github-code}/springlets-test-autoconfigure/src/main/java/io/springlets/boot/test/autoconfigure
+:dc-ext: html
+:dc-root: http://docs.spring.io/spring-boot/docs/{spring-boot-docs-version}/api
+:dc-spring-boot: {dc-root}/org/springframework/boot
+:dc-spring-boot-autoconfigure: {dc-root}/org/springframework/boot/autoconfigure
+:dc-spring-boot-actuator: {dc-root}/org/springframework/boot/actuate
+:dc-spring-boot-test: {dc-root}/spring-boot-test/src/main/java/org/springframework/boot/test
+:dc-spring-boot-test-autoconfigure: {dc-root}/spring-boot-test-autoconfigure/src/main/java/org/springframework/boot/test/autoconfigure
+:spring-reference: http://docs.spring.io/spring/docs/{spring-docs-version}/spring-framework-reference/htmlsingle
+:spring-security-reference: http://docs.spring.io/spring-security/site/docs/{spring-security-docs-version}/reference/htmlsingle
+:spring-security-oauth2-reference: http://projects.spring.io/spring-security-oauth/docs/oauth2.html
+:spring-webservices-reference: http://docs.spring.io/spring-ws/docs/{spring-webservices-docs-version}/reference/htmlsingle
+:spring-javadoc: http://docs.spring.io/spring/docs/{spring-docs-version}/javadoc-api/org/springframework
+:spring-amqp-javadoc: http://docs.spring.io/spring-amqp/docs/current/api/org/springframework/amqp
+:spring-batch-javadoc: http://docs.spring.io/spring-batch/apidocs/org/springframework/batch
+:spring-data-javadoc: http://docs.spring.io/spring-data/jpa/docs/current/api/org/springframework/data/jpa
+:spring-data-commons-javadoc: http://docs.spring.io/spring-data/commons/docs/current/api/org/springframework/data
+:spring-data-mongo-javadoc: http://docs.spring.io/spring-data/mongodb/docs/current/api/org/springframework/data/mongodb
+:spring-data-rest-javadoc: http://docs.spring.io/spring-data/rest/docs/current/api/org/springframework/data/rest
+:gradle-userguide: http://www.gradle.org/docs/current/userguide
+:propdeps-plugin: https://github.com/spring-projects/gradle-plugins/tree/master/propdeps-plugin
+:ant-manual: http://ant.apache.org/manual
+:code-examples: ../java/io/springlets
+// ======================================================================================
+
+include::documentation-overview.adoc[]
+include::getting-started.adoc[]
+include::springlets-features.adoc[]
+include::appendix.adoc[]
+
+// ======================================================================================

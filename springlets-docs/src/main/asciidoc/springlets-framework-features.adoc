@@ -1,0 +1,373 @@
+[[springlets-framework-features]]
+== Springlets for Spring Framework features
+
+Springlets for Spring Framework provide additional features for the following Spring 
+Framework modules:
+
+[[springlets-context]]
+=== Spring Context
+
+To use Springlets for the Spring Framework context module just include the following dependency:
+
+[source,xml,indent=0]
+----
+    <dependency>
+      <groupId>io.springlets</groupId>
+      <artifactId>springlets-context</artifactId>
+      <version>{springlets-version}</version>
+    </dependency>
+----
+
+It provides the following utilities:
+
+[[springlets-context-validation]]
+==== Validation of collections
+
+Spring performs validation by default only on single objects. If you have a collection of objects
+to be validated, you can use the Springlets _CollectionValidator_.
+
+_CollectionValidator_ will iterate over the elements of a Collection and run the validation process
+for each of them individually. An example of use can be found in the
+<<springlets-mvc-advice-validator, validator advice section>>
+
+[[springlets-context-i18nenums]]
+==== I18n of enums
+
+In an application which supports many locales you have to show labels in the current locale. By
+default, when you have objects with properties of type _enum_ their name is used to show them.
+
+As an example, if we have the following enum:
+
+[source,java,indent=0]
+----
+public enum PetType {
+
+    DOG, CAT, BIRD
+}
+----
+
+Then you have an object with a property _type_ of _PetType_ type which is shown in a page, like
+in the next example of a Thymeleaf template fragment:
+
+[source,html,indent=0]
+----
+<li id="pet-type-field">
+  <strong data-th-text="#{label_pet_type}">type</strong>
+  <span data-th-text="${{pet.type}}">typeValue</span>
+</li>
+----
+
+The result will be:
+
+[source,html,indent=0]
+----
+<li id="pet-type-field">
+  <strong>Type:</strong>
+  <span>DOG</span>
+</li>
+----
+
+To provide an easy way to manage the i18n of enums in any use case where an enum is converted to text
+through the _ConversionService_, Springlets registers the _EnumToMessageConverter_ class. It will look
+for a message with the following format: *enum_CLASS_NAME*, being *CLASS* the enum simple class name,
+and name the enum value name. If it is not found it defaults to the enum name.
+
+With the previous example, you just would have to add the following entries to your
+_messages*.properties_:
+
+[source,properties,indent=0]
+.messages.properties
+----
+enum_PetType_DOG = Dog
+enum_PetType_CAT = Cat
+enum_PetType_Bird = Bird
+----
+
+[source,properties,indent=0]
+.messages-es.properties
+----
+enum_PetType_DOG = Perro
+enum_PetType_CAT = Gato
+enum_PetType_Bird = Pájaro
+----
+
+This way, the sample html template with an Spanish locale would generate the following:
+
+[source,html,indent=0]
+----
+<li id="pet-type-field">
+  <strong>Tipo:</strong>
+  <span>Perro</span>
+</li>
+----
+
+[[springlets-context-i18nobjects]]
+==== I18n of objects
+
+Similar to the i18n of enums, sometimes you have an object property that you would like to show
+as a String. This is usually the case of a JPA entity with a relation to another one.
+
+By default, the object value is converted to String by calling it's _toString()_ method. But this
+is not a good idea, as this method is not defined to provide a text to show an object in user
+interfaces. Also it doesn't support formatting related to a property or to a locale.
+
+Springlets provides some utilities and an annotation to easily manage the conversion of properties
+and objects to String, in a way similar to the Spring *@DateTimeFormat* and *@NumberFormat*
+annotations.
+
+The annotation is *@EntityFormat*. Although the typical use case is for entities, it will work
+on any Java class. It can be used at:
+
+* class level: sets the default format to convert an object of the class. If the annotation
+is used without any parameters, the _toString()_ method is used to generate the _String_.
+* property level: sets the format to convert the values of that property. The annotation can be 
+included without parameters, in which case the format will be the one defined the property's type 
+class level. 
+
+The annotation provides the following parameters:
+
+* *expression*: a SpEL expression that can be created with the object properties.
+
+Example:
+
+[source,java,indent=0]
+----
+@EntityFormat("#{name} (#{type})")
+public class Pet {
+    
+  private String name;
+
+  @NumberFormat
+  private Float weight;
+
+  private PetType type;
+
+  // Constructors, getters, setters, ...
+}
+----
+
+With this expression, an instance of _Pet_ with name *"Rocky"* and _PetType_ *DOG* will be shown
+as *"Rocky (Dog)"*.
+
+* *message*:  message code to use to get an internationalized expression to apply based on the
+current {@link Locale}.
+
+This is an example using the _message_ property and the *@EntityFormat* annotation applied to 
+a property:
+
+[source,java,indent=0]
+.Pet.java
+----
+public class Pet {
+    
+  private String name;
+
+  @NumberFormat
+  private Float weight;
+
+  private PetType type;
+
+  @EntityFormat(message = "format_pet_owner")
+  private Owner owner;
+
+  // Constructors, getters, setters, ...
+}
+----
+
+[source,properties,indent=0]
+.messages.properties
+----
+format_pet_owner=#{lastName}, #{firstName} 
+----
+
+[source,properties,indent=0]
+.messages-es.properties
+----
+format_pet_owner=#{firstName} #{lastName} 
+----
+
+With this configuration, if a _Pet.owner_ property is formatted, depending on the current locale,
+one of the two formats will be applied.  
+
+[[springlets-mvc]]
+=== Spring MVC
+
+To use Springlets for Spring MVC just include the following dependency:
+
+[source,xml,indent=0]
+----
+    <dependency>
+      <groupId>io.springlets</groupId>
+      <artifactId>springlets-web</artifactId>
+      <version>{springlets-version}</version>
+    </dependency>
+----
+
+It provides the following utilities for the Spring MVC web framework:
+
+[[springlets-mvc-jackson-bindingresult]]
+==== Sending a BindingResult in a RestController
+
+In a Spring MVC HTML view is a common practice to provide binding and validation
+information to the user when data is sent through a form. This is achieved through
+the _BindingResult_ class, which is created by Spring MVC with the results
+of the binding process.
+
+If you would like to use the same technique in a Spring MVC RestController, or a
+controller annotated with _@ResponseBody_, whose response is converted to JSON or
+XML through the Jackson library, Springlets provides a Jackson Serializer.
+
+To enable it, just add the _@EnableSpringletsWebJacksonSupport_ annotation to a 
+configuration class. If you are using Spring boot, there is an even easier way
+to do it just by including a boot starter. More details can be found in the Springlets
+for Spring Boot features.
+
+Once enabled, you can use the _@Valid_ annotation with the _@RequestBody_ parameter
+and return a _BindingResult_ object in your controller methods that
+will be serialized by Jackson and returned in the response. 
+
+An example in a _@RestController_ annotated class to update a _Pet_ entity would be:
+
+[source,java,indent=0]
+----
+    @PutMapping(name = "update")
+    public ResponseEntity<?> update(@Valid @RequestBody Pet pet, BindingResult result) {
+        
+        if (result.hasErrors()) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(result);
+        }
+       
+        // Update the pet 
+        // ...
+
+        return ResponseEntity.ok().build();
+    }
+----
+
+[[springlets-mvc-jackson-hibernate5]]
+==== Enabling support for hibernate 5 lazy properties in Jackson
+
+If you try to serialize a JPA Entity with Jackson, maybe because it's the result of a JPA
+query returned in a _RestController_, if there are any lazy loaded properties still not
+loaded, it will fail. Jackson doesn't know how to serialize those attributes by default.
+
+To solve it you have to add the Hibernate 5 Jackson module and register it, which is
+automatically performed by the _@EnableSpringletsWebJacksonSupport_ annotation.
+
+[[springlets-mvc-notfound]]
+==== Default exception for not found responses
+
+When a request is made for a resource that doesn't exist, usually a 404 response 
+(Not Found) is returned.
+
+As this is a typical scenario, springlets provides a _NotFoundException_ annotated
+with _@ResponseStatus(HttpStatus.NOT_FOUND)_ that you can throw in those cases:
+
+[source,java,indent=0]
+----
+    @ModelAttribute
+    public Owner getOwner(@PathVariable("owner") Long id) {
+        Owner owner = ownerService.findOne(id);
+        if (owner == null) {
+            throw new NotFoundException(String.format("Owner with identifier '%s' not found", id));
+        }
+        return owner;
+    }
+----
+
+[[springlets-mvc-advice]]
+==== Controller advices
+
+There are some controller advices usually used in web projects that are provided by default by
+springlets. All of them are available just by adding the _@EnableSpringletsWebMvcAdvices_ annotation
+to your configuration classes.
+
+[[springlets-mvc-advice-stringtrimmer]]
+===== StringTrimmerAdvice
+
+Registers a _StringTrimmerEditor_ in the data binder to be able to trim strings that come as 
+parameters.
+
+The editor can be configured with the *springlets.mvc.advices.trimeditor.** properties.
+
+[[springlets-mvc-advice-jsonp]]
+===== JsonpAdvice
+
+Registers a controller advice to instruct the MappingJackson2HttpMessageConverter to serialize
+with JSONP formatting.
+
+The advice can be configured with the *springlets.mvc.advices.jsonp.** properties.
+
+[[springlets-mvc-advice-validator]]
+===== ValidatorAdvice
+
+Controller advice that adds the <<springlets-context-validation,Springlets CollectionValidator>>
+to the WebDataBinder. This way you can have Collections of objects as parameters in your
+controllers that can be validated, like in the following example:
+
+[source,java,indent=0]
+----
+    @PostMapping(value = "/batch", name = "createBatch")
+    public ResponseEntity<?> createBatch(@Valid @RequestBody Collection<Owner> owners, BindingResult result) {
+        
+        if (result.hasErrors()) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(result);
+        }
+        
+        getOwnerService().save(owners);
+        
+        return ResponseEntity.created(listURI().toUri()).build();
+    }
+----
+
+
+[source,java,indent=0]
+----
+include::{code-examples}/builder/SpringApplicationBuilderExample.java[tag=hierarchy]
+----
+
+NOTE: There are some restrictions when creating an `ApplicationContext` hierarchy, e.g.
+Web components *must* be contained within the child context, and the same `Environment`
+will be used for both parent and child contexts. See the
+{dc-spring-boot}/builder/SpringApplicationBuilder.{dc-ext}[`SpringApplicationBuilder`
+Javadoc] for full details.
+
+In addition to the usual Spring Framework events, such as
+{spring-javadoc}/context/event/ContextRefreshedEvent.{dc-ext}[`ContextRefreshedEvent`],
+a `SpringApplication` sends some additional application events.
+
+[NOTE]
+====
+Some events are actually triggered before the `ApplicationContext` is created so you
+cannot register a listener on those as a `@Bean`. You can register them via the
+`SpringApplication.addListeners(...)` or `SpringApplicationBuilder.listeners(...)`
+methods.
+====
+
+[indent=0]
+----
+	org.springframework.context.ApplicationListener=com.example.project.MyListener
+----
+
+TIP: You often won't need to use application events, but it can be handy to know that they
+exist. Internally, Spring Boot uses events to handle a variety of tasks.
+
+[source,java,indent=0]
+----
+	import org.springframework.boot.*
+	import org.springframework.beans.factory.annotation.*
+	import org.springframework.stereotype.*
+
+	@Component
+	public class MyBean {
+
+		@Autowired
+		public MyBean(ApplicationArguments args) {
+			boolean debug = args.containsOption("debug");
+			List<String> files = args.getNonOptionArgs();
+			// if run with "--debug logfile.txt" debug=true, files=["logfile.txt"]
+		}
+
+	}
+----
+
