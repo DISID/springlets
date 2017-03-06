@@ -31,7 +31,7 @@ for each of them individually. An example of use can be found in the
 <<springlets-mvc-advice-validator, validator advice section>>
 
 [[springlets-context-i18nenums]]
-==== I18n of enums
+==== Enums i18n
 
 In an application which supports many locales you have to show labels in the current locale. By
 default, when you have objects with properties of type _enum_ their name is used to show them.
@@ -102,7 +102,7 @@ This way, the sample html template with an Spanish locale would generate the fol
 ----
 
 [[springlets-context-i18nobjects]]
-==== I18n of objects
+==== Objects i18n
 
 Similar to the i18n of enums, sometimes you have an object property that you would like to show
 as a String. This is usually the case of a JPA entity with a relation to another one.
@@ -187,7 +187,83 @@ format_pet_owner=#{firstName} #{lastName}
 ----
 
 With this configuration, if a _Pet.owner_ property is formatted, depending on the current locale,
-one of the two formats will be applied.  
+one of the two formats will be applied.
+
+===== Parsing objects
+
+If you use the _@EntityFormat_ annotation to format a property, it will be used also in the other way around to get the object from a text value, as a _Parser_ will be automatically created to handle the conversion.
+
+This comes handy, for example, when you provide a Rest service with a parameter which is an object with a relation to another one. This way the message only needs to provide an object text identifier as the property value.
+
+Spring Data provides a similar utility to convert and object identifier as String to the real object, by converting the text to the object identifier type and then loading the object through its _Repository_. But if you have a Service layer between your controllers and your repositories, this utility goes over it.
+
+To avoid that problem, the _EntityParser_ looks for a component in the Spring context which implements the _EntityParser_ interface for the object type and its identifier type. This allows, for example, to make your services implement that interface to resolve the object instances.
+
+For example, if you have a _Pet_ JPA Entity, with a related _PetService_ which uses a _PetRepository_ to load the data form a database. The _PetService_ would implement the _EntityResolver_ as follows:
+
+[source,java,indent=0]
+.Pet.java
+----
+@Entity
+@EntityFormat("#{name} (#{type})")
+public class Pet {
+
+    @Id
+    private Long id;
+
+    // Other properties, getters/setters, ...
+}
+----
+
+[source,java,indent=0]
+.PetService.java
+----
+@Service
+public class PetService implements EntityResolver<Pet, Long> {
+
+    public Class<Pet> getEntityType() {
+        return Pet.class;
+    }
+    
+    public Class<Long> getIdType() {
+        return Long.class;
+    }
+
+    public Pet findOne(Long id) {
+        return getPetRepository().findOne(id);
+    }
+    
+    // Other methods and properties ...
+}
+----
+
+Then, another entity could have a property of type _Pet_,
+
+[source,java,indent=0]
+.Visit.java
+----
+@Entity
+public class Visit {
+
+    @EntityFormat
+    private Pet pet;
+
+    // Other properties, getters/setters, ...
+}
+----
+
+This way, if you have a Rest Controller that allows to create visits for Pets, the method would
+allow to receive a JSON message with a property _pet_ having as value the identifier of the _Pet_
+to assign to the _Visit_.
+
+[NOTE]
+====
+Take into account the conversion to and from text provided by the _EntityFormat_ annotation will
+not be reversible. The conversion to text will be performed using the provided expression, but
+the conversion to object will expect the object identifier. 
+Can be made reversible if you provide an expression that uses the object identifier, but that
+won't be usually the case.
+====
 
 [[springlets-mvc]]
 === Spring MVC
@@ -318,56 +394,5 @@ controllers that can be validated, like in the following example:
         
         return ResponseEntity.created(listURI().toUri()).build();
     }
-----
-
-
-[source,java,indent=0]
-----
-include::{code-examples}/builder/SpringApplicationBuilderExample.java[tag=hierarchy]
-----
-
-NOTE: There are some restrictions when creating an `ApplicationContext` hierarchy, e.g.
-Web components *must* be contained within the child context, and the same `Environment`
-will be used for both parent and child contexts. See the
-{dc-spring-boot}/builder/SpringApplicationBuilder.{dc-ext}[`SpringApplicationBuilder`
-Javadoc] for full details.
-
-In addition to the usual Spring Framework events, such as
-{spring-javadoc}/context/event/ContextRefreshedEvent.{dc-ext}[`ContextRefreshedEvent`],
-a `SpringApplication` sends some additional application events.
-
-[NOTE]
-====
-Some events are actually triggered before the `ApplicationContext` is created so you
-cannot register a listener on those as a `@Bean`. You can register them via the
-`SpringApplication.addListeners(...)` or `SpringApplicationBuilder.listeners(...)`
-methods.
-====
-
-[indent=0]
-----
-	org.springframework.context.ApplicationListener=com.example.project.MyListener
-----
-
-TIP: You often won't need to use application events, but it can be handy to know that they
-exist. Internally, Spring Boot uses events to handle a variety of tasks.
-
-[source,java,indent=0]
-----
-	import org.springframework.boot.*
-	import org.springframework.beans.factory.annotation.*
-	import org.springframework.stereotype.*
-
-	@Component
-	public class MyBean {
-
-		@Autowired
-		public MyBean(ApplicationArguments args) {
-			boolean debug = args.containsOption("debug");
-			List<String> files = args.getNonOptionArgs();
-			// if run with "--debug logfile.txt" debug=true, files=["logfile.txt"]
-		}
-
-	}
 ----
 
