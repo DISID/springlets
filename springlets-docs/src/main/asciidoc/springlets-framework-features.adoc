@@ -396,3 +396,52 @@ controllers that can be validated, like in the following example:
     }
 ----
 
+[[springlets-mvc-links]]
+==== Links to controllers
+
+TODO
+
+
+[[springlets-mail]]
+=== Spring Mail
+
+To use Springlets for Spring Framework eMail just include the following dependency:
+
+[source,xml,indent=0]
+----
+    <dependency>
+      <groupId>io.springlets</groupId>
+      <artifactId>springlets-mail</artifactId>
+      <version>{springlets-version}</version>
+    </dependency>
+----
+
+It provides the following utilities for the Spring email support:
+
+[[springlets-mail-receive]]
+==== Mail receiver service
+
+TODO
+
+
+[[springlets-jms]]
+=== Spring JMS
+
+To use Springlets for Spring Framework JMS just include the following dependency:
+
+[source,xml,indent=0]
+----
+    <dependency>
+      <groupId>io.springlets</groupId>
+      <artifactId>springlets-web</artifactId>
+      <version>{springlets-version}</version>
+    </dependency>
+----
+
+It provides the following utilities for the Spring JMS support:
+
+[[springlets-jms-sender]]
+==== Sending JMS messages
+
+TODO
+
