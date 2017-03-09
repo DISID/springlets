@@ -130,7 +130,7 @@ public class QueryDslRepositorySupportExt<T> extends QueryDslRepositorySupport {
       return query;
     }
 
-    Pageable mappedPageable = null;
+    Pageable mappedPageable;
     Sort sort = pageable.getSort();
     if (sort != null) {
       List<Sort.Order> mappedOrders = new ArrayList<Sort.Order>();

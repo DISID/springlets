@@ -91,9 +91,9 @@ class SpringletsSecurityInMemoryAuthenticationConfigurer
     inMemAuthProvConfigurer.withUser("admin").password(adminPassw).roles("USER",
         "ADMIN");
 
-    LOG.info("\n\nDefault security users [USERNAME : PASSWORD : ROLES]:\n"
-            .concat("\n  [user  : {} : ROLE_USER]\n")
-            .concat("\n  [admin : {} : ROLE_USER, ROLE_ADMIN]\n"), userPassw , adminPassw);
+    LOG.info("\n\nDefault security users [USERNAME : PASSWORD : ROLES]:\n" +
+             "\n  [user  : {} : ROLE_USER]\n" +
+             "\n  [admin : {} : ROLE_USER, ROLE_ADMIN]\n", userPassw , adminPassw);
 
     // Add users credentials to Environment for dev purposes
 

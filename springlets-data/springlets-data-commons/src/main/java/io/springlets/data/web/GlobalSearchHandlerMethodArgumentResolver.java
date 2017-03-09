@@ -38,7 +38,7 @@ public class GlobalSearchHandlerMethodArgumentResolver implements HandlerMethodA
 
   private String searchValueParameter = DEFAULT_SEARCH_VALUE_PARAMETER;
 
-  private String regexpParameter = DEFAULT_REGEXP_PARAMETER;;
+  private String regexpParameter = DEFAULT_REGEXP_PARAMETER;
 
   public String getSearchValueParameter() {
     return searchValueParameter;

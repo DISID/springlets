@@ -191,21 +191,17 @@ public class BindingResultSerializer extends JsonSerializer<BindingResult> {
   private void loadObjectError(FieldError error, String fieldNamePath,
       Map<String, Object> objectErrors) {
 
-    String propertyName;
+    String propertyName = fieldNamePath;
     boolean isObject = false;
-    boolean isList = false;
 
     // Get this property name and if is a object property
     if (fieldNamePath != null && fieldNamePath.contains(".")) {
       isObject = true;
       propertyName = substringBefore(fieldNamePath, ".");
-    } else {
-      isObject = false;
-      propertyName = fieldNamePath;
     }
 
     // Check if property is an array or a list
-    isList = propertyName != null && propertyName.contains("[");
+    boolean isList = propertyName != null && propertyName.contains("[");
 
     // Process a list item property
     if (isList) {

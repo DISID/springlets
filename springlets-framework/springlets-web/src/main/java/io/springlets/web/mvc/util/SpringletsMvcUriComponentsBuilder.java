@@ -97,12 +97,12 @@ public class SpringletsMvcUriComponentsBuilder extends MvcUriComponentsBuilder {
 	private static UriComponentsBuilder fromMethodInternal(UriComponentsBuilder baseUrl,
 			Class<?> controllerType, Method method, Object... args) {
 
-		baseUrl = getBaseUrlToUse(baseUrl);
+	    UriComponentsBuilder baseUrlToUse = getBaseUrlToUse(baseUrl);
 		String typePath = getTypeRequestMapping(controllerType);
 		String methodPath = getMethodRequestMapping(method);
 		String path = pathMatcher.combine(typePath, methodPath);
-		baseUrl.path(path);
-		UriComponents uriComponents = applyContributors(baseUrl, method, args);
+		baseUrlToUse.path(path);
+		UriComponents uriComponents = applyContributors(baseUrlToUse, method, args);
 		return UriComponentsBuilder.newInstance().uriComponents(uriComponents);
 	}
 
@@ -210,7 +210,7 @@ public class SpringletsMvcUriComponentsBuilder extends MvcUriComponentsBuilder {
 		catch (NoSuchBeanDefinitionException ex) {
 			if (logger.isDebugEnabled()) {
 				logger.debug("No CompositeUriComponentsContributor bean with name '" +
-						MVC_URI_COMPONENTS_CONTRIBUTOR_BEAN_NAME + "'");
+						MVC_URI_COMPONENTS_CONTRIBUTOR_BEAN_NAME + "'", ex);
 			}
 			return null;
 		}

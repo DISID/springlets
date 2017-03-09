@@ -226,7 +226,7 @@ public class DatatablesSortHandlerMethodArgumentResolver extends SortHandlerMeth
         }
       }
 
-      if (orderList.size() == 0) {
+      if (orderList.isEmpty()) {
         return null;
       }
 
