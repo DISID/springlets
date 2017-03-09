@@ -1,72 +1,72 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>io.springlets</groupId>
 		<artifactId>springlets-parent</artifactId>
 		<version>1.2.0.BUILD-SNAPSHOT</version>
 	</parent>
-    <packaging>pom</packaging>
+	<packaging>pom</packaging>
 	<artifactId>springlets-docs</artifactId>
-	<name>Springlets Docs</name>
-	<description>Springlets documents</description>
-	<url>TODO</url>
+	<url>http://springlets.io</url>
 	<organization>
 		<name>DISID Corporation S.L.</name>
 		<url>http://www.disid.com</url>
 	</organization>
+	<scm>
+		<connection>scm:git:https://github.com/DISID/springlets</connection>
+		<url>https://github.com/DISID/springlets</url>
+	</scm>
 	<properties>
 		<main.basedir>${basedir}/..</main.basedir>
+		<github.global.server>github</github.global.server>
+    <github.global.oauth2Token>${env.GITHUB_OAUTH_TOKEN}</github.global.oauth2Token>    
 	</properties>
 	<dependencies>
-    <!--
-    = About the dependencies
-
-    ORDER CRITERIA:
-
-    * Two dependency groups: first springlets dependencies, next the external ones.
-    * Inside a group: alphabetical order, ordering first by groupId, then by artifactId.
-    -->
-      <dependency>
-        <groupId>io.springlets</groupId>
-        <artifactId>springlets-autoconfigure</artifactId>
-      </dependency>
-      <dependency>
-        <groupId>io.springlets</groupId>
-        <artifactId>springlets-authentication</artifactId>
-      </dependency>
-      <dependency>
-        <groupId>io.springlets</groupId>
-        <artifactId>springlets-context</artifactId>
-      </dependency>
-      <dependency>
-        <groupId>io.springlets</groupId>
-        <artifactId>springlets-data-commons</artifactId>
-      </dependency>
-      <dependency>
-        <groupId>io.springlets</groupId>
-        <artifactId>springlets-data-jpa</artifactId>
-      </dependency>
-      <dependency>
-        <groupId>io.springlets</groupId>
-        <artifactId>springlets-jms</artifactId>
-      </dependency>
-      <dependency>
-        <groupId>io.springlets</groupId>
-        <artifactId>springlets-mail</artifactId>
-      </dependency>
-	    <dependency>
-	      <groupId>io.springlets</groupId>
-	      <artifactId>springlets-test-autoconfigure</artifactId>
-	    </dependency>
-      <dependency>
-        <groupId>io.springlets</groupId>
-        <artifactId>springlets-web</artifactId>
-      </dependency>
-      <dependency>
-        <groupId>io.springlets</groupId>
-        <artifactId>springlets-webflow</artifactId>
-      </dependency>
+		<!-- = About the dependencies ORDER CRITERIA: * Two dependency groups: 
+			first springlets dependencies, next the external ones. * Inside a group: 
+			alphabetical order, ordering first by groupId, then by artifactId. -->
+		<dependency>
+			<groupId>io.springlets</groupId>
+			<artifactId>springlets-autoconfigure</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.springlets</groupId>
+			<artifactId>springlets-authentication</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.springlets</groupId>
+			<artifactId>springlets-context</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.springlets</groupId>
+			<artifactId>springlets-data-commons</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.springlets</groupId>
+			<artifactId>springlets-data-jpa</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.springlets</groupId>
+			<artifactId>springlets-jms</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.springlets</groupId>
+			<artifactId>springlets-mail</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.springlets</groupId>
+			<artifactId>springlets-test-autoconfigure</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.springlets</groupId>
+			<artifactId>springlets-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.springlets</groupId>
+			<artifactId>springlets-webflow</artifactId>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
@@ -74,16 +74,21 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
 				<configuration>
-				<excludes>
-					<exclude>**</exclude>
-				</excludes>
+					<excludes>
+						<exclude>**</exclude>
+					</excludes>
 				</configuration>
 			</plugin>
 		</plugins>
 	</build>
 	<profiles>
 		<profile>
-			<id>full</id>
+			<id>release</id>
+			<activation>
+				<property>
+					<name>!skipRelease</name>
+				</property>
+			</activation>
 			<build>
 				<plugins>
 					<plugin>
@@ -103,7 +108,7 @@
 									</dependencySourceIncludes>
 									<attach>false</attach>
 									<quiet>true</quiet>
-									<stylesheetfile>${basedir}/src/main/javadoc/spring-javadoc.css</stylesheetfile>
+									<!--stylesheetfile>${basedir}/src/main/javadoc/spring-javadoc.css</stylesheetfile -->
 									<links>
 										<link>http://docs.oracle.com/javase/7/docs/api/</link>
 										<link>http://docs.oracle.com/javaee/7/api/</link>
@@ -113,114 +118,6 @@
 										<link>http://download.eclipse.org/jetty/stable-9/apidocs/</link>
 										<link>http://www.thymeleaf.org/apidocs/thymeleaf/${thymeleaf.version}/</link>
 									</links>
-								</configuration>
-							</execution>
-						</executions>
-					</plugin>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-dependency-plugin</artifactId>
-						<executions>
-							<execution>
-								<id>copy-starters-pom</id>
-								<phase>generate-resources</phase>
-								<goals>
-									<goal>copy</goal>
-								</goals>
-								<configuration>
-									<artifactItems>
-										<artifactItem>
-											<groupId>io.springlets</groupId>
-											<artifactId>springlets-boot-starters</artifactId>
-											<version>${project.version}</version>
-											<type>pom</type>
-											<overWrite>true</overWrite>
-											<outputDirectory>${project.build.directory}/external-resources</outputDirectory>
-											<destFileName>starters-effective-pom.xml</destFileName>
-										</artifactItem>
-									</artifactItems>
-								</configuration>
-							</execution>
-                            <!--
-							<execution>
-								<id>copy-dependencies-effective-pom</id>
-								<phase>generate-resources</phase>
-								<goals>
-									<goal>copy</goal>
-								</goals>
-								<configuration>
-									<artifactItems>
-										<artifactItem>
-											<groupId>org.springframework.boot</groupId>
-											<artifactId>spring-boot-dependencies</artifactId>
-											<version>${project.version}</version>
-											<type>effective-pom</type>
-											<overWrite>true</overWrite>
-											<outputDirectory>${project.build.directory}/external-resources</outputDirectory>
-											<destFileName>effective-pom.xml</destFileName>
-										</artifactItem>
-									</artifactItems>
-								</configuration>
-							</execution>
-                            -->
-							<execution>
-								<id>unpack-spring-factories</id>
-								<phase>generate-resources</phase>
-								<goals>
-									<goal>unpack</goal>
-								</goals>
-								<configuration>
-									<artifactItems>
-										<artifactItem>
-											<groupId>io.springlets</groupId>
-											<artifactId>springlets-autoconfigure</artifactId>
-											<version>${project.version}</version>
-											<outputDirectory>
-												${project.build.directory}/auto-config/springlets-autoconfigure
-											</outputDirectory>
-											<includes>META-INF/spring.factories</includes>
-										</artifactItem>
-									</artifactItems>
-								</configuration>
-							</execution>
-                            <!--
-							<execution>
-								<id>unpack-starter-poms</id>
-								<phase>generate-resources</phase>
-								<goals>
-									<goal>unpack</goal>
-								</goals>
-								<configuration>
-									<artifactItems>
-										<artifactItem>
-											<groupId>io.springlets</groupId>
-											<artifactId>springlets-boot-starters</artifactId>
-											<version>${project.version}</version>
-											<type>zip</type>
-											<classifier>starter-poms</classifier>
-											<outputDirectory>${project.build.directory}/external-resources/starter-poms</outputDirectory>
-										</artifactItem>
-									</artifactItems>
-								</configuration>
-							</execution>
-                            -->
-							<execution>
-								<id>unpack-test-slices</id>
-								<phase>generate-resources</phase>
-								<goals>
-									<goal>unpack</goal>
-								</goals>
-								<configuration>
-									<artifactItems>
-										<artifactItem>
-											<groupId>io.springlets</groupId>
-											<artifactId>springlets-test-autoconfigure</artifactId>
-											<version>${project.version}</version>
-											<outputDirectory>
-												${project.build.directory}/test-auto-config
-											</outputDirectory>
-										</artifactItem>
-									</artifactItems>
 								</configuration>
 							</execution>
 						</executions>
@@ -245,7 +142,8 @@
 									</includes>
 									<stylesheet>src/main/xslt/dependencyVersions.xsl</stylesheet>
 									<fileMappers>
-										<fileMapper implementation="org.codehaus.plexus.components.io.filemappers.FileExtensionMapper">
+										<fileMapper
+											implementation="org.codehaus.plexus.components.io.filemappers.FileExtensionMapper">
 											<targetExtension>.adoc</targetExtension>
 										</fileMapper>
 									</fileMappers>
@@ -254,286 +152,99 @@
 							</transformationSets>
 						</configuration>
 					</plugin>
-                    <!--
-					<plugin>
-						<groupId>org.codehaus.gmavenplus</groupId>
-						<artifactId>gmavenplus-plugin</artifactId>
-						<executions>
-							<execution>
-								<goals>
-									<goal>execute</goal>
-								</goals>
-								<phase>generate-resources</phase>
-							</execution>
-						</executions>
-						<configuration>
-							<scripts>
-								<script>file:///${project.basedir}/src/main/groovy/generateAutoConfigurationClassTables.groovy</script>
-								<script>file:///${project.basedir}/src/main/groovy/generateStarterTables.groovy</script>
-								<script>file:///${project.basedir}/src/main/groovy/generateTestSlicesTable.groovy</script>
-							</scripts>
-						</configuration>
-						<dependencies>
-							<dependency>
-								<groupId>org.codehaus.groovy</groupId>
-								<artifactId>groovy-all</artifactId>
-								<version>${groovy.version}</version>
-							</dependency>
-							<dependency>
-								<groupId>org.springframework</groupId>
-								<artifactId>spring-core</artifactId>
-								<version>${spring.version}</version>
-							</dependency>
-						</dependencies>
-					</plugin>
-                    -->
+					<!-- AsciiDoctor plugin -->
 					<plugin>
 						<groupId>org.asciidoctor</groupId>
 						<artifactId>asciidoctor-maven-plugin</artifactId>
-						<version>1.5.0</version>
+						<version>1.5.2</version>
+						<dependencies>
+							<dependency>
+								<groupId>org.asciidoctor</groupId>
+								<artifactId>asciidoctorj</artifactId>
+								<version>1.5.2</version>
+							</dependency>
+							<dependency>
+								<groupId>org.asciidoctor</groupId>
+								<artifactId>asciidoctorj-pdf</artifactId>
+								<version>1.5.0-alpha.6</version>
+							</dependency>
+						</dependencies>
 						<executions>
 							<execution>
-								<id>generate-docbook</id>
-								<phase>prepare-package</phase>
+								<id>output-html</id>
+								<phase>generate-resources</phase>
 								<goals>
 									<goal>process-asciidoc</goal>
 								</goals>
 								<configuration>
-									<sourceDocumentName>index.adoc</sourceDocumentName>
-									<backend>docbook5</backend>
-									<doctype>book</doctype>
+									<backend>html5</backend>
+									<sourceHighlighter>highlightjs</sourceHighlighter>
 									<attributes>
-										<docinfo>true</docinfo>
-										<springlets-version>${springlets.version}</springlets-version>
-										<springlets-docs-version>${project.version}</springlets-docs-version>
-										<spring-version>${spring.version}</spring-version>
-										<spring-boot-version>${project.version}</spring-boot-version>
-										<spring-boot-docs-version>${project.version}</spring-boot-docs-version>
-										<spring-boot-repo>${spring-boot-repo}</spring-boot-repo>
-										<spring-docs-version>${spring.version}</spring-docs-version>
-										<spring-security-docs-version>${spring-security.version}</spring-security-docs-version>
-										<spring-webservices-docs-version>${spring-ws.version}</spring-webservices-docs-version>
-										<github-tag>${github-tag}</github-tag>
+										<toc />
+										<toc-placement>left</toc-placement>
+										<sectanchors>true</sectanchors>
+										<!-- set the idprefix to blank -->
+										<idprefix />
+										<idseparator>-</idseparator>
+										<docinfo1>true</docinfo1>
 									</attributes>
 								</configuration>
 							</execution>
+							<!-- @formatter:off -->
+							<!-- 
+							<execution>
+								<id>generate-pdf-doc</id>
+								<phase>generate-resources</phase>
+								<goals>
+									<goal>process-asciidoc</goal>
+								</goals>
+								<configuration>
+									<backend>pdf</backend> 
+								<!-#-WARNING callout bullets don't yet work with CodeRay-#->
+									<sourceHighlighter>coderay</sourceHighlighter>
+									<attributes>
+										<pagenums />
+										<toc />
+										<idprefix />
+										<idseparator>-</idseparator>
+									</attributes>
+								</configuration>
+							</execution>
+							 -->
+              <!-- @formatter:on -->							 
 						</executions>
-					</plugin>
-					<plugin>
-						<groupId>com.agilejava.docbkx</groupId>
-						<artifactId>docbkx-maven-plugin</artifactId>
-						<version>2.0.15</version>
 						<configuration>
-							<sourceDirectory>${basedir}/target/generated-docs</sourceDirectory>
-							<includes>index.xml</includes>
-							<xincludeSupported>true</xincludeSupported>
-							<chunkedOutput>false</chunkedOutput>
-							<foCustomization>${basedir}/src/main/docbook/xsl/pdf.xsl</foCustomization>
-							<useExtensions>1</useExtensions>
-							<highlightSource>1</highlightSource>
-							<highlightXslthlConfig>${basedir}/src/main/docbook/xsl/xslthl-config.xml</highlightXslthlConfig>
+							<doctype>book</doctype>
+							<sourceDirectory>src/main/asciidoc</sourceDirectory>
+							<headerFooter>true</headerFooter>
+							<data-uri />
+							<outputDirectory>target/site/guide</outputDirectory>
 						</configuration>
-						<dependencies>
-							<dependency>
-								<groupId>net.sf.xslthl</groupId>
-								<artifactId>xslthl</artifactId>
-								<version>2.1.0</version>
-							</dependency>
-							<dependency>
-								<groupId>net.sf.docbook</groupId>
-								<artifactId>docbook-xml</artifactId>
-								<version>5.0-all</version>
-								<classifier>resources</classifier>
-								<type>zip</type>
-								<scope>runtime</scope>
-							</dependency>
-						</dependencies>
-						<executions>
-							<execution>
-								<id>html-single</id>
-								<goals>
-									<goal>generate-html</goal>
-								</goals>
-								<phase>prepare-package</phase>
-								<configuration>
-									<htmlCustomization>${basedir}/src/main/docbook/xsl/html-singlepage.xsl</htmlCustomization>
-									<targetDirectory>${basedir}/target/docbook/htmlsingle</targetDirectory>
-									<postProcess>
-										<copy todir="${basedir}/target/contents/reference/htmlsingle">
-											<fileset dir="${basedir}/target/docbook/htmlsingle">
-												<include name="**/*.html" />
-											</fileset>
-										</copy>
-										<copy todir="${basedir}/target/contents/reference/htmlsingle">
-											<fileset dir="${basedir}/src/main/docbook">
-												<include name="**/*.css" />
-												<include name="**/*.png" />
-												<include name="**/*.gif" />
-												<include name="**/*.jpg" />
-											</fileset>
-										</copy>
-									</postProcess>
-								</configuration>
-							</execution>
-							<execution>
-								<id>html</id>
-								<goals>
-									<goal>generate-html</goal>
-								</goals>
-								<phase>prepare-package</phase>
-								<configuration>
-									<htmlCustomization>${basedir}/src/main/docbook/xsl/html-multipage.xsl</htmlCustomization>
-									<targetDirectory>${basedir}/target/docbook/html</targetDirectory>
-									<chunkedOutput>true</chunkedOutput>
-									<postProcess>
-										<copy todir="${basedir}/target/contents/reference/html">
-											<fileset dir="${basedir}/target/docbook/html">
-												<include name="**/*.html" />
-											</fileset>
-										</copy>
-										<copy todir="${basedir}/target/contents/reference/html">
-											<fileset dir="${basedir}/src/main/docbook">
-												<include name="**/*.css" />
-												<include name="**/*.png" />
-												<include name="**/*.gif" />
-												<include name="**/*.jpg" />
-											</fileset>
-										</copy>
-									</postProcess>
-								</configuration>
-							</execution>
-							<execution>
-								<id>pdf</id>
-								<goals>
-									<goal>generate-pdf</goal>
-								</goals>
-								<phase>prepare-package</phase>
-								<configuration>
-									<foCustomization>${basedir}/src/main/docbook/xsl/pdf.xsl</foCustomization>
-									<targetDirectory>${basedir}/target/docbook/pdf</targetDirectory>
-									<postProcess>
-										<copy todir="${basedir}/target/contents/reference">
-											<fileset dir="${basedir}/target/docbook">
-												<include name="**/*.pdf" />
-											</fileset>
-										</copy>
-										<move file="${basedir}/target/contents/reference/pdf/index.pdf" tofile="${basedir}/target/contents/reference/pdf/springlets-reference.pdf" />
-									</postProcess>
-								</configuration>
-							</execution>
-							<execution>
-								<id>epub</id>
-								<goals>
-									<goal>generate-epub3</goal>
-								</goals>
-								<phase>prepare-package</phase>
-								<configuration>
-									<epubCustomization>${basedir}/src/main/docbook/xsl/epub.xsl</epubCustomization>
-									<targetDirectory>${basedir}/target/docbook/epub</targetDirectory>
-									<postProcess>
-										<copy todir="${basedir}/target/contents/reference/epub">
-											<fileset dir="${basedir}/target/docbook">
-												<include name="**/*.epub" />
-											</fileset>
-										</copy>
-										<move file="${basedir}/target/contents/reference/epub/index.epub" tofile="${basedir}/target/contents/reference/epub/springlets-reference.epub" />
-									</postProcess>
-								</configuration>
-							</execution>
-						</executions>
 					</plugin>
-                    <!--
+
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-antrun-plugin</artifactId>
-						<dependencies>
-							<dependency>
-								<groupId>ant-contrib</groupId>
-								<artifactId>ant-contrib</artifactId>
-								<version>1.0b3</version>
-								<exclusions>
-									<exclusion>
-										<groupId>ant</groupId>
-										<artifactId>ant</artifactId>
-									</exclusion>
-								</exclusions>
-							</dependency>
-							<dependency>
-								<groupId>org.apache.ant</groupId>
-								<artifactId>ant-nodeps</artifactId>
-								<version>1.8.1</version>
-							</dependency>
-							<dependency>
-								<groupId>org.tigris.antelope</groupId>
-								<artifactId>antelopetasks</artifactId>
-								<version>3.2.10</version>
-							</dependency>
-						</dependencies>
-						<executions>
-							<execution>
-								<id>package-and-attach-docs-zip</id>
-								<phase>package</phase>
-								<goals>
-									<goal>run</goal>
-								</goals>
-								<configuration>
-									<target>
-										<zip destfile="${project.build.directory}/${project.artifactId}-${project.version}.zip">
-											<zipfileset src="${project.build.directory}/${project.artifactId}-${project.version}-javadoc.jar" prefix="api" />
-											<fileset dir="${project.build.directory}/contents" />
-										</zip>
-									</target>
-								</configuration>
-							</execution>
-							<execution>
-								<id>setup-maven-properties</id>
-								<phase>validate</phase>
-								<goals>
-									<goal>run</goal>
-								</goals>
-								<configuration>
-									<exportAntProperties>true</exportAntProperties>
-									<target>
-										<taskdef resource="net/sf/antcontrib/antcontrib.properties" />
-										<taskdef name="stringutil" classname="ise.antelope.tasks.StringUtilTask" />
-										<var name="version-type" value="${project.version}" />
-										<propertyregex property="version-type" override="true" input="${version-type}" regexp=".*\.(.*)" replace="\1" />
-										<propertyregex property="version-type" override="true" input="${version-type}" regexp="(M)\d+" replace="MILESTONE" />
-										<propertyregex property="version-type" override="true" input="${version-type}" regexp="(RC)\d+" replace="MILESTONE" />
-										<propertyregex property="version-type" override="true" input="${version-type}" regexp="BUILD-(.*)" replace="SNAPSHOT" />
-										<stringutil string="${version-type}" property="spring-boot-repo">
-											<lowercase />
-										</stringutil>
-										<var name="github-tag" value="v${project.version}" />
-										<propertyregex property="github-tag" override="true" input="${github-tag}" regexp=".*SNAPSHOT" replace="master" />
-									</target>
-								</configuration>
-							</execution>
-						</executions>
+						<artifactId>maven-project-info-reports-plugin</artifactId>
+						<version>2.9</version>
 					</plugin>
-                    -->
-                    <!--
+
 					<plugin>
-						<groupId>org.codehaus.mojo</groupId>
-						<artifactId>build-helper-maven-plugin</artifactId>
+						<groupId>com.github.github</groupId>
+						<artifactId>site-maven-plugin</artifactId>
+						<version>0.12</version>
+						<configuration>
+							<message>Creating site for ${project.version}</message>
+						</configuration>
 						<executions>
 							<execution>
-								<id>attach-zip</id>
 								<goals>
-									<goal>attach-artifact</goal>
+									<goal>site</goal>
 								</goals>
-								<configuration>
-									<artifacts>
-										<artifact>
-											<file>${project.build.directory}/${project.artifactId}-${project.version}.zip</file>
-											<type>zip;zip.type=docs;zip.deployed=false</type>
-										</artifact>
-									</artifacts>
-								</configuration>
+								<phase>site</phase>
 							</execution>
 						</executions>
 					</plugin>
-                    -->
+
 				</plugins>
 			</build>
 		</profile>

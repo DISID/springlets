@@ -1,8 +1,13 @@
 [[springlets-framework-features]]
 == Springlets for Spring Framework features
 
-Springlets for Spring Framework provide additional features for the following Spring 
+Springlets for Spring Framework provides additional features for the following Spring 
 Framework modules:
+
+* <<springlets-context>>
+* <<springlets-mvc>>
+* <<springlets-mail>>
+* <<springlets-jms>>
 
 [[springlets-context]]
 === Spring Context

@@ -1,0 +1,34 @@
+<project xmlns="http://maven.apache.org/DECORATION/1.7.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/DECORATION/1.7.0 http://maven.apache.org/xsd/decoration-1.7.0.xsd"
+         name="Springlets">
+
+  <bannerLeft>
+    <name>Springlets</name>
+    <!--src>http://maven.apache.org/images/apache-maven-project.png</src-->
+    <href>http://springlets.io/</href>
+  </bannerLeft>
+
+  <skin>
+    <groupId>org.apache.maven.skins</groupId>
+    <artifactId>maven-fluido-skin</artifactId>
+    <version>1.5</version>
+  </skin>
+     
+  <body>
+    <links>
+      <item name="Reference guide" href="guide/index.html" alt="Reference guide" title="Reference guide" />
+    </links>
+
+    <menu name="Documentation">
+      <item name="Reference guide" href="guide/index.html"/>
+    </menu>
+
+    <menu name="CI">
+      <item name="TravisCI" href="https://travis-ci.org/DISID/springlets"/>
+      <item name="SonarQube" href="https://sonarqube.com/dashboard?id=io.springlets"/>
+      <item name="Codecov" href="https://codecov.io/gh/DISID/springlets"/>
+    </menu>
+
+    <menu ref="reports"/>
+  </body>
+</project>

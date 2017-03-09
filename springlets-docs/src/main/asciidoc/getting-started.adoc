@@ -3,11 +3,8 @@
 
 [partintro]
 --
-If you're just getting started with Springlets, or 'Spring' in general, this is the section
-for you! Here we answer the basic "`what?`", "`how?`" and "`why?`" questions. You'll
-find a gentle introduction to Spring Boot along with installation instructions.
-We'll then build our first Spring Boot application, discussing some core principles as
-we go.
+This section will allow you to get started with the Springlets library.
+First you'll find an introduction to Springlets and then the installation instructions.
 --
 
 

@@ -3,11 +3,10 @@
 
 [partintro]
 --
-This section dives into the details of Springlets. Here you can learn about the key
-features that you will want to use and customize. If you haven't already, you might want
-to read the _<<getting-started.adoc#getting-started>>_ and
-_<<using-springlets.adoc#using-springlets>>_ sections so that you have a good grounding
-of the basics.
+This section provides a guide of the Springlets features and how to use them in your own projects.
+If you haven't already, please read the _<<getting-started.adoc#getting-started>>_ section 
+beforehand. There you will find installation instructions to add the Springlets libraries to
+your project.
 --
 
 include::springlets-framework-features.adoc[]
