@@ -5,7 +5,8 @@ jdk:
   - openjdk7
 env:
   - MAVEN_CONFIG=-DskipRelease
-script: "mvn cobertura:cobertura"
+#script: "mvn cobertura:cobertura "
+script: "mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install cobertura:cobertura sonar:sonar -Dsonar.host.url=https://sonarqube.com -Dsonar.projectKey=io.springlets"
 after_success:
   - bash <(curl -s https://codecov.io/bash)
 cache:
