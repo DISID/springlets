@@ -6,9 +6,9 @@ jdk:
 env:
   - MAVEN_CONFIG=-DskipRelease
 script: 
-  - "mvnw cobertura:cobertura"
+  - "./mvnw cobertura:cobertura"
   - jdk_switcher use oraclejdk8
-  - "mvnw org.jacoco:jacoco-maven-plugin:prepare-agent verify sonar:sonar -Dsonar.host.url=https://sonarqube.com -Dsonar.projectKey=io.springlets -Dsonar.login=$SONAR_TOKEN"
+  - "./mvnw org.jacoco:jacoco-maven-plugin:prepare-agent verify sonar:sonar -Dsonar.host.url=https://sonarqube.com -Dsonar.projectKey=io.springlets -Dsonar.login=$SONAR_TOKEN"
 after_success:
   - bash <(curl -s https://codecov.io/bash)
 cache:
