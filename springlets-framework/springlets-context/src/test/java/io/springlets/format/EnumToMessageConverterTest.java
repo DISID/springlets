@@ -111,6 +111,17 @@ public class EnumToMessageConverterTest {
     assertThat(converted).isEqualTo("one");
   }
 
+  @Test
+  public void convertNullShouldReturnNull() {
+    // Prepare
+    // Exercise
+    Object converted = converter.convert(null, TypeDescriptor.valueOf(TestEnum.class),
+        TypeDescriptor.valueOf(String.class));
+
+    // Validate
+    assertThat(converted).isNull();
+  }
+
   enum TestEnum {
     ONE, TWO
   }

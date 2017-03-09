@@ -49,6 +49,7 @@ public class EnumToMessageConverter implements GenericConverter {
   @Override
   public Object convert(Object source, TypeDescriptor sourceType, TypeDescriptor targetType) {
     if (source == null) {
+      // Nothing to convert
       return null;
     }
     @SuppressWarnings("rawtypes")
