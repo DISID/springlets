@@ -84,11 +84,6 @@
 	<profiles>
 		<profile>
 			<id>release</id>
-			<activation>
-				<property>
-					<name>!skipRelease</name>
-				</property>
-			</activation>
 			<build>
 				<plugins>
 					<plugin>

@@ -11,7 +11,7 @@ script:
       echo "Running sonar only for JDK version: $TRAVIS_JDK_VERSION";
       ./mvnw org.jacoco:jacoco-maven-plugin:prepare-agent verify sonar:sonar -Dsonar.host.url=https://sonarqube.com -Dsonar.projectKey=io.springlets -Dsonar.login=$SONAR_TOKEN || travis_terminate 1;
       echo "Generating springlets site";
-      ./mvnw clean install site -pl springlets-docs || travis_terminate 1;
+      ./mvnw -Prelease clean install site -pl springlets-docs || travis_terminate 1;
      fi'
 after_success:
   - bash <(curl -s https://codecov.io/bash)
