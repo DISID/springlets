@@ -63,7 +63,7 @@ public class SpringletsWebMvcExcludeFilter extends AnnotationCustomizableTypeExc
     includes.add(HandlerMethodArgumentResolver.class);
     includes.add(MethodLinkFactory.class);
     DEFAULT_INCLUDES = Collections.unmodifiableSet(includes);
-  };
+  }
 
   private static final Set<Class<?>> DEFAULT_INCLUDES_AND_CONTROLLER;
 

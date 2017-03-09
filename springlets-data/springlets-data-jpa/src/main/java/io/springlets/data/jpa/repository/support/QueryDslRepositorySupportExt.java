@@ -150,7 +150,7 @@ public class QueryDslRepositorySupportExt<T> extends QueryDslRepositorySupport {
           }
         }
       }
-      if (mappedOrders.size() == 0) {
+      if (mappedOrders.isEmpty()) {
         // No properties to order by are available, so don't apply ordering and return the query
         // as it is
         return query;
