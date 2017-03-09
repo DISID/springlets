@@ -82,6 +82,7 @@
     <module>springlets-autoconfigure</module>
     <module>springlets-test-autoconfigure</module>
     <module>springlets-boot-starters</module>
+    <module>springlets-docs</module>
   </modules>
 
   <distributionManagement>
