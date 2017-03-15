@@ -1,5 +1,3 @@
 = Springlets documentation
 
-You can access the Springlets project documentation for each of the following versions:
-
-* link:1.2.0.BUILD-SNAPSHOT/index.html[1.2.0.BUILD-SNAPSHOT] *(current)*
+This branch contains the Springlets project documentation, which is published to http://springlets.io
