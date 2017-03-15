@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.2">
-<title>Common application properties</title>
+<title>Getting started</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
@@ -412,86 +412,117 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
 <script>hljs.initHighlightingOnLoad()</script>
 </head>
-<body class="book toc2 toc-left">
+<body id="getting-started" class="book toc2 toc-left">
 <div id="header">
+<h1>Getting started</h1>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#common-application-properties">Appendix A: Common application properties</a></li>
+<li><a href="#getting-started-introducing-springlets">Introducing Springlets</a></li>
+<li><a href="#getting-started-system-requirements">System Requirements</a></li>
+<li><a href="#getting-started-installing-springlets">Installing Springlets</a>
+<ul class="sectlevel2">
+<li><a href="#getting-started-installation-instructions-for-java">Installation instructions for the Java developer</a></li>
+<li><a href="#getting-started-upgrading-from-an-earlier-version">Upgrading from an earlier version of Springlets</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
 <div id="content">
+<div id="preamble">
+<div class="sectionbody">
+
+</div>
+</div>
 <div class="sect1">
-<h2 id="common-application-properties"><a class="anchor" href="#common-application-properties"></a>Appendix A: Common application properties</h2>
+<h2 id="getting-started-introducing-springlets"><a class="anchor" href="#getting-started-introducing-springlets"></a>Introducing Springlets</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>If you use the Springlets for Spring Boot features,
-various properties can be specified inside your <code>application.properties</code>/<code>application.yml</code>
-file or as command line switches. This section provides a list of common Springlets
-for Spring Boot properties and references to the underlying classes that consume them.</p>
+<p>Springlets provides a series of heterogeneus utilities and Spring Boot starters not currently
+available in the Spring projects like Spring Framework, Spring Data or Spring Boot, as well
+as other open source projects used in Java web projects.</p>
 </div>
-<div class="admonitionblock warning">
+<div class="paragraph">
+<p>Our goal in Springlets is to follow the conventions used in the Spring projects (naming,
+versioning, project structure, …) as close as possible. As a matter of fact, you can
+easily view to which Spring project are related most Springlet modules, as their name has been
+created by replacing the spring prefix with springlets.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="getting-started-system-requirements"><a class="anchor" href="#getting-started-system-requirements"></a>System Requirements</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The Springlets 1.x versions will be associated to the Spring IO platform Athens releases.
+As a result, Springlets 1.x will depend on the Spring Framework 4.3 releases. Also JDK 7 and 8
+are supported.</p>
+</div>
+<div class="paragraph">
+<p>Dependencies are provided through Maven Central to be used in Maven (3.2+), but other tools
+like can be also used.</p>
+</div>
+<div class="paragraph">
+<p>For other requirements, just take a look at the related Spring projects requirements.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="getting-started-installing-springlets"><a class="anchor" href="#getting-started-installing-springlets"></a>Installing Springlets</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Springlets can be used with &#8220;classic&#8221; Java development tools.
+Regardless, you will need <a href="http://www.java.com">Java SDK v1.7</a> or higher. You
+should check your current Java installation before you begin:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ java -version</pre>
+</div>
+</div>
+<div class="sect2">
+<h3 id="getting-started-installation-instructions-for-java"><a class="anchor" href="#getting-started-installation-instructions-for-java"></a>Installation instructions for the Java developer</h3>
+<div class="paragraph">
+<p>You can use Springlets in the same way as any standard Java library. Simply include the
+appropriate <code>springlets-*.jar</code> files on your classpath.</p>
+</div>
+<div class="paragraph">
+<p>Although you <em>could</em> just copy the Springlets jars, we generally recommend that you use a
+build tool that supports dependency management (such as Maven or Gradle).</p>
+</div>
+<div class="sect3">
+<h4 id="getting-started-maven-installation"><a class="anchor" href="#getting-started-maven-installation"></a>Maven installation</h4>
+<div class="paragraph">
+<p>Springlets is compatible with Apache Maven 3.2 or above. If you don&#8217;t already have Maven
+installed you can follow the instructions at <a href="http://maven.apache.org" class="bare">http://maven.apache.org</a>.</p>
+</div>
+<div class="admonitionblock tip">
 <table>
 <tr>
 <td class="icon">
-<div class="title">Warning</div>
+<div class="title">Tip</div>
 </td>
 <td class="content">
-This sample file is meant as a guide only. Do <strong>not</strong> copy/paste the entire
-content into your application; rather pick only the properties that you need.
+On many operating systems Maven can be installed via a package manager. If you&#8217;re an
+OSX Homebrew user try <code>brew install maven</code>. Ubuntu users can run
+<code>sudo apt-get install maven</code>.
 </td>
 </tr>
 </table>
 </div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-properties" data-lang="properties"># ===================================================================
-# COMMON SPRINGLETS PROPERTIES
-#
-# This sample file is provided as a guideline. Do NOT copy it in its
-# entirety to your own application.               ^^^
-# ===================================================================
-
-# ----------------------------------------
-# SPRINGLETS FRAMEWORK PROPERTIES
-# ----------------------------------------
-
-# EMAIL
-springlets.mail.receiver.enabled=true # Enable email receiving support
-springlets.mail.receiver.host=  # Email server host
-springlets.mail.receiver.port=  # Email server port
-springlets.mail.receiver.protocol=  # Email server protocol
-springlets.mail.receiver.username=  # User to login in the email server
-springlets.mail.receiver.password=  # Password to login in the email server
-springlets.mail.receiver.starttls-enabled=  # Enables the use of the STARTTLS to connect to the email server
-springlets.mail.receiver.jndi-name=  # JNDI name. When set, takes precedence to others mail settings.
-
-# WEB CONTROLLER ADVICES
-springlets.mvc.advices.enabled=true # Enable Springlets Spring MVC Controller advices
-
-# Trimeditor advice configuration
-springlets.mvc.advices.trimeditor.empty-as-null=true # If an empty parameter value is to be transformed into `null`
-springlets.mvc.advices.trimeditor.chars-to-delete= # Set of characters to delete, in addition to trimming the parameter value. Useful for deleting unwanted line breaks: e.g. "\r\n\f" will delete all new lines and line feeds in a String.
-
-# JsonP advice configuration
-springlets.mvc.advices.jsonp.query-param-names=callback # Supported list of comma separated Jsonp parameter names
-
-# ----------------------------------------
-# SPRINGLETS DATA PROPERTIES
-# ----------------------------------------
-
-# ----------------------------------------
-# SPRINGLETS SECURITY PROPERTIES
-# ----------------------------------------
-
-# IN MEMORY AUTHENTICATION
-springlets.security.auth.in-memory.enabled=false # Enable the in memory spring security authentication
-springlets.security.auth.in-memory.erase-credentials=false # If authentication credentials must be erased from memory once the authentication process has finished
-
-# ----------------------------------------
-# SPRINGLETS WEBFLOW PROPERTIES
-# ----------------------------------------</code></pre>
+<div class="paragraph">
+<p>Springlets dependencies use the <code>io.springlets</code> <code>groupId</code>. Depending on your project&#8217;s
+needs, you just have to select which springlets dependency have to include in your project.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="getting-started-upgrading-from-an-earlier-version"><a class="anchor" href="#getting-started-upgrading-from-an-earlier-version"></a>Upgrading from an earlier version of Springlets</h3>
+<div class="paragraph">
+<p>If you are upgrading from an earlier release of Springlets check the &#8220;release notes&#8221;
+hosted on the {github-wiki}[project wiki]. You&#8217;ll find upgrade instructions along with
+a list of &#8220;new and noteworthy&#8221; features for each release.</p>
 </div>
 </div>
 </div>
@@ -499,7 +530,7 @@ springlets.security.auth.in-memory.erase-credentials=false # If authentication c
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-03-09 18:27:44 UTC
+Last updated 2017-03-08 18:42:33 +01:00
 </div>
 </div>
 </body>

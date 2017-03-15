@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.2">
-<title>Springlets for Spring Boot features</title>
+<title>Appendices</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
@@ -412,181 +412,87 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
 <script>hljs.initHighlightingOnLoad()</script>
 </head>
-<body class="book toc2 toc-left">
+<body id="appendix" class="book toc2 toc-left">
 <div id="header">
+<h1>Appendices</h1>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#springlets-boot-features">Springlets for Spring Boot features</a>
-<ul class="sectlevel2">
-<li><a href="#springlets-boot-web">Springlets web starter</a></li>
-<li><a href="#springlets-boot-data-jpa">Springlets Data JPA starter</a></li>
-<li><a href="#springlets-boot-mail">Springlets Mail starter</a></li>
-<li><a href="#springlets-boot-jms">Springlets JMS starter</a></li>
-<li><a href="#springlets-boot-authentication">Springlets Security Authentication</a></li>
-<li><a href="#springlets-boot-webflow">Springlets Webflow starter</a></li>
-<li><a href="#springlets-boot-test">Springlets Test starter</a></li>
-</ul>
-</li>
+<li><a href="#common-application-properties">Appendix A: Common application properties</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="springlets-boot-features"><a class="anchor" href="#springlets-boot-features"></a>Springlets for Spring Boot features</h2>
+<h2 id="common-application-properties"><a class="anchor" href="#common-application-properties"></a>Appendix A: Common application properties</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Springlets for Spring Boot provides additional features, autoconfiguration and starters for the
-Springlets modules as well as other libraries.</p>
+<p>If you use the Springlets for Spring Boot features,
+various properties can be specified inside your <code>application.properties</code>/<code>application.yml</code>
+file or as command line switches. This section provides a list of common Springlets
+for Spring Boot properties and references to the underlying classes that consume them.</p>
 </div>
-<div class="paragraph">
-<p>The starters provided are the following ones:</p>
-</div>
-<div class="sect2">
-<h3 id="springlets-boot-web"><a class="anchor" href="#springlets-boot-web"></a>Springlets web starter</h3>
-<div class="paragraph">
-<p>To use the Springlets web starter just include the following dependency:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-xml" data-lang="xml">&lt;dependencyT&gt;
-  &lt;groupId&gt;io.springlets&lt;/groupId&gt;
-  &lt;artifactId&gt;springlets-boot-starter-web&lt;/artifactId&gt;
-  &lt;version&gt;{springlets-version}&lt;/version&gt;
-&lt;/dependency&gt;</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>It provides the following autoconfiguration:</p>
-</div>
-<div class="paragraph">
-<p>TODO: Pending</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="springlets-boot-data-jpa"><a class="anchor" href="#springlets-boot-data-jpa"></a>Springlets Data JPA starter</h3>
-<div class="paragraph">
-<p>To use the Springlets Data JPA starter just include the following dependency:</p>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Warning</div>
+</td>
+<td class="content">
+This sample file is meant as a guide only. Do <strong>not</strong> copy/paste the entire
+content into your application; rather pick only the properties that you need.
+</td>
+</tr>
+</table>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-xml" data-lang="xml">&lt;dependencyT&gt;
-  &lt;groupId&gt;io.springlets&lt;/groupId&gt;
-  &lt;artifactId&gt;springlets-boot-starter-data-jpa&lt;/artifactId&gt;
-  &lt;version&gt;{springlets-version}&lt;/version&gt;
-&lt;/dependency&gt;</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>It provides the following autoconfiguration:</p>
-</div>
-<div class="paragraph">
-<p>TODO</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="springlets-boot-mail"><a class="anchor" href="#springlets-boot-mail"></a>Springlets Mail starter</h3>
-<div class="paragraph">
-<p>To use the Springlets Mail starter just include the following dependency:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-xml" data-lang="xml">&lt;dependencyT&gt;
-  &lt;groupId&gt;io.springlets&lt;/groupId&gt;
-  &lt;artifactId&gt;springlets-boot-starter-mail&lt;/artifactId&gt;
-  &lt;version&gt;{springlets-version}&lt;/version&gt;
-&lt;/dependency&gt;</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>It provides the following autoconfiguration:</p>
-</div>
-<div class="paragraph">
-<p>TODO</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="springlets-boot-jms"><a class="anchor" href="#springlets-boot-jms"></a>Springlets JMS starter</h3>
-<div class="paragraph">
-<p>To use the Springlets JMS starter just include the following dependency:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-xml" data-lang="xml">&lt;dependencyT&gt;
-  &lt;groupId&gt;io.springlets&lt;/groupId&gt;
-  &lt;artifactId&gt;springlets-boot-starter-jms&lt;/artifactId&gt;
-  &lt;version&gt;{springlets-version}&lt;/version&gt;
-&lt;/dependency&gt;</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>It provides the following autoconfiguration:</p>
-</div>
-<div class="paragraph">
-<p>TODO</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="springlets-boot-authentication"><a class="anchor" href="#springlets-boot-authentication"></a>Springlets Security Authentication</h3>
-<div class="paragraph">
-<p>To use the Springlets Security Authentication starter just include the following dependency:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-xml" data-lang="xml">&lt;dependencyT&gt;
-  &lt;groupId&gt;io.springlets&lt;/groupId&gt;
-  &lt;artifactId&gt;springlets-boot-starter-authentication&lt;/artifactId&gt;
-  &lt;version&gt;{springlets-version}&lt;/version&gt;
-&lt;/dependency&gt;</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>It provides the following autoconfiguration:</p>
-</div>
-<div class="paragraph">
-<p>TODO</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="springlets-boot-webflow"><a class="anchor" href="#springlets-boot-webflow"></a>Springlets Webflow starter</h3>
-<div class="paragraph">
-<p>To use the Springlets Webflow starter just include the following dependency:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-xml" data-lang="xml">&lt;dependencyT&gt;
-  &lt;groupId&gt;io.springlets&lt;/groupId&gt;
-  &lt;artifactId&gt;springlets-boot-starter-webflow&lt;/artifactId&gt;
-  &lt;version&gt;{springlets-version}&lt;/version&gt;
-&lt;/dependency&gt;</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>It provides the following autoconfiguration:</p>
-</div>
-<div class="paragraph">
-<p>TODO</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="springlets-boot-test"><a class="anchor" href="#springlets-boot-test"></a>Springlets Test starter</h3>
-<div class="paragraph">
-<p>To use the Springlets Tests starter just include the following dependency:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-xml" data-lang="xml">&lt;dependencyT&gt;
-  &lt;groupId&gt;io.springlets&lt;/groupId&gt;
-  &lt;artifactId&gt;springlets-boot-starter-test&lt;/artifactId&gt;
-  &lt;version&gt;{springlets-version}&lt;/version&gt;
-&lt;/dependency&gt;</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>It provides the following autoconfiguration:</p>
-</div>
-<div class="paragraph">
-<p>TODO</p>
+<pre class="highlightjs highlight"><code class="language-properties" data-lang="properties"># ===================================================================
+# COMMON SPRINGLETS PROPERTIES
+#
+# This sample file is provided as a guideline. Do NOT copy it in its
+# entirety to your own application.               ^^^
+# ===================================================================
+
+# ----------------------------------------
+# SPRINGLETS FRAMEWORK PROPERTIES
+# ----------------------------------------
+
+# EMAIL
+springlets.mail.receiver.enabled=true # Enable email receiving support
+springlets.mail.receiver.host=  # Email server host
+springlets.mail.receiver.port=  # Email server port
+springlets.mail.receiver.protocol=  # Email server protocol
+springlets.mail.receiver.username=  # User to login in the email server
+springlets.mail.receiver.password=  # Password to login in the email server
+springlets.mail.receiver.starttls-enabled=  # Enables the use of the STARTTLS to connect to the email server
+springlets.mail.receiver.jndi-name=  # JNDI name. When set, takes precedence to others mail settings.
+
+# WEB CONTROLLER ADVICES
+springlets.mvc.advices.enabled=true # Enable Springlets Spring MVC Controller advices
+
+# Trimeditor advice configuration
+springlets.mvc.advices.trimeditor.empty-as-null=true # If an empty parameter value is to be transformed into `null`
+springlets.mvc.advices.trimeditor.chars-to-delete= # Set of characters to delete, in addition to trimming the parameter value. Useful for deleting unwanted line breaks: e.g. "\r\n\f" will delete all new lines and line feeds in a String.
+
+# JsonP advice configuration
+springlets.mvc.advices.jsonp.query-param-names=callback # Supported list of comma separated Jsonp parameter names
+
+# ----------------------------------------
+# SPRINGLETS DATA PROPERTIES
+# ----------------------------------------
+
+# ----------------------------------------
+# SPRINGLETS SECURITY PROPERTIES
+# ----------------------------------------
+
+# IN MEMORY AUTHENTICATION
+springlets.security.auth.in-memory.enabled=false # Enable the in memory spring security authentication
+springlets.security.auth.in-memory.erase-credentials=false # If authentication credentials must be erased from memory once the authentication process has finished
+
+# ----------------------------------------
+# SPRINGLETS WEBFLOW PROPERTIES
+# ----------------------------------------</code></pre>
 </div>
 </div>
 </div>
@@ -594,7 +500,7 @@ Springlets modules as well as other libraries.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-03-09 18:27:44 UTC
+Last updated 2017-03-09 09:46:40 +01:00
 </div>
 </div>
 </body>
