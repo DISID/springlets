@@ -1,3 +1,6 @@
+---
+permalink: /index.html
+---
 # Springlets documentation
 
 You can access the Springlets project documentation for each of the following versions:
