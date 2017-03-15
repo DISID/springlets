@@ -229,6 +229,9 @@
 						<version>0.12</version>
 						<configuration>
 							<message>Creating site for ${project.version}</message>
+                            <!-- Destination directory -->
+                            <path>${project.version}</path>
+                            <merge>true</merge>
 						</configuration>
 						<executions>
 							<execution>
