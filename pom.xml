@@ -263,6 +263,11 @@
             <check />
           </configuration>
         </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-javadoc-plugin</artifactId>
+          <version>2.10.4</version>
+        </plugin>
       </plugins>
     </pluginManagement>
     <plugins>
@@ -274,6 +279,14 @@
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>cobertura-maven-plugin</artifactId>
       </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <configuration>
+          <additionalparam>-Xdoclint:none</additionalparam>
+          <reportOutputDirectory>${project.basedir}/springlets-docs/target/site</reportOutputDirectory>
+        </configuration>
+      </plugin>      
    </plugins>
   </build>
   

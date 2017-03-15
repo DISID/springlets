@@ -10,6 +10,8 @@ script:
   - 'if [ "$TRAVIS_JDK_VERSION" == "oraclejdk8" ]; then
       echo "Running sonar only for JDK version: $TRAVIS_JDK_VERSION";
       ./mvnw org.jacoco:jacoco-maven-plugin:prepare-agent verify sonar:sonar -Dsonar.host.url=https://sonarqube.com -Dsonar.projectKey=io.springlets -Dsonar.login=$SONAR_TOKEN || travis_terminate 1;
+      echo "Generating springlets javadoc";
+      ./mvnw javadoc:aggregate || travis_terminate 1;
       echo "Generating springlets site";
       ./mvnw -Prelease clean install site -pl springlets-docs || travis_terminate 1;
      fi'

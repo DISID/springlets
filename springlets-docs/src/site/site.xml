@@ -17,10 +17,12 @@
   <body>
     <links>
       <item name="Reference guide" href="guide/index.html" alt="Reference guide" title="Reference guide" />
+      <item name="Javadoc" href="apidocs/index.html" alt="Javadoc" title="Javadoc" />
     </links>
 
     <menu name="Documentation">
       <item name="Reference guide" href="guide/index.html"/>
+      <item name="Javadoc" href="apidocs/index.html"/>
     </menu>
 
     <menu name="CI">
