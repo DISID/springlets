@@ -13,7 +13,7 @@ script:
       echo "Generating springlets javadoc";
       ./mvnw javadoc:aggregate || travis_terminate 1;
       echo "Generating springlets site";
-      travis_wait ./mvnw -Prelease install site -pl springlets-docs || travis_terminate 1;
+      travis_wait 30 ./mvnw -Prelease install site -pl springlets-docs || travis_terminate 1;
      fi'
 after_success:
   - bash <(curl -s https://codecov.io/bash)
