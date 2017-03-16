@@ -5,17 +5,17 @@ jdk:
   - openjdk7
 env:
   global:
-    - MAVEN_CONFIG="-T 1C -DskipRelease"
+    - MAVEN_CONFIG="-DskipRelease"
     - MAVEN_OPTS="-XX:+TieredCompilation -XX:TieredStopAtLevel=1"
 script: 
-  - './mvnw cobertura:cobertura'
+  - './mvnw -T 1C cobertura:cobertura'
   - 'if [ "$TRAVIS_JDK_VERSION" == "oraclejdk8" ]; then
       echo "Running sonar only for JDK version: $TRAVIS_JDK_VERSION";
       ./mvnw org.jacoco:jacoco-maven-plugin:prepare-agent verify sonar:sonar -Dsonar.host.url=https://sonarqube.com -Dsonar.projectKey=io.springlets -Dsonar.login=$SONAR_TOKEN || travis_terminate 1;
       echo "Generating springlets javadoc";
-      ./mvnw javadoc:aggregate || travis_terminate 1;
+      ./mvnw -T 1C javadoc:aggregate || travis_terminate 1;
       echo "Generating springlets site";
-      travis_wait 30 ./mvnw -o -Prelease install site -pl springlets-docs || travis_terminate 1;
+      travis_wait 30 ./mvnw -o -T 1C -Prelease install site -pl springlets-docs || travis_terminate 1;
      fi'
 after_success:
   - bash <(curl -s https://codecov.io/bash)
