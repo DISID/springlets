@@ -4,7 +4,8 @@ jdk:
   - oraclejdk7
   - openjdk7
 env:
-  - MAVEN_CONFIG=-DskipRelease
+  - MAVEN_CONFIG="-T 1C -DskipRelease"
+  - MAVEN_OPTS="-XX:+TieredCompilation -XX:TieredStopAtLevel=1"
 script: 
   - './mvnw cobertura:cobertura'
   - 'if [ "$TRAVIS_JDK_VERSION" == "oraclejdk8" ]; then
@@ -13,7 +14,7 @@ script:
       echo "Generating springlets javadoc";
       ./mvnw javadoc:aggregate || travis_terminate 1;
       echo "Generating springlets site";
-      travis_wait 30 ./mvnw -Prelease install site -pl springlets-docs || travis_terminate 1;
+      travis_wait 30 ./mvnw -o -Prelease install site -pl springlets-docs || travis_terminate 1;
      fi'
 after_success:
   - bash <(curl -s https://codecov.io/bash)
