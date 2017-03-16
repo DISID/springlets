@@ -1,10 +1,10 @@
-= Springlets image:https://travis-ci.org/DISID/springlets.svg?branch=master["Build Status", link="https://travis-ci.org/DISID/springlets"]
+= Springlets image:https://travis-ci.org/DISID/springlets.svg?branch=master["Build Status", link="https://travis-ci.org/DISID/springlets"] image:https://sonarqube.com/api/badges/gate?key=io.springlets["Quality Gate", link="https://sonarqube.com/dashboard?id=io.springlets"] 
 
 Springlets provides a series of heterogeneus utilities and Spring Boot starters not currently available in the Spring projects like Spring Framework, Spring Data or Spring Boot, as well as other open source projects used in Java web projects.
 
 Our goal in Springlets is to follow the conventions used in the Spring projects (naming, versioning, project structure, ...) as close as possible. As a matter of fact, you can easily view to which Spring project are related most Springlet modules, as their name has been created by replacing the _spring_ prefix with _springlets_.
 
-The Springlets 1.x versions will be associated to the Spring IO platform Athens releases. As a result, Springlets 1.x will depend on the Spring Framework 4.3 releases. 
+The Springlets 1.x versions will be associated to the Spring IO platform releases (Athens, Brussels) which depend on the Spring Framework 4.3 releases and Spring Boot 1.x releases. 
 Also JDK 7 and 8 is supported.
 
 == Installation and Getting Started
