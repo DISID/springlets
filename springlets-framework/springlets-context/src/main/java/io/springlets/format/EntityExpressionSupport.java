@@ -15,9 +15,14 @@
  */
 package io.springlets.format;
 
+import org.springframework.core.convert.ConversionService;
 import org.springframework.expression.Expression;
 import org.springframework.expression.ExpressionParser;
+import org.springframework.expression.common.CompositeStringExpression;
 import org.springframework.expression.common.TemplateParserContext;
+import org.springframework.expression.spel.standard.SpelExpression;
+import org.springframework.expression.spel.support.StandardEvaluationContext;
+import org.springframework.expression.spel.support.StandardTypeConverter;
 import org.springframework.util.StringUtils;
 
 public class EntityExpressionSupport {
@@ -25,17 +30,30 @@ public class EntityExpressionSupport {
   private final ExpressionParser parser;
   private final TemplateParserContext templateParserContext;
   private final String defaultExpression;
+  private final ConversionService conversionService;
 
   public EntityExpressionSupport(ExpressionParser parser,
       TemplateParserContext templateParserContext) {
-    this(parser, templateParserContext, "#{toString()}");
+    this(parser, templateParserContext, null, "#{toString()}");
+  }
+
+  public EntityExpressionSupport(ExpressionParser parser,
+      TemplateParserContext templateParserContext, ConversionService conversionService) {
+    this(parser, templateParserContext, conversionService, "#{toString()}");
   }
 
   public EntityExpressionSupport(ExpressionParser parser,
       TemplateParserContext templateParserContext, String defaultExpression) {
+    this(parser, templateParserContext, null, defaultExpression);
+  }
+
+  public EntityExpressionSupport(ExpressionParser parser,
+      TemplateParserContext templateParserContext, ConversionService conversionService,
+      String defaultExpression) {
     this.parser = parser;
     this.templateParserContext = templateParserContext;
     this.defaultExpression = defaultExpression;
+    this.conversionService = conversionService;
   }
 
   /**
@@ -76,7 +94,36 @@ public class EntityExpressionSupport {
    * @return the parsed expression
    */
   protected Expression parseExpression(String expression) {
-    return getParser().parseExpression(expression, getTemplateParserContext());
+    Expression parsedExpression =
+        getParser().parseExpression(expression, getTemplateParserContext());
+
+    registerConversionServiceInSpelExpressions(parsedExpression);
+
+    return parsedExpression;
+  }
+
+  private void registerConversionServiceInSpelExpressions(Expression parsedExpression) {
+    if (conversionService == null) {
+      return;
+    }
+    StandardTypeConverter converter = new StandardTypeConverter(conversionService);
+    StandardEvaluationContext context = new StandardEvaluationContext();
+    context.setTypeConverter(converter);
+    setContextIfSpelExpression(parsedExpression, context);
+
+    if (parsedExpression instanceof CompositeStringExpression) {
+      CompositeStringExpression composite = (CompositeStringExpression) parsedExpression;
+      for (Expression childExpresion : composite.getExpressions()) {
+        setContextIfSpelExpression(childExpresion, context);
+      }
+    }
+  }
+
+  private void setContextIfSpelExpression(Expression expression,
+      StandardEvaluationContext context) {
+    if (expression instanceof SpelExpression) {
+      ((SpelExpression) expression).setEvaluationContext(context);
+    }
   }
 
   /**

@@ -28,6 +28,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.context.MessageSource;
+import org.springframework.core.convert.ConversionService;
+import org.springframework.core.convert.support.DefaultConversionService;
 import org.springframework.expression.ExpressionParser;
 import org.springframework.expression.common.TemplateParserContext;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
@@ -50,9 +52,11 @@ public class EntityMessagePrinterTest {
   private TemplateParserContext context = new TemplateParserContext();
   private TestObject testObject = new TestObject();
   private Locale locale = Locale.getDefault();
+  private ConversionService conversionService = new DefaultConversionService();
 
   @Mock
   private MessageSource messageSource;
+
 
   @Rule
   public ExpectedException thown = ExpectedException.none();
@@ -60,7 +64,8 @@ public class EntityMessagePrinterTest {
   @Test
   public void shouldPrintToStringWithNullMessageCode() {
     // Prepare
-    printer = new EntityMessagePrinter(null, messageSource, parser, context, TO_STRING_EXPRESSION);
+    printer = new EntityMessagePrinter(null, messageSource, parser, context, conversionService,
+        TO_STRING_EXPRESSION);
 
     // Exercise
     String result = printer.print(testObject, locale);
@@ -75,7 +80,8 @@ public class EntityMessagePrinterTest {
     when(messageSource.getMessage(anyString(), any(Object[].class), anyString(), eq(locale)))
         .thenReturn(TO_STRING_EXPRESSION);
     printer =
-        new EntityMessagePrinter("empty", messageSource, parser, context, TO_STRING_EXPRESSION);
+        new EntityMessagePrinter("empty", messageSource, parser, context, conversionService,
+            TO_STRING_EXPRESSION);
 
     // Exercise
     String result = printer.print(testObject, locale);
@@ -90,7 +96,8 @@ public class EntityMessagePrinterTest {
     when(messageSource.getMessage("message", null, null, locale))
         .thenReturn("#{field1} - #{field2}");
     printer =
-        new EntityMessagePrinter("message", messageSource, parser, context, TO_STRING_EXPRESSION);
+        new EntityMessagePrinter("message", messageSource, parser, context, conversionService,
+            TO_STRING_EXPRESSION);
 
     // Exercise
     String result = printer.print(testObject, locale);

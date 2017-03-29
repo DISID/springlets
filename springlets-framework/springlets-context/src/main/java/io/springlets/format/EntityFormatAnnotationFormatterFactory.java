@@ -154,7 +154,7 @@ public class EntityFormatAnnotationFormatterFactory extends EmbeddedValueResolut
    * @return the entity to String converter
    */
   public ConditionalGenericConverter getToStringConverter() {
-    return new EntityToStringConverter(PARSER, PARSER_CONTEXT, messageSource);
+    return new EntityToStringConverter(PARSER, PARSER_CONTEXT, messageSource, conversionService);
   }
 
   @SuppressWarnings({"rawtypes"})
@@ -169,12 +169,13 @@ public class EntityFormatAnnotationFormatterFactory extends EmbeddedValueResolut
   }
 
   private EntityPrinter createPrinter(String expression) {
-    return new EntityPrinter(expression, PARSER, PARSER_CONTEXT, defaultExpression);
+    return new EntityPrinter(expression, PARSER, PARSER_CONTEXT, conversionService,
+        defaultExpression);
   }
 
   private EntityMessagePrinter createMessagePrinter(String messageCode) {
     return new EntityMessagePrinter(messageCode, messageSource, PARSER, PARSER_CONTEXT,
-        defaultExpression);
+        conversionService, defaultExpression);
   }
 
 }

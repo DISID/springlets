@@ -18,6 +18,7 @@ package io.springlets.format;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.core.annotation.AnnotatedElementUtils;
+import org.springframework.core.convert.ConversionService;
 import org.springframework.core.convert.TypeDescriptor;
 import org.springframework.core.convert.converter.ConditionalGenericConverter;
 import org.springframework.expression.ExpressionParser;
@@ -47,9 +48,25 @@ public class EntityToStringConverter extends EntityExpressionSupport
 
   /**
    * Creates a new converter 
-   * @param parser
-   * @param templateParserContext
-   * @param messageSource
+   * @param parser to parse the expression
+   * @param templateParserContext context to use to parse the expression
+   * @param messageSource to get the SpEL expression related to a given {@link Locale}
+   * @param conversionService the ConversionService to use to convert property values 
+   * inside the expression
+   */
+  public EntityToStringConverter(ExpressionParser parser,
+      TemplateParserContext templateParserContext, MessageSource messageSource,
+      ConversionService conversionService) {
+    super(parser, templateParserContext, conversionService);
+    this.messageSource = messageSource;
+  }
+
+  /**
+   * Creates a new converter 
+   * @param parser to parse the expression
+   * @param templateParserContext context to use to parse the expression
+   * @param messageSource to get the SpEL expression related to a given {@link Locale}
+   * inside the expression
    */
   public EntityToStringConverter(ExpressionParser parser,
       TemplateParserContext templateParserContext, MessageSource messageSource) {

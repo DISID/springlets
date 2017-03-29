@@ -15,6 +15,7 @@
  */
 package io.springlets.format;
 
+import org.springframework.core.convert.ConversionService;
 import org.springframework.expression.ExpressionParser;
 import org.springframework.expression.common.TemplateParserContext;
 
@@ -35,10 +36,27 @@ public class EntityPrinter extends AbstractEntityPrinter {
    * @param expression expression to generate a String from the provided objects
    * @param parser to parse the expression
    * @param templateParserContext context to use to parse the expression
+   * @param defaultExpression expression to use if the expression to use in the conversion is empty
    */
   public EntityPrinter(String expression, ExpressionParser parser,
       TemplateParserContext templateParserContext, String defaultExpression) {
     super(parser, templateParserContext, defaultExpression);
+    this.expression = expression;
+  }
+
+  /**
+   * Creates a new instance with the given expression and expression parser.
+   * @param expression expression to generate a String from the provided objects
+   * @param parser to parse the expression
+   * @param templateParserContext context to use to parse the expression
+   * @param conversionService the ConversionService to use to convert property values 
+   * inside the expression
+   * @param defaultExpression expression to use if the expression to use in the conversion is empty
+   */
+  public EntityPrinter(String expression, ExpressionParser parser,
+      TemplateParserContext templateParserContext, ConversionService conversionService,
+      String defaultExpression) {
+    super(parser, templateParserContext, conversionService, defaultExpression);
     this.expression = expression;
   }
 

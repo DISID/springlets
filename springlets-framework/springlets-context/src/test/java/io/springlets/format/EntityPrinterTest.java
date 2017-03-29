@@ -20,6 +20,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import org.springframework.core.convert.ConversionService;
+import org.springframework.core.convert.support.DefaultConversionService;
 import org.springframework.expression.ExpressionParser;
 import org.springframework.expression.common.TemplateParserContext;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
@@ -40,6 +42,7 @@ public class EntityPrinterTest {
   private ExpressionParser parser = new SpelExpressionParser();
   private TemplateParserContext context = new TemplateParserContext();
   private TestObject testObject = new TestObject();
+  private ConversionService conversionService = new DefaultConversionService();
 
   @Rule
   public ExpectedException thown = ExpectedException.none();
@@ -47,7 +50,7 @@ public class EntityPrinterTest {
   @Test
   public void shouldPrintToStringWithEmptyExpression() {
     // Prepare
-    printer = new EntityPrinter("", parser, context, TO_STRING_EXPRESSION);
+    printer = new EntityPrinter("", parser, context, conversionService, TO_STRING_EXPRESSION);
 
     // Exercise
     String result = printer.print(testObject, Locale.getDefault());
@@ -59,7 +62,7 @@ public class EntityPrinterTest {
   @Test
   public void shouldPrintToStringWithNullExpression() {
     // Prepare
-    printer = new EntityPrinter(null, parser, context, TO_STRING_EXPRESSION);
+    printer = new EntityPrinter(null, parser, context, conversionService, TO_STRING_EXPRESSION);
 
     // Exercise
     String result = printer.print(testObject, Locale.getDefault());
@@ -71,7 +74,8 @@ public class EntityPrinterTest {
   @Test
   public void shouldPrintUsingExpression() {
     // Prepare
-    printer = new EntityPrinter("#{field1} - #{field2}", parser, context, TO_STRING_EXPRESSION);
+    printer = new EntityPrinter("#{field1} - #{field2}", parser, context, conversionService,
+        TO_STRING_EXPRESSION);
 
     // Exercise
     String result = printer.print(testObject, Locale.getDefault());

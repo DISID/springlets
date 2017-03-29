@@ -27,8 +27,10 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.context.MessageSource;
+import org.springframework.core.convert.ConversionService;
 import org.springframework.core.convert.TypeDescriptor;
 import org.springframework.core.convert.converter.GenericConverter.ConvertiblePair;
+import org.springframework.core.convert.support.DefaultConversionService;
 import org.springframework.expression.ExpressionParser;
 import org.springframework.expression.common.TemplateParserContext;
 
@@ -59,12 +61,14 @@ public class EntityToStringConverterTest {
   @Mock
   private TypeDescriptor targetType;
 
+  private ConversionService conversionService = new DefaultConversionService();
+
   private EntityToStringConverter converter;
 
 
   @Before
   public void setUp() throws Exception {
-    converter = new EntityToStringConverter(parser, context, messageSource);
+    converter = new EntityToStringConverter(parser, context, messageSource, conversionService);
   }
 
   /**
