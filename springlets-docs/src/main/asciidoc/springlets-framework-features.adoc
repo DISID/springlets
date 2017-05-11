@@ -404,7 +404,65 @@ controllers that can be validated, like in the following example:
 [[springlets-mvc-links]]
 ==== Links to controllers
 
+Spring MVC provides an API to generate links to controller methods (see http://docs.spring.io/spring/docs/current/spring-framework-reference/htmlsingle/#mvc-links-to-controllers), avoiding to hard code URI paths in the controllers code, as well as in the links generated in the application pages.
+
+If you are using JSP pages or Thymeleaf templates, you can use a tag or utility to use that API to generate the links. In the case of Thymeleaf, you can use the *#mvc.url* expression object, like in the following example:
+
+[source,java,indent=0]
+----
+public class SampleController {
+    @RequestMapping("/sample1")
+    public String sample1() { 
+      return "sample1" 
+    }
+
+    @RequestMapping("/sample2")
+    public String sample2(@RequestParam("param") String param) { 
+      return "sample2" 
+    }
+}
+----
+
+[source,html,indent=0]
+----
+<a th:href="${(#mvc.url('SC#sample1')).build()}">Go to sample 1</a>
+<a th:href="${(#mvc.url('SC#sample2').arg(0,'value')).build()}">Go to sample 2</a>
+----
+
+To get the URL to the controller method you provide a String composed with the name of the Controller plus the *#* character and the name of the method. The name of the controller is constructed by default in Spring MVC using the capital letters of the controller class. In this sample, the _SampleController_ class name becomes *SC*. The method name is generated using the java method name, in this case *sample1* and *sample2*.
+
+This is useful and simple, but in most cases it has the following problems:
+
+* Its very easy to have two controllers which generate the same name. Following the previous example, if we create a _ShopController_, its name will be also *SC*, colliding with the _SampleController_ name. This can be avoided by carefully selecting the controller name, which can be painful, or using the _name_ parameter of the _@RequestMapping_ annotation at the class level. This parameter allows to set the name of the controller, avoiding the aforementioned collision. In this case, take into account you will have to use the _name_ parameter also in all the controller methods, as the default naming for methods won't work.
+
+* Related to the previous problem, you can't have two controller methods with the same name, although the method signature is different. You can use the same previous techniques to avoid the name collision.
+
+* In the case of methods with any _@RequestParam_ annotated parameter, if you don't provide the value for the parameter, the generated URI will have the parameter added without value. In the example, the following Thymeleaf fragment:
+
+[source,html,indent=0]
+----
+<a th:href="${(#mvc.url('SC#sample2')).build()}">Go to sample 2</a>
+----
+
+Will generate the following HTML code:
+
+[source,html,indent=0]
+----
+<a th:href="/sample2?param}">Go to sample 2</a>
+----
+
+If the link is used, for example, in a form and the _param_ value is sent with a form input tag, the final URL sent to the server will become something like this:
+
+----
+/sample2?param&param=value
+----
+
+In the controller then Spring MVC will try to bind the parameters to the controller parameters. There are two _param_ parameters in the URL, one with a _null_ value and the other with a value of _"value"_. Which one will be used seems not to be clear. Also, if the parameter is a list, you will end up with a null value into the list.
+
+The last problem can't be avoided and renders the *#mvc.url* object expression unusable in forms and any URLs generated dinamically in javascript.
+
 TODO
+
 
 
 [[springlets-mail]]
