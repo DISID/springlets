@@ -950,6 +950,79 @@ public ResponseEntity&lt;?&gt; createBatch(@Valid @RequestBody Collection&lt;Own
 <div class="sect3">
 <h4 id="springlets-mvc-links"><a class="anchor" href="#springlets-mvc-links"></a>Links to controllers</h4>
 <div class="paragraph">
+<p>Spring MVC provides an API to generate links to controller methods (see <a href="http://docs.spring.io/spring/docs/current/spring-framework-reference/htmlsingle/#mvc-links-to-controllers" class="bare">http://docs.spring.io/spring/docs/current/spring-framework-reference/htmlsingle/#mvc-links-to-controllers</a>), avoiding to hard code URI paths in the controllers code, as well as in the links generated in the application pages.</p>
+</div>
+<div class="paragraph">
+<p>If you are using JSP pages or Thymeleaf templates, you can use a tag or utility to use that API to generate the links. In the case of Thymeleaf, you can use the <strong>#mvc.url</strong> expression object, like in the following example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java" data-lang="java">public class SampleController {
+    @RequestMapping("/sample1")
+    public String sample1() {
+      return "sample1"
+    }
+
+    @RequestMapping("/sample2")
+    public String sample2(@RequestParam("param") String param) {
+      return "sample2"
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-html" data-lang="html">&lt;a th:href="${(#mvc.url('SC#sample1')).build()}"&gt;Go to sample 1&lt;/a&gt;
+&lt;a th:href="${(#mvc.url('SC#sample2').arg(0,'value')).build()}"&gt;Go to sample 2&lt;/a&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To get the URL to the controller method you provide a String composed with the name of the Controller plus the <strong>#</strong> character and the name of the method. The name of the controller is constructed by default in Spring MVC using the capital letters of the controller class. In this sample, the <em>SampleController</em> class name becomes <strong>SC</strong>. The method name is generated using the java method name, in this case <strong>sample1</strong> and <strong>sample2</strong>.</p>
+</div>
+<div class="paragraph">
+<p>This is useful and simple, but in most cases it has the following problems:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Its very easy to have two controllers which generate the same name. Following the previous example, if we create a <em>ShopController</em>, its name will be also <strong>SC</strong>, colliding with the <em>SampleController</em> name. This can be avoided by carefully selecting the controller name, which can be painful, or using the <em>name</em> parameter of the <em>@RequestMapping</em> annotation at the class level. This parameter allows to set the name of the controller, avoiding the aforementioned collision. In this case, take into account you will have to use the <em>name</em> parameter also in all the controller methods, as the default naming for methods won&#8217;t work.</p>
+</li>
+<li>
+<p>Related to the previous problem, you can&#8217;t have two controller methods with the same name, although the method signature is different. You can use the same previous techniques to avoid the name collision.</p>
+</li>
+<li>
+<p>In the case of methods with any <em>@RequestParam</em> annotated parameter, if you don&#8217;t provide the value for the parameter, the generated URI will have the parameter added without value. In the example, the following Thymeleaf fragment:</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-html" data-lang="html">&lt;a th:href="${(#mvc.url('SC#sample2')).build()}"&gt;Go to sample 2&lt;/a&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Will generate the following HTML code:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-html" data-lang="html">&lt;a th:href="/sample2?param}"&gt;Go to sample 2&lt;/a&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If the link is used, for example, in a form and the <em>param</em> value is sent with a form input tag, the final URL sent to the server will become something like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>/sample2?param&amp;param=value</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In the controller then Spring MVC will try to bind the parameters to the controller parameters. There are two <em>param</em> parameters in the URL, one with a <em>null</em> value and the other with a value of <em>"value"</em>. Which one will be used seems not to be clear. Also, if the parameter is a list, you will end up with a null value into the list.</p>
+</div>
+<div class="paragraph">
+<p>The last problem can&#8217;t be avoided and renders the <strong>#mvc.url</strong> object expression unusable in forms and any URLs generated dinamically in javascript.</p>
+</div>
+<div class="paragraph">
 <p>TODO</p>
 </div>
 </div>
@@ -1316,7 +1389,7 @@ Springlets modules as well as other libraries.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-03-29 11:24:12 UTC
+Last updated 2017-05-16 08:13:04 UTC
 </div>
 </div>
 </body>
