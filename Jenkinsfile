@@ -1,9 +1,14 @@
 pipeline {
   agent any
   stages {
-    stage('mvn clean test') {
+    stage('Use maven 3') {
       steps {
-        sh 'mvn clean test'
+        withMaven(maven: 'M3')
+      }
+    }
+    stage('Compile and test') {
+      steps {
+        sh 'sh mvn clean test'
       }
     }
   }
