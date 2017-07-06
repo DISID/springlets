@@ -22,7 +22,7 @@ pipeline {
     stage('Source code quality') {
       steps {
         withMaven(maven: 'M3') {
-          sh '''mvn --batch-mode -V -U -e  org.jacoco:jacoco-maven-plugin:prepare-agent test sonar:sonar -Dsurefire.useFile=false
+          sh '''mvn --batch-mode -V -U -e  org.jacoco:jacoco-maven-plugin:prepare-agent test sonar:sonar -Dsonar.host.url=http://localhost:9000  -Dsurefire.useFile=false
 
 '''
         }
