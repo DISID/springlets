@@ -19,10 +19,11 @@ pipeline {
         
       }
     }
-    stage('Integration tests') {
+    stage('Source code quality') {
       steps {
         withMaven(maven: 'M3') {
-          sh '''mvn --batch-mode -V -U -e verify -Dsurefire.useFile=false
+          sh '''mvn --batch-mode -V -U -e  org.jacoco:jacoco-maven-plugin:prepare-agent-integration verify sonar:sonar -Dsurefire.useFile=false
+
 '''
         }
         
