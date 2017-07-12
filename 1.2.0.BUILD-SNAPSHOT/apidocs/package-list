@@ -12,6 +12,7 @@ io.springlets.boot.test.autoconfigure.web.servlet
 io.springlets.data.domain
 io.springlets.data.domain.jaxb
 io.springlets.data.jpa.config
+io.springlets.data.jpa.domain
 io.springlets.data.jpa.repository
 io.springlets.data.jpa.repository.support
 io.springlets.data.web
@@ -38,6 +39,7 @@ io.springlets.web
 io.springlets.web.config
 io.springlets.web.mvc.advice
 io.springlets.web.mvc.config
+io.springlets.web.mvc.converters
 io.springlets.web.mvc.support
 io.springlets.web.mvc.util
 io.springlets.webflow.binding.convert
