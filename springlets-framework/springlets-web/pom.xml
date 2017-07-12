@@ -64,6 +64,10 @@
       <groupId>io.springlets</groupId>
       <artifactId>springlets-context</artifactId>
     </dependency>
+    <dependency>
+      <groupId>io.springlets</groupId>
+      <artifactId>springlets-data-jpa</artifactId>
+    </dependency>
     
   	<!-- 3rd party dependencies -->
     <dependency>

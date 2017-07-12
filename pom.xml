@@ -71,6 +71,8 @@
     <java.version>1.7</java.version>
     <thymeleaf.version>3.0.0.RELEASE</thymeleaf.version>
     <!--tracee.version>1.1.2</tracee.version-->
+    <!-- Webjars -->
+    <bootstrap-fileinput.version>4.4.0</bootstrap-fileinput.version>
   </properties>
 
   <modules>
@@ -206,6 +208,14 @@
       <groupId>org.thymeleaf.extras</groupId>
         <artifactId>thymeleaf-extras-springsecurity4</artifactId>
         <version>${thymeleaf.version}</version>
+      </dependency>
+      
+      <!-- Webjars -->
+      
+      <dependency>
+        <groupId>org.webjars.bower</groupId>
+        <artifactId>bootstrap-fileinput</artifactId>
+        <version>${bootstrap-fileinput.version}</version>
       </dependency>
 
     </dependencies>

@@ -74,5 +74,12 @@
       <artifactId>jackson-datatype-hibernate5</artifactId>
     </dependency>
 
+    <!-- Webjars -->
+    
+    <dependency>
+      <groupId>org.webjars.bower</groupId>
+      <artifactId>bootstrap-fileinput</artifactId>
+    </dependency>
+
   </dependencies>
 </project>

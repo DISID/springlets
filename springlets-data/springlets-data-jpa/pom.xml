@@ -61,6 +61,11 @@
       <artifactId>querydsl-jpa</artifactId>
       <optional>true</optional>
     </dependency>
+    
+    <dependency>
+      <groupId>commons-codec</groupId>
+      <artifactId>commons-codec</artifactId>
+    </dependency>
 
     <dependency>
       <groupId>org.eclipse.persistence</groupId>

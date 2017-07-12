@@ -18,10 +18,10 @@ package io.springlets.boot.autoconfigure.web.mvc;
 import io.springlets.web.mvc.config.EnableSpringletsWebMvcAdvices;
 import io.springlets.web.mvc.config.SpringletsWebMvcConfiguration;
 import io.springlets.web.mvc.config.SpringletsWebMvcProperties;
+import io.springlets.web.mvc.converters.SpringletsImageFileConverter;
 import io.springlets.web.mvc.support.SimpleControllerMethodLinkBuilderFactory;
 import io.springlets.web.mvc.util.ControllerMethodLinkBuilderFactory;
 import io.springlets.web.mvc.util.MethodLinkFactory;
-
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
@@ -43,6 +43,7 @@ import org.springframework.context.annotation.Configuration;
  *
  * @author Enrique Ruiz at http://www.disid.com[DISID Corporation S.L.]
  * @author Cèsar Ordiñana at http://www.disid.com[DISID Corporation S.L.]
+ * @author Juan Carlos García at http://www.disid.com[DISID Corporation S.L.] 
  */
 @AutoConfigureBefore(WebMvcAutoConfiguration.class)
 @ConditionalOnClass(SpringletsWebMvcConfiguration.class)
@@ -70,5 +71,17 @@ public class SpringletsWebMvcAutoConfiguration {
       registry.register(factories[i]);
     }
     return registry;
+  }
+
+  /**
+   * Bean that manages the conversion between a received MultiPart element to a 
+   * new EmbeddedImage type.
+   *  
+   * @return
+   */
+  @Bean
+  @ConditionalOnProperty(name = "springlets.image.management", havingValue = "true")
+  public SpringletsImageFileConverter springletsImageFileConverter() {
+    return new SpringletsImageFileConverter();
   }
 }
