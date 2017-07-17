@@ -67,4 +67,58 @@ TODO
 
 TODO
 
+[[springlets-data-jpa-embeddable-image]]
+==== Support for image management
+
+Springlets JPA support provides an `@Embeddable` entity to manage images as a field of an entity. To use this embeddable entity as a field of your entity, you could do it easily:
+
+[source,java,indent=0]
+----
+public class MyEntity {
+
+  @Id
+  private Long id;
+
+  @Version
+  private Integer version;
+
+  /**
+   * Image field 
+   */
+  @Embedded
+  private EmbeddableImage image;
+
+}
+----
+
+Also, this entity provides some utility methods that will be useful to resize, format and obtain information about the stored image.
+
+[source,java,indent=0]
+----
+public class MyServiceImpl implements MyService {
+
+  @Override
+  public MyEntity save(MyEntity entity){
+
+    // Format the image to PNG format and resize it
+    // to 150x150 pixels
+    EmebddableImage formattedAndResizedImage = 
+          entity.getImage().formatAndResize("png", 150, 150);
+    
+    // Obtain the format of the image
+    String format = formattedAndResizedImage.getFormat();
+
+    // Obtain the base64 value of the image
+    String base64 = formattedAndResizedImage.getBase64();
+
+    // Obtain the String representation of the
+    // image. Combines getFormat() and getBase64()
+    // methods.
+    String imgString = formattedAndResizedImage.toString();
+
+  }
+}
+----
+
+
 

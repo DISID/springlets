@@ -24,6 +24,27 @@ It provides the following autoconfiguration:
 
 TODO: Pending
 
+==== Image management
+
+Including the Springlets web starter, the project will include all the necessary elements to manage images in the view layer. One of these elements are the `bootstrap-fileinput` jQuery plugin, that will allow developers to select and preview the images that should be uploaded to the server side. This Spring Boot starter includes the following dependencies and versions:
+
+[source,xml,indent=0]
+----
+<properties>
+  <bootstrap-fileinput.version>4.4.0</bootstrap-fileinput.version>
+</properties>
+
+<dependencies>
+  <dependency>
+    <groupId>org.webjars.bower</groupId>
+    <artifactId>bootstrap-fileinput</artifactId>
+    <version>${bootstrap-fileinput.version}</version>
+  </dependency>
+</dependencies>
+----
+
+Also, this starter includes the necessary autoconfiguration to register the `SpringletsImageFileConverter` bean (_see [[springlets-mvc-images]]_) automatically into the Spring MVC context if the `springlets.image.management` property has `true` value.
+
 
 [[springlets-boot-data-jpa]]
 === Springlets Data JPA starter

@@ -43,6 +43,9 @@ springlets.mvc.advices.trimeditor.chars-to-delete= # Set of characters to delete
 # JsonP advice configuration
 springlets.mvc.advices.jsonp.query-param-names=callback # Supported list of comma separated Jsonp parameter names
 
+# Image Management
+springlets.image.management= # Enable the image Converter
+
 # ----------------------------------------
 # SPRINGLETS DATA PROPERTIES
 # ----------------------------------------

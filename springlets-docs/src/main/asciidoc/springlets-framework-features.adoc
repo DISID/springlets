@@ -463,7 +463,22 @@ The last problem can't be avoided and renders the *#mvc.url* object expression u
 
 TODO
 
+[[springlets-mvc-images]]
+==== Managing images
 
+Springlets provides some common utilities to manage image files in an Spring MVC project. Usually, to upload an image to the server side, the file is received as a `MultipartFile` type. After that, the server side should convert this image to the desired type to be saved into the filesystem or the desired type to be saved into the database. 
+
+To unify the way as the images are managed in all the projects, Springlets provides an Spring MVC Converter that allows to convert automatically all the received `MultipartFile` elements to an `EmbeddableImage` type (_Read more about this type into the [[springlets-data-jpa-embeddable-image]]_).
+
+To register this converter into the Spring MVC context, you could include the following `@Bean` definition:
+
+[source,java,indent=0]
+----
+@Bean
+public SpringletsImageFileConverter springletsImageFileConverter() {
+  return new SpringletsImageFileConverter();
+}
+----
 
 [[springlets-mail]]
 === Spring Mail
