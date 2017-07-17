@@ -1275,6 +1275,26 @@ public ResponseEntity&lt;?&gt; createBatch(@Valid @RequestBody Collection&lt;Own
 <p>TODO</p>
 </div>
 </div>
+<div class="sect3">
+<h4 id="springlets-mvc-images"><a class="anchor" href="#springlets-mvc-images"></a>Managing images</h4>
+<div class="paragraph">
+<p>Springlets provides some common utilities to manage image files in an Spring MVC project. Usually, to upload an image to the server side, the file is received as a <code>MultipartFile</code> type. After that, the server side should convert this image to the desired type to be saved into the filesystem or the desired type to be saved into the database.</p>
+</div>
+<div class="paragraph">
+<p>To unify the way as the images are managed in all the projects, Springlets provides an Spring MVC Converter that allows to convert automatically all the received <code>MultipartFile</code> elements to an <code>EmbeddableImage</code> type (<em>Read more about this type into the <a id="springlets-data-jpa-embeddable-image"></a></em>).</p>
+</div>
+<div class="paragraph">
+<p>To register this converter into the Spring MVC context, you could include the following <code>@Bean</code> definition:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java" data-lang="java">@Bean
+public SpringletsImageFileConverter springletsImageFileConverter() {
+  return new SpringletsImageFileConverter();
+}</code></pre>
+</div>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="springlets-mail"><a class="anchor" href="#springlets-mail"></a>Spring Mail</h3>
@@ -1408,6 +1428,61 @@ Data modules:</p>
 <p>TODO</p>
 </div>
 </div>
+<div class="sect3">
+<h4 id="springlets-data-jpa-embeddable-image"><a class="anchor" href="#springlets-data-jpa-embeddable-image"></a>Support for image management</h4>
+<div class="paragraph">
+<p>Springlets JPA support provides an <code>@Embeddable</code> entity to manage images as a field of an entity. To use this embeddable entity as a field of your entity, you could do it easily:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java" data-lang="java">public class MyEntity {
+
+  @Id
+  private Long id;
+
+  @Version
+  private Integer version;
+
+  /**
+   * Image field
+   */
+  @Embedded
+  private EmbeddableImage image;
+
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Also, this entity provides some utility methods that will be useful to resize, format and obtain information about the stored image.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java" data-lang="java">public class MyServiceImpl implements MyService {
+
+  @Override
+  public MyEntity save(MyEntity entity){
+
+    // Format the image to PNG format and resize it
+    // to 150x150 pixels
+    EmebddableImage formattedAndResizedImage =
+          entity.getImage().formatAndResize("png", 150, 150);
+
+    // Obtain the format of the image
+    String format = formattedAndResizedImage.getFormat();
+
+    // Obtain the base64 value of the image
+    String base64 = formattedAndResizedImage.getBase64();
+
+    // Obtain the String representation of the
+    // image. Combines getFormat() and getBase64()
+    // methods.
+    String imgString = formattedAndResizedImage.toString();
+
+  }
+}</code></pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -1505,6 +1580,30 @@ Springlets modules as well as other libraries.</p>
 </div>
 <div class="paragraph">
 <p>TODO: Pending</p>
+</div>
+<div class="sect3">
+<h4 id="image-management"><a class="anchor" href="#image-management"></a>Image management</h4>
+<div class="paragraph">
+<p>Including the Springlets web starter, the project will include all the necessary elements to manage images in the view layer. One of these elements are the <code>bootstrap-fileinput</code> jQuery plugin, that will allow developers to select and preview the images that should be uploaded to the server side. This Spring Boot starter includes the following dependencies and versions:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml" data-lang="xml">&lt;properties&gt;
+  &lt;bootstrap-fileinput.version&gt;4.4.0&lt;/bootstrap-fileinput.version&gt;
+&lt;/properties&gt;
+
+&lt;dependencies&gt;
+  &lt;dependency&gt;
+    &lt;groupId&gt;org.webjars.bower&lt;/groupId&gt;
+    &lt;artifactId&gt;bootstrap-fileinput&lt;/artifactId&gt;
+    &lt;version&gt;${bootstrap-fileinput.version}&lt;/version&gt;
+  &lt;/dependency&gt;
+&lt;/dependencies&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Also, this starter includes the necessary autoconfiguration to register the <code>SpringletsImageFileConverter</code> bean (<em>see <a id="springlets-mvc-images"></a></em>) automatically into the Spring MVC context if the <code>springlets.image.management</code> property has <code>true</code> value.</p>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -1691,6 +1790,9 @@ springlets.mvc.advices.trimeditor.chars-to-delete= # Set of characters to delete
 # JsonP advice configuration
 springlets.mvc.advices.jsonp.query-param-names=callback # Supported list of comma separated Jsonp parameter names
 
+# Image Management
+springlets.image.management= # Enable the image Converter
+
 # ----------------------------------------
 # SPRINGLETS DATA PROPERTIES
 # ----------------------------------------
@@ -1713,7 +1815,7 @@ springlets.security.auth.in-memory.erase-credentials=false # If authentication c
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-07-12 11:19:43 UTC
+Last updated 2017-07-17 07:04:13 UTC
 </div>
 </div>
 </body>

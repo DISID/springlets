@@ -993,6 +993,26 @@ public ResponseEntity&lt;?&gt; createBatch(@Valid @RequestBody Collection&lt;Own
 <p>TODO</p>
 </div>
 </div>
+<div class="sect3">
+<h4 id="springlets-mvc-images"><a class="anchor" href="#springlets-mvc-images"></a>Managing images</h4>
+<div class="paragraph">
+<p>Springlets provides some common utilities to manage image files in an Spring MVC project. Usually, to upload an image to the server side, the file is received as a <code>MultipartFile</code> type. After that, the server side should convert this image to the desired type to be saved into the filesystem or the desired type to be saved into the database.</p>
+</div>
+<div class="paragraph">
+<p>To unify the way as the images are managed in all the projects, Springlets provides an Spring MVC Converter that allows to convert automatically all the received <code>MultipartFile</code> elements to an <code>EmbeddableImage</code> type (<em>Read more about this type into the <a id="springlets-data-jpa-embeddable-image"></a></em>).</p>
+</div>
+<div class="paragraph">
+<p>To register this converter into the Spring MVC context, you could include the following <code>@Bean</code> definition:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java" data-lang="java">@Bean
+public SpringletsImageFileConverter springletsImageFileConverter() {
+  return new SpringletsImageFileConverter();
+}</code></pre>
+</div>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="springlets-mail"><a class="anchor" href="#springlets-mail"></a>Spring Mail</h3>
@@ -1047,7 +1067,7 @@ public ResponseEntity&lt;?&gt; createBatch(@Valid @RequestBody Collection&lt;Own
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-07-12 11:19:43 UTC
+Last updated 2017-07-17 07:04:13 UTC
 </div>
 </div>
 </body>

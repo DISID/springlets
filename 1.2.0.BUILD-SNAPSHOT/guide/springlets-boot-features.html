@@ -462,6 +462,30 @@ Springlets modules as well as other libraries.</p>
 <div class="paragraph">
 <p>TODO: Pending</p>
 </div>
+<div class="sect3">
+<h4 id="image-management"><a class="anchor" href="#image-management"></a>Image management</h4>
+<div class="paragraph">
+<p>Including the Springlets web starter, the project will include all the necessary elements to manage images in the view layer. One of these elements are the <code>bootstrap-fileinput</code> jQuery plugin, that will allow developers to select and preview the images that should be uploaded to the server side. This Spring Boot starter includes the following dependencies and versions:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml" data-lang="xml">&lt;properties&gt;
+  &lt;bootstrap-fileinput.version&gt;4.4.0&lt;/bootstrap-fileinput.version&gt;
+&lt;/properties&gt;
+
+&lt;dependencies&gt;
+  &lt;dependency&gt;
+    &lt;groupId&gt;org.webjars.bower&lt;/groupId&gt;
+    &lt;artifactId&gt;bootstrap-fileinput&lt;/artifactId&gt;
+    &lt;version&gt;${bootstrap-fileinput.version}&lt;/version&gt;
+  &lt;/dependency&gt;
+&lt;/dependencies&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Also, this starter includes the necessary autoconfiguration to register the <code>SpringletsImageFileConverter</code> bean (<em>see <a id="springlets-mvc-images"></a></em>) automatically into the Spring MVC context if the <code>springlets.image.management</code> property has <code>true</code> value.</p>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="springlets-boot-data-jpa"><a class="anchor" href="#springlets-boot-data-jpa"></a>Springlets Data JPA starter</h3>
@@ -594,7 +618,7 @@ Springlets modules as well as other libraries.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-07-12 11:19:43 UTC
+Last updated 2017-07-17 07:04:13 UTC
 </div>
 </div>
 </body>

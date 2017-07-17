@@ -509,13 +509,68 @@ Data modules:</p>
 <p>TODO</p>
 </div>
 </div>
+<div class="sect3">
+<h4 id="springlets-data-jpa-embeddable-image"><a class="anchor" href="#springlets-data-jpa-embeddable-image"></a>Support for image management</h4>
+<div class="paragraph">
+<p>Springlets JPA support provides an <code>@Embeddable</code> entity to manage images as a field of an entity. To use this embeddable entity as a field of your entity, you could do it easily:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java" data-lang="java">public class MyEntity {
+
+  @Id
+  private Long id;
+
+  @Version
+  private Integer version;
+
+  /**
+   * Image field
+   */
+  @Embedded
+  private EmbeddableImage image;
+
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Also, this entity provides some utility methods that will be useful to resize, format and obtain information about the stored image.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java" data-lang="java">public class MyServiceImpl implements MyService {
+
+  @Override
+  public MyEntity save(MyEntity entity){
+
+    // Format the image to PNG format and resize it
+    // to 150x150 pixels
+    EmebddableImage formattedAndResizedImage =
+          entity.getImage().formatAndResize("png", 150, 150);
+
+    // Obtain the format of the image
+    String format = formattedAndResizedImage.getFormat();
+
+    // Obtain the base64 value of the image
+    String base64 = formattedAndResizedImage.getBase64();
+
+    // Obtain the String representation of the
+    // image. Combines getFormat() and getBase64()
+    // methods.
+    String imgString = formattedAndResizedImage.toString();
+
+  }
+}</code></pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-07-12 11:19:43 UTC
+Last updated 2017-07-17 07:04:13 UTC
 </div>
 </div>
 </body>
