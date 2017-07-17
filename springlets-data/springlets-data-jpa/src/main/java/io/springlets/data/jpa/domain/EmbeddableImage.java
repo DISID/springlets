@@ -96,8 +96,11 @@ public class EmbeddableImage {
   public String getFormat() {
     Assert.notNull(this.image, "ERROR: The provided image should have a valid image byte array.");
     try {
-      return URLConnection.guessContentTypeFromStream(new ByteArrayInputStream(this.image))
-          .replace("image/", "");
+      String format = URLConnection.guessContentTypeFromStream(new ByteArrayInputStream(this.image));
+      if(format != null){
+        return format.replace("image/", ""); 
+      }
+          
     } catch (IOException e) {
       e.printStackTrace();
     }
