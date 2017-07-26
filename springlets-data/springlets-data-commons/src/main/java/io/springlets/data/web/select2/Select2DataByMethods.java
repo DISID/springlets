@@ -113,7 +113,6 @@ public class Select2DataByMethods<T> extends Select2DataSupport<T> {
    *
    * @param <T>
    */
-  @FunctionalInterface
   public static interface IdProvider<T> {
     Object getId(T object);
   }
@@ -127,7 +126,6 @@ public class Select2DataByMethods<T> extends Select2DataSupport<T> {
    *
    * @param <T>
    */
-  @FunctionalInterface
   public static interface CaptionProvider<T> {
     Object getCaption(T object);
   }
