@@ -38,7 +38,7 @@ DISID CORPORATION S.L.
 :toclevels: 2
 :toc-placement: left
 :toc-title: Table of Contents
-:version: 1.2.0.BUILD-SNAPSHOT
+:version: 1.2.0.RC2
 ifdef::backend-pdf[]
 :pdf-style: asciidoctor
 :pagenums:
