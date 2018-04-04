@@ -69,7 +69,7 @@ It provides utilities related to the Spring Framework project. The included subm
 
 * springlets-jms: send and receive JMS messages.
 * springlets-mail: send and receive email messages.
-* springlets-web: activate support for JSONP, additional Jackson properties, return BindingResults in JSON requests, build links to controllers, ...
+* springlets-web: activate support for JSONP, additional Jackson properties, return BindingResults in JSON requests, build links to controllers, manage optimistic concurrency in the web layer...
 
 === springlets-data
 
