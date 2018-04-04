@@ -10,7 +10,7 @@
   </parent>
   <groupId>io.springlets</groupId>
   <artifactId>springlets-parent</artifactId>
-  <version>1.2.0.RC2</version>
+  <version>1.2.0.RC3</version>
   <packaging>pom</packaging>
   <name>Springlets</name>
   <description>

@@ -32,3 +32,5 @@ tmp/**/*
 .externalToolBuilders/
 .factorypath
 
+*.idea
+*.iml
