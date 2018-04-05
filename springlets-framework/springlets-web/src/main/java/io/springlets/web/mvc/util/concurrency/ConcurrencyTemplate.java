@@ -48,7 +48,7 @@ public class ConcurrencyTemplate<T> {
     public T execute(T record, Model model, ConcurrencyCallback<T> action) {
         try {
             // Execute the provided action and return the result
-            return action.doInConcurrency();
+            return action.doInConcurrency(record);
         } catch (ObjectOptimisticLockingFailureException ex) {
             // If some Concurrency Exception appears, log the error as debug level
             // and throws a custom exception that contains all the information about

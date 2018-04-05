@@ -12,7 +12,8 @@ public interface ConcurrencyCallback<T> {
     /**
      * Gets called by {@link ConcurrencyTemplate#execute(ConcurrencyCallback)}.
      *
+     * @param entity the element that should be saved during concurrency
      * @return a result object, or {@code null}
      */
-    T doInConcurrency() throws Exception;
+    T doInConcurrency(T entity) throws Exception;
 }

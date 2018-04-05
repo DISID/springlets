@@ -54,12 +54,6 @@ public interface ConcurrencyManager<T> {
     /**
      * All the controllers that implements ConcurrencyManager could implement a populateConcurrencyForm method to ensure
      * that the edit form is populate correctly when a Concurrency Exception appears.
-     * <p>
-     * This method has a default implementation for all the controllers that implements the ConcurrencyManager interface,
-     * so if you want the default behavior when a Concurrency Exception appears, you don't need to implement it.
-     * <p>
-     * If you want to modify this implementation and populate your form with your custom attributes, you must implement
-     * the method again in your controller.
      *
      * @param entity
      * @return
