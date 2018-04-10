@@ -18,7 +18,6 @@ package io.springlets.security.jpa.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,19 +28,19 @@ import io.springlets.security.jpa.service.api.UserLoginService;
 
 /**
  * = {@link UserLoginService} implementation
- *  
+ *
  * {@link UserLoginService} default implementation used and configured by
- * the Springlets Boot Autoconfiguration to load and store UserLogin 
+ * the Springlets Boot Autoconfiguration to load and store UserLogin
  * from repositories.
- * 
- * CRUD methods are transactional by default. For reading operations the 
- * transaction configuration readOnly flag is set to true, all others are 
- * configured with a plain {@link Transactional} so that default transaction 
- * configuration applies. 
- * 
- * Developers may use this class directly, subclass it, or write their own 
+ *
+ * CRUD methods are transactional by default. For reading operations the
+ * transaction configuration readOnly flag is set to true, all others are
+ * configured with a plain {@link Transactional} so that default transaction
+ * configuration applies.
+ *
+ * Developers may use this class directly, subclass it, or write their own
  * UserLoginService implementation from scratch.
- * 
+ *
  * @author Enrique Ruiz at http://www.disid.com[DISID Corporation S.L.]
  * @author Cèsar Ordiñana at http://www.disid.com[DISID Corporation S.L.]
  * @author Juan Carlos García at http://www.disid.com[DISID Corporation S.L.]

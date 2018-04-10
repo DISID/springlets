@@ -55,6 +55,7 @@ public class SpringletsDataWebConfiguration extends WebMvcConfigurerAdapter {
     return new DatatablesColumnsHandlerMethodArgumentResolver();
   }
 
+  @Override
   public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
     argumentResolvers.add(globalSearchResolver());
     argumentResolvers.add(datatablesPageableResolver());

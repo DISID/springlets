@@ -109,11 +109,7 @@ public class UserLoginRole {
     }
 
     UserLoginRole other = (UserLoginRole) obj;
-    if (!id.equals(other.id)) {
-      return false;
-    }
-
-    return true;
+    return id.equals(other.id);
   }
 
   @Override

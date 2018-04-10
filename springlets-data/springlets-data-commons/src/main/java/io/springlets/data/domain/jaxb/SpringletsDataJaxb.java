@@ -41,12 +41,12 @@ import io.springlets.data.domain.GlobalSearch;
 /**
  * Spring Data {@link SpringDataJaxb} clone to use public {@link PageableAdapter} class
  * inside SEI interfaces.
- * 
- * Contains utility methods to implement JAXB {@link XmlAdapter}s as well as the 
+ *
+ * Contains utility methods to implement JAXB {@link XmlAdapter}s as well as the
  * Springlets DTO types to be marshalled by JAXB.
  *
  * Based on the Spring Data's class {@link SpringDataJaxb}.
- * 
+ *
  * @author Enrique Ruiz at http://www.disid.com[DISID Corporation S.L.]
  */
 public abstract class SpringletsDataJaxb {
@@ -75,7 +75,10 @@ public abstract class SpringletsDataJaxb {
   public static class PageRequestDto {
 
     @XmlAttribute
-    int page, size;
+    int page;
+
+    @XmlAttribute
+    int size;
 
     @XmlElement(name = "order")
     List<OrderDto> orders = new ArrayList<OrderDto>();
@@ -83,7 +86,7 @@ public abstract class SpringletsDataJaxb {
 
   /**
    * The DTO for {@link Page}.
-   * 
+   *
    * @author Oliver Gierke
    */
   @XmlRootElement(name = "page")
@@ -97,7 +100,7 @@ public abstract class SpringletsDataJaxb {
 
   /**
    * The DTO for {@link Order}.
-   * 
+   *
    * @author Oliver Gierke
    */
   @XmlRootElement(name = "order")
@@ -113,7 +116,7 @@ public abstract class SpringletsDataJaxb {
 
   /**
    * Marshals each of the elements of the given {@link Iterable} using the given {@link XmlAdapter}.
-   * 
+   *
    * @param source
    * @param adapter must not be {@literal null}.
    * @return
@@ -121,7 +124,7 @@ public abstract class SpringletsDataJaxb {
    */
   public static <T, S> List<S> marshal(Iterable<T> source, XmlAdapter<S, T> adapter) {
 
-    Assert.notNull(adapter);
+    Assert.notNull(adapter, "[Assertion failed] - this argument is required; it must not be null");
 
     if (source == null) {
       return Collections.emptyList();
@@ -132,8 +135,8 @@ public abstract class SpringletsDataJaxb {
     for (T element : source) {
       try {
         result.add(adapter.marshal(element));
-      } catch (Exception o_O) {
-        throw new RuntimeException(o_O);
+      } catch (Exception ex) {
+        throw new IllegalStateException(ex);
       }
     }
 

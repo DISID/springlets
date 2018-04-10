@@ -23,9 +23,9 @@ import java.util.Collections;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
 /**
- * JAXB {@link XmlAdapter} to convert {@link Iterable} instances 
+ * JAXB {@link XmlAdapter} to convert {@link Iterable} instances
  * into a {@link Collection}s and vice versa.
- * 
+ *
  * @author Enrique Ruiz at http://www.disid.com[DISID Corporation S.L.]
  */
 public class IterableAdapter<S> extends XmlAdapter<AbstractCollection<S>, Iterable<S>> {
@@ -57,7 +57,7 @@ public class IterableAdapter<S> extends XmlAdapter<AbstractCollection<S>, Iterab
 
   /**
    * Creates a mutable {@link ArrayList} instance containing the given elements.
-   * 
+   *
    * @param source Iterable
    * @return Collection
    */
@@ -68,9 +68,9 @@ public class IterableAdapter<S> extends XmlAdapter<AbstractCollection<S>, Iterab
     for (S element : source) {
       try {
         result.add(element);
-      } 
-      catch (Exception o_O) {
-        throw new RuntimeException(o_O);
+      }
+      catch (Exception ex) {
+        throw new IllegalStateException(ex);
       }
     }
     return result;

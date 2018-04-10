@@ -28,7 +28,7 @@ import javax.validation.constraints.Size;
 
 /**
  * JPA Entity that models the user roles.
- * 
+ *
  * @author Enrique Ruiz at http://www.disid.com[DISID Corporation S.L.]
  * @author Cèsar Ordiñana at http://www.disid.com[DISID Corporation S.L.]
  * @author Juan Carlos García at http://www.disid.com[DISID Corporation S.L.]
@@ -107,11 +107,7 @@ public class LoginRole {
     }
 
     LoginRole other = (LoginRole) obj;
-    if (!id.equals(other.id)) {
-      return false;
-    }
-
-    return true;
+    return id.equals(other.id);
   }
 
   @Override

@@ -53,22 +53,22 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 /**
  * This class is a custom implementation of the {@link MvcUriComponentsBuilder}
- * class provided by the Spring MVC. 
- * 
+ * class provided by the Spring MVC.
+ *
  * We only need to overwrite the private method `applyContributors`. The problem is
  * that all methods of this class are statics, and we need to re-implement them to be
- * able to use our customized method.  
- * 
+ * able to use our customized method.
+ *
  * This customization is necessary to be able to solve the following issue
- * https://jira.spring.io/browse/SPR-14890. 
- * 
+ * https://jira.spring.io/browse/SPR-14890.
+ *
  * @author Juan Carlos García at http://www.disid.com[DISID Corporation S.L.]
  * @since 1.1.0
  */
 public class SpringletsMvcUriComponentsBuilder extends MvcUriComponentsBuilder {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(SpringletsMvcUriComponentsBuilder.class);
-	
+
 	private static final PathMatcher pathMatcher = new AntPathMatcher();
 
 	private static final ParameterNameDiscoverer parameterNameDiscoverer = new DefaultParameterNameDiscoverer();
@@ -126,7 +126,7 @@ public class SpringletsMvcUriComponentsBuilder extends MvcUriComponentsBuilder {
 			return "/";
 		}
 		if (paths.length > 1 && logger.isWarnEnabled()) {
-			logger.warn("Multiple paths on controller " + controllerType.getName() + ", using first one");
+			logger.warn("Multiple paths on controller {}, using first one", controllerType.getName());
 		}
 		return paths[0];
 	}
@@ -142,7 +142,7 @@ public class SpringletsMvcUriComponentsBuilder extends MvcUriComponentsBuilder {
 			return "/";
 		}
 		if (paths.length > 1 && logger.isWarnEnabled()) {
-			logger.warn("Multiple paths on method " + method.toGenericString() + ", using first one");
+			logger.warn("Multiple paths on method {}, using first one", method.toGenericString());
 		}
 		return paths[0];
 	}
@@ -167,10 +167,10 @@ public class SpringletsMvcUriComponentsBuilder extends MvcUriComponentsBuilder {
 			param.initParameterNameDiscovery(parameterNameDiscoverer);
 			contributor.contributeMethodArgument(param, args[i], builder, uriVars);
 		}
-		
+
 		// Custom implementation to remove uriVar if the value is null
 		removeUriVarsWithNullValue(uriVars);
-		
+
 		// We may not have all URI var values, expand only what we have
 		return builder.build().expand(new UriComponents.UriTemplateVariables() {
 			@Override
@@ -181,9 +181,9 @@ public class SpringletsMvcUriComponentsBuilder extends MvcUriComponentsBuilder {
 	}
 
 	/**
-	 * Custom implementation. This method removes all the variables that contains a 
+	 * Custom implementation. This method removes all the variables that contains a
 	 * null value from the provided uriVars map.
-	 * 
+	 *
 	 * @param uriVars map that contains the uri variables.
 	 */
 	private static void removeUriVarsWithNullValue(Map<String, Object> uriVars) {

@@ -31,12 +31,12 @@ import javax.persistence.Embeddable;
 
 /**
  * = EmbeddableImage
- * 
+ *
  * Embeddable class that contains all the necessary operations to manage an image.
- * 
+ *
  * Also, it provides some utility methods to obtain info about the contained image and to apply
  * format and resize of the image.
- *  
+ *
  * @author Juan Carlos García at http://www.disid.com[DISID Corporation S.L.]
  */
 @Embeddable
@@ -62,7 +62,7 @@ public class EmbeddableImage {
   /**
    * Constructor that receives the byte array information
    * to initialize the image.
-   * 
+   *
    * @param image
    */
   public EmbeddableImage(byte[] image) {
@@ -71,7 +71,7 @@ public class EmbeddableImage {
 
   /**
    * Getter that returns the image byte array.
-   * 
+   *
    * @return the bytes of the image
    */
   public byte[] getImage() {
@@ -80,7 +80,7 @@ public class EmbeddableImage {
 
   /**
    * Setter that sets the bytes of the image.
-   * 
+   *
    * @param image
    */
   public void setImage(byte[] image) {
@@ -90,19 +90,20 @@ public class EmbeddableImage {
   /**
    * Utility method that obtains the format of the uploaded image using the
    * byte array.
-   * 
+   *
    * @return String with the format of the uploaded image.
    */
   public String getFormat() {
     Assert.notNull(this.image, "ERROR: The provided image should have a valid image byte array.");
     try {
-      String format = URLConnection.guessContentTypeFromStream(new ByteArrayInputStream(this.image));
-      if(format != null){
-        return format.replace("image/", ""); 
+      String format =
+          URLConnection.guessContentTypeFromStream(new ByteArrayInputStream(this.image));
+      if (format != null) {
+        return format.replace("image/", "");
       }
-          
+
     } catch (IOException e) {
-      e.printStackTrace();
+      throw new EmbeddableImageException("Error identify image format", e);
     }
     return null;
   }
@@ -110,7 +111,7 @@ public class EmbeddableImage {
 
   /**
    * Utility method that obtains the {@link Image} in base64 format.
-   * 
+   *
    * @return String with base64 format.
    */
   public String getBase64() {
@@ -120,7 +121,7 @@ public class EmbeddableImage {
 
   /**
    * Utility method that resizes the image using the received width and height
-   * 
+   *
    * @param width The new width of the image
    * @param height The new height of the image
    * @return Image the same image but resized to the specified dimensions.
@@ -146,14 +147,14 @@ public class EmbeddableImage {
       return writeImage(resizedImage, getFormat());
 
     } catch (IOException e) {
-      throw new RuntimeException(e.getMessage());
+      throw new EmbeddableImageException("Error resizing image", e);
     }
   }
 
 
   /**
    * Utility method that formats the image using the received format.
-   * 
+   *
    * @param newFormat String that indicates the new format of the image.
    * @return Image the same image but in the new format.
    */
@@ -162,14 +163,14 @@ public class EmbeddableImage {
       // Write the new image in the new provided format
       return writeImage(getBufferedImage(), newFormat);
     } catch (IOException e) {
-      throw new RuntimeException(e.getMessage());
+      throw new EmbeddableImageException("Error formating image to " + newFormat, e);
     }
   }
 
   /**
    * Utility method that formats and resize the image at the same time
    * delegating in <code>format</code> and <code>resize</code>.
-   * 
+   *
    * @param newFormat The new format to use
    * @param width The new width of the image
    * @param height The new height of the image
@@ -182,7 +183,7 @@ public class EmbeddableImage {
 
   /**
    * Method that obtains a buffered image using the current byte arrays.
-   * 
+   *
    * @return BufferedImage with all the information about the image
    * @throws IOException if some error during the image read.
    */
@@ -193,7 +194,8 @@ public class EmbeddableImage {
     BufferedImage imageBuffer = ImageIO.read(imageInputStream);
 
     if (imageBuffer == null) {
-      throw new RuntimeException("ERROR: The provided ." + getFormat() + " image is not valid.");
+      throw new EmbeddableImageException(
+          "ERROR: The provided ." + getFormat() + " image is not valid.");
     }
 
     return imageBuffer;
@@ -202,7 +204,7 @@ public class EmbeddableImage {
   /**
    * Method that writes the provided bufferedImage with the provided format and returns
    * a new instance of the image.
-   *  
+   *
    * @param image The bufferedImage to use
    * @param format The format of the new image
    * @return Image instance with the new byteArray.
@@ -216,9 +218,9 @@ public class EmbeddableImage {
 
   /**
    * toString method that returns the String representation of this image. It delegates
-   * into the <code>getFormat()</code> and the <code>getBase64()</code> methods to obtain 
+   * into the <code>getFormat()</code> and the <code>getBase64()</code> methods to obtain
    * the complete representation of the image.
-   * 
+   *
    * @return String that could be used into an "src" attribute of an img HTML element.
    */
   @Override

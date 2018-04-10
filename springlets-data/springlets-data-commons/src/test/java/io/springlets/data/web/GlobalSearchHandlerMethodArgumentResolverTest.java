@@ -46,7 +46,7 @@ public class GlobalSearchHandlerMethodArgumentResolverTest {
   @Test
   public void validateSupportedParameterTypeIsGlobalSearch() {
     // Exercise & Verify
-    assertThat(resolver.supportsParameter(methodParameter));
+    assertThat(resolver.supportsParameter(methodParameter)).isTrue();
   }
 
   @Test

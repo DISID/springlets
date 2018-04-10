@@ -41,8 +41,8 @@ import org.springframework.format.annotation.DateTimeFormat;
  * Some applications require the user to have a login in order to gain access
  * to the application.
  *
- * This JPA Entity models the user login given to a user. 
- * 
+ * This JPA Entity models the user login given to a user.
+ *
  * @author Enrique Ruiz at http://www.disid.com[DISID Corporation S.L.]
  * @author Cèsar Ordiñana at http://www.disid.com[DISID Corporation S.L.]
  * @author Juan Carlos García at http://www.disid.com[DISID Corporation S.L.]
@@ -183,11 +183,7 @@ public class UserLogin {
     }
 
     UserLogin other = (UserLogin) obj;
-    if (!id.equals(other.id)) {
-      return false;
-    }
-
-    return true;
+    return id.equals(other.id);
   }
 
   @Override

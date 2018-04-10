@@ -61,7 +61,7 @@ public class DatatablesSortHandlerMethodArgumentResolverTest {
     Mockito.<Class<?>>when(methodParameter.getParameterType()).thenReturn(Sort.class);
 
     // Exercise & Verify
-    assertThat(resolver.supportsParameter(methodParameter));
+    assertThat(resolver.supportsParameter(methodParameter)).isTrue();
   }
 
   /**
