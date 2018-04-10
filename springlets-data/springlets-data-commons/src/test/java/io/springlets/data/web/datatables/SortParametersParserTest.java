@@ -67,7 +67,7 @@ public class SortParametersParserTest {
   public void checkMaximumColumnCountIsUsed() {
     // Prepare
     parser = createParser(new String[] {"order[0][column]", "order[1][column]", "order[2][column]",
-        "order[10000][column]"});
+        "order[999][column]"});
 
     // Exercise
     int columnCount = parser.getColumnCount();

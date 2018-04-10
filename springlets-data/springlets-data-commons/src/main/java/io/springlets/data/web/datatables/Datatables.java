@@ -20,7 +20,7 @@ import java.util.regex.Pattern;
 
 /**
  * Some datatables utilities and constant values.
- * 
+ *
  * @author Cèsar Ordiñana at http://www.disid.com[DISID Corporation S.L.]
  */
 public class Datatables {
@@ -45,15 +45,16 @@ public class Datatables {
 
   private static final String PARAM_SEARCH_TYPE = "search";
 
-  private static final Pattern COLUMN_INDEX_PATTERN = Pattern.compile("columns\\[([0-9]*)?\\]*");
+  private static final Pattern COLUMN_INDEX_PATTERN =
+      Pattern.compile("columns\\[([0-9]{1,3})?\\]");
 
   private static final Pattern COLUMN_TYPE_PATTERN =
-      Pattern.compile("columns\\[([0-9]*)?\\]\\[([a-z]*)?\\]*");
+      Pattern.compile("columns\\[([0-9]{1,3})?\\]\\[(data|name|searchable|orderable|search|regex)?\\]");
 
 
   /**
    * Returns the name of the parameter which provides the index of the column
-   * in the list of columns of the datatables. 
+   * in the list of columns of the datatables.
    * @param index position in the list of columns to order by
    * @return the name of the property
    */
@@ -63,7 +64,7 @@ public class Datatables {
 
   /**
    * Returns the parameter name with the order direction
-   * in the given ordering position. 
+   * in the given ordering position.
    * @param index position in the list of order by columns
    * @return the name of the property
    */
@@ -73,7 +74,7 @@ public class Datatables {
 
   /**
    * Returns the parameter name with the name of the column
-   * in the provided position in the datatables. 
+   * in the provided position in the datatables.
    * @param columnPosition position in the list of datatables columns
    * @return the name of the property
    */
@@ -119,10 +120,8 @@ public class Datatables {
       Matcher matcher = COLUMN_TYPE_PATTERN.matcher(parameter);
       while (matcher.find()) {
         String type = matcher.group(2);
-        if (PARAM_SEARCH_TYPE.equals(type)) {
-          if (parameter.endsWith("[search][regex]")) {
-            return ColumnParamType.REGEX;
-          }
+        if (PARAM_SEARCH_TYPE.equals(type) && parameter.endsWith("[search][regex]")) {
+          return ColumnParamType.REGEX;
         }
         try {
           return ColumnParamType.valueOf(type.toUpperCase());
@@ -135,7 +134,7 @@ public class Datatables {
   }
 
   /**
-   * Enumeration of datatables column types 
+   * Enumeration of datatables column types
    * @author Cèsar Ordiñana at http://www.disid.com[DISID Corporation S.L.]
    */
   public enum ColumnParamType {

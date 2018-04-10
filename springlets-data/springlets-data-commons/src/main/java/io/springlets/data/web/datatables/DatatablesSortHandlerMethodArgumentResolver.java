@@ -31,15 +31,15 @@ import java.util.regex.Pattern;
 
 /**
  * Resolves controller method parameters of type {@link DatatablesSort}.
- * 
+ *
  * It extends the Spring Data's {@link SortHandlerMethodArgumentResolver}
- * to set the parameter names used by the datatables components, 
+ * to set the parameter names used by the datatables components,
  * (*order[i]* and *columns[i]*) and creates a {@link DatatablesSort} instance.
  *
  * If those parameters are not available, it delegates in the default
  * Spring Data resolver implementation.
  * See {@link https://datatables.net/manual/server-side}
- * 
+ *
  * @author Cèsar Ordiñana at http://www.disid.com[DISID Corporation S.L.]
  */
 public class DatatablesSortHandlerMethodArgumentResolver extends SortHandlerMethodArgumentResolver {
@@ -83,7 +83,7 @@ public class DatatablesSortHandlerMethodArgumentResolver extends SortHandlerMeth
    */
   static class SortParametersParser {
 
-    private static final Pattern PATTERN = Pattern.compile("order\\[([0-9]*)?\\]\\[column\\]");
+    private static final Pattern PATTERN = Pattern.compile("order\\[([0-9]{1,3})?\\]\\[column\\]");
 
     private final int maxColumnCount;
     private Map<String, String[]> parameters;
@@ -103,13 +103,13 @@ public class DatatablesSortHandlerMethodArgumentResolver extends SortHandlerMeth
     }
 
     /**
-     * Returns the number of columns to order by from a list of parameters 
+     * Returns the number of columns to order by from a list of parameters
      * names.
-     * 
+     *
      * From the list, only will be taken into account parameters that
      * begin with *columns[i]*, being _i_ the position of the column
-     * in the datatables. Then a count of columns is not performed, 
-     * but it takes into account datatables returns a list, so the 
+     * in the datatables. Then a count of columns is not performed,
+     * but it takes into account datatables returns a list, so the
      * maximum value will be obtained.
      * If the value is bigger than the maximum number of values supported,
      * the second value will be returned instead to avoid parameter abuse.
@@ -144,7 +144,7 @@ public class DatatablesSortHandlerMethodArgumentResolver extends SortHandlerMeth
      *
      * @param paramName the name of the column to analyze
      * @return the position given in the column order, or -1 if it is not
-     * a valid number or the format is not the expected one 
+     * a valid number or the format is not the expected one
      */
 
     static int getColumnPosition(String paramName) {
@@ -161,7 +161,7 @@ public class DatatablesSortHandlerMethodArgumentResolver extends SortHandlerMeth
     /**
      * Returns the name of the property whose datatables column is available
      * into the list of the columns to order by, in the given position.
-     * 
+     *
      * Returns null if there is no ordering by the given column
      *
      * @param pos the column position into the ordering list
