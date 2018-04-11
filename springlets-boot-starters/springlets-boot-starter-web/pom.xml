@@ -5,7 +5,7 @@
   <parent>
     <groupId>io.springlets</groupId>
     <artifactId>springlets-boot-starters</artifactId>
-    <version>1.2.0.RC3</version>
+    <version>1.2.0.BUILD-SNAPSHOT</version>
   </parent>
   <artifactId>springlets-boot-starter-web</artifactId>
   <packaging>jar</packaging>
