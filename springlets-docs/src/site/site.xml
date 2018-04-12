@@ -27,7 +27,7 @@
 
     <menu name="CI">
       <item name="TravisCI" href="https://travis-ci.org/DISID/springlets"/>
-      <item name="SonarQube" href="https://sonarqube.com/dashboard?id=io.springlets"/>
+      <item name="SonarQube" href="https://sonarcloud.io/dashboard?id=io.springlets"/>
       <item name="Codecov" href="https://codecov.io/gh/DISID/springlets"/>
     </menu>
 
