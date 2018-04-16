@@ -42,5 +42,6 @@ io.springlets.web.mvc.config
 io.springlets.web.mvc.converters
 io.springlets.web.mvc.support
 io.springlets.web.mvc.util
+io.springlets.web.mvc.util.concurrency
 io.springlets.webflow.binding.convert
 io.springlets.webflow.config
