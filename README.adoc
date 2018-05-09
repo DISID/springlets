@@ -18,7 +18,7 @@ As an example, to add the Springlets webflow starter to a project with Maven, yo
 <dependency>
     <groupId>io.springlets</groupId>
     <artifactId>springlets-boot-starter-webflow</artifactId>
-    <version>1.0.0.RELEASE</version>
+    <version>1.2.0.RELEASE</version>
 </dependency>
 ----
 
