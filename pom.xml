@@ -68,7 +68,7 @@
   </developers>  
   
   <properties>
-    <java.version>1.7</java.version>
+    <java.version>1.8</java.version>
     <thymeleaf.version>3.0.0.RELEASE</thymeleaf.version>
     <!--tracee.version>1.1.2</tracee.version-->
     <!-- Webjars -->
@@ -346,60 +346,6 @@
   </build>
   
   <profiles>
-    <profile>
-        <id>jdk7</id>
-        <activation>
-            <jdk>1.7</jdk>
-            <property>
-                <name>!skipRelease</name>
-            </property>
-        </activation>
-        <build>
-            <plugins>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-javadoc-plugin</artifactId>
-                    <executions>
-                        <execution>
-                            <id>attach-javadocs</id>
-                            <goals>
-                                <goal>jar</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-source-plugin</artifactId>
-                    <executions>
-                        <execution>
-                            <id>attach-sources</id>
-                            <goals>
-                                <goal>jar-no-fork</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-gpg-plugin</artifactId>
-                    <version>1.6</version>
-                    <configuration>
-                        <useAgent>true</useAgent>
-                    </configuration>
-                    <executions>
-                        <execution>
-                            <id>sign-artifacts</id>
-                            <phase>verify</phase>
-                            <goals>
-                                <goal>sign</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
-           </plugins>
-        </build>
-    </profile>
     <profile>
         <!--
         Profile to prevent errors if Springlets is compiled using Java 8
