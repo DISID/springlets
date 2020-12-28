@@ -77,10 +77,10 @@ public class SpringletsStringTrimmerAdviceAutoConfigurationTest {
    * The default value for `springlets.mvc.advices.enabled` is true, so
    * check that if it is not defined the StringTrimmerAdvice is registered.
    *
-   * @throws Exception
+   * @throws BeansException throw BeansException when StringTrimmerAdvice is not defined
    */
   @Test
-  public void defaultConfiguration() throws Exception {
+  public void defaultConfiguration() throws BeansException {
 
     // Setup
     registerAndRefreshContext();
@@ -96,10 +96,10 @@ public class SpringletsStringTrimmerAdviceAutoConfigurationTest {
    * Check if `springlets.mvc.advices.enabled` is false the
    * StringTrimmerAdvice is not registered.
    *
-   * @throws Exception
+   * @throws BeansException throw BeansException
    */
   @Test(expected = BeansException.class)
-  public void disabledAdvice() {
+  public void disabledAdvice() throws BeansException{
 
     // Setup
     registerAndRefreshContext("springlets.mvc.advices.enabled:false");
@@ -124,10 +124,10 @@ public class SpringletsStringTrimmerAdviceAutoConfigurationTest {
   /**
    * Check the environment properties are used to setup the {@link StringTrimmerAdvice}
    *
-   * @throws Exception
+   * @throws BeansException throw BeansException when StringTrimmerAdvice is not defined
    */
   @Test
-  public void overrideProperties() throws Exception {
+  public void overrideProperties() throws BeansException {
     registerAndRefreshContext("springlets.mvc.advices.enabled:true",
         "springlets.mvc.advices.trimeditor.chars-to-delete:abc",
         "springlets.mvc.advices.trimeditor.empty-as-null:true");
