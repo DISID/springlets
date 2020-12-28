@@ -62,8 +62,8 @@
 			<artifactId>querydsl-jpa</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.eclipse.persistence</groupId>
-			<artifactId>javax.persistence</artifactId>
+			<groupId>org.hibernate.javax.persistence</groupId>
+			<artifactId>hibernate-jpa-2.1-api</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>javax.validation</groupId>

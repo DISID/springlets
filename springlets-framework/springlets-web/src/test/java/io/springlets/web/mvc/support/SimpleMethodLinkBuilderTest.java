@@ -30,7 +30,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentMatcher;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.web.util.UriComponents;
 
 import java.util.Map;
@@ -168,7 +168,7 @@ public class SimpleMethodLinkBuilderTest {
 
   private ArgumentMatcher<Object[]> isParametersOfOneElement() {
     return new ArgumentMatcher<Object[]>() {
-      public boolean matches(Object array) {
+      public boolean matches(Object[] array) {
         return array != null && ((Object[]) array).length == 1;
       }
     };
@@ -178,10 +178,9 @@ public class SimpleMethodLinkBuilderTest {
       final String value) {
     return new ArgumentMatcher<Map<String, Object>>() {
       @SuppressWarnings("unchecked")
-      public boolean matches(Object arg) {
-        Map<String, Object> map = (Map<String, Object>) arg;
-        if (map.size() == 1) {
-          Object argVariableValue = map.get(variable);
+      public boolean matches(Map<String, Object> arg) {
+        if (arg.size() == 1) {
+          Object argVariableValue = arg.get(variable);
           return value.equals(argVariableValue);
         }
         return false;

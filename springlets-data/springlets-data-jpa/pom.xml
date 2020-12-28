@@ -68,8 +68,8 @@
     </dependency>
 
     <dependency>
-      <groupId>org.eclipse.persistence</groupId>
-      <artifactId>javax.persistence</artifactId>
+      <groupId>org.hibernate.javax.persistence</groupId>
+      <artifactId>hibernate-jpa-2.1-api</artifactId>
       <optional>true</optional>
     </dependency>
   </dependencies>

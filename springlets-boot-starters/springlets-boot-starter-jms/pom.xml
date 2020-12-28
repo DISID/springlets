@@ -50,7 +50,7 @@
     <!-- 3rd party dependencies -->
     <dependency>
       <groupId>javax.jms</groupId>
-      <artifactId>jms-api</artifactId>
+      <artifactId>javax.jms-api</artifactId>
     </dependency>
 
   </dependencies>

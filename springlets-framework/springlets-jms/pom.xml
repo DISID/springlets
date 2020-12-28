@@ -46,11 +46,15 @@
       <artifactId>spring-jms</artifactId>
       <optional>true</optional>
     </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context</artifactId>
+    </dependency>
 
     <!-- 3rd party dependencies -->
     <dependency>
       <groupId>javax.jms</groupId>
-      <artifactId>jms-api</artifactId>
+      <artifactId>javax.jms-api</artifactId>
       <optional>true</optional>
     </dependency>
 

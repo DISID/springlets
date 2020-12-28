@@ -73,6 +73,7 @@
     <dependency>
       <groupId>org.springframework.webflow</groupId>
       <artifactId>spring-webflow</artifactId>
+      <version>2.4.4.RELEASE</version>
       <optional>true</optional>
     </dependency>
 
@@ -82,7 +83,7 @@
 
     <dependency>
       <groupId>org.thymeleaf</groupId>
-      <artifactId>thymeleaf-spring4</artifactId>
+      <artifactId>thymeleaf-spring5</artifactId>
       <optional>true</optional>
     </dependency>
 

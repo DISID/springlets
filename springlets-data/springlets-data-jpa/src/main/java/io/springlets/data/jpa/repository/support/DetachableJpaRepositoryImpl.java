@@ -62,7 +62,7 @@ public class DetachableJpaRepositoryImpl<T, ID extends Serializable>
 
   @Override
   public T findOneDetached(ID id) {
-    T entity = findOne(id);
+    T entity = getOne(id);
     if (entity != null) {
       entityManager.detach(entity);
     }

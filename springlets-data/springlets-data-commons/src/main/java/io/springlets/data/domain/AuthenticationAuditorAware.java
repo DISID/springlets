@@ -19,6 +19,8 @@ import org.springframework.data.domain.AuditorAware;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import java.util.Optional;
+
 /**
  * {@link AuditorAware} implementation to get the current user's name from
  * the Spring Security's authentication context.
@@ -34,12 +36,12 @@ public class AuthenticationAuditorAware implements AuditorAware<String> {
    * @return object which represents the user or null if the user is not logged.
    */
   @Override
-  public String getCurrentAuditor() {
+  public Optional<String> getCurrentAuditor() {
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     if (authentication == null || !authentication.isAuthenticated()) {
-      return null;
+      return Optional.empty();
     }
-    return authentication.getName();
+    return Optional.ofNullable(authentication.getName());
   }
 
 }

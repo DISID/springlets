@@ -20,7 +20,7 @@ import io.springlets.security.jpa.domain.UserLogin;
 import io.springlets.security.jpa.domain.UserLoginInfo;
 import io.springlets.security.jpa.domain.UserLoginRole;
 
-import org.springframework.data.jpa.repository.support.QueryDslRepositorySupport;
+import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
@@ -34,7 +34,7 @@ import java.util.Set;
  * @author Juan Carlos García at http://www.disid.com[DISID Corporation S.L.]
  */
 @Transactional(readOnly = true)
-public class UserLoginRepositoryImpl extends QueryDslRepositorySupport
+public class UserLoginRepositoryImpl extends QuerydslRepositorySupport
     implements UserLoginRepositoryCustom {
 
   public UserLoginRepositoryImpl() {
