@@ -16,19 +16,21 @@
 package io.springlets.web.mvc.support;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Matchers.anyMapOf;
-import static org.mockito.Matchers.argThat;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Matchers.isNull;
+import static org.mockito.ArgumentMatchers.anyMap;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.isNull;
+import static org.mockito.hamcrest.MockitoHamcrest.argThat;
 import static org.mockito.Mockito.when;
 
 import io.springlets.web.mvc.util.MethodLinkBuilder;
 import io.springlets.web.mvc.util.MethodLinkFactory;
 
+import org.hamcrest.BaseMatcher;
+import org.hamcrest.Description;
+import org.hamcrest.Matcher;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.ArgumentMatcher;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.web.util.UriComponents;
@@ -78,13 +80,13 @@ public class SimpleMethodLinkBuilderTest {
   @Test
   public void testToUri() {
     // Setup
-    when(linkFactory.toUri(eq(METHOD_NAME), isNull(Object[].class),
-        anyMapOf(String.class, Object.class))).thenReturn(uriMethod);
+    when(linkFactory.toUri(eq(METHOD_NAME), isNull(),
+        anyMap())).thenReturn(uriMethod);
 
     when(linkFactory.toUri(eq(METHOD_NAME), argThat(isParametersOfOneElement()),
-        anyMapOf(String.class, Object.class))).thenReturn(uriMethodParams);
+        anyMap())).thenReturn(uriMethodParams);
 
-    when(linkFactory.toUri(eq(METHOD_NAME), isNull(Object[].class),
+    when(linkFactory.toUri(eq(METHOD_NAME), isNull(),
         argThat(isPathVariablesOfVariable(VARIABLE_NAME, VARIABLE_VALUE))))
             .thenReturn(uriMethodVars);
 
@@ -124,8 +126,8 @@ public class SimpleMethodLinkBuilderTest {
   @Test
   public void toUriStringShouldCallSameMethodInUriComponents() {
     // Setup
-    when(linkFactory.toUri(eq(METHOD_NAME), isNull(Object[].class),
-        anyMapOf(String.class, Object.class))).thenReturn(uriMethod);
+    when(linkFactory.toUri(eq(METHOD_NAME), isNull(),
+        anyMap())).thenReturn(uriMethod);
 
     when(uriMethod.toUriString()).thenReturn(THEURI);
 
@@ -139,8 +141,8 @@ public class SimpleMethodLinkBuilderTest {
   @Test
   public void toPathShouldCallSameMethodInUriComponents() {
     // Setup
-    when(linkFactory.toUri(eq(METHOD_NAME), isNull(Object[].class),
-        anyMapOf(String.class, Object.class))).thenReturn(uriMethod);
+    when(linkFactory.toUri(eq(METHOD_NAME), isNull(),
+        anyMap())).thenReturn(uriMethod);
 
     when(uriMethod.getPath()).thenReturn(THEURI);
 
@@ -154,8 +156,8 @@ public class SimpleMethodLinkBuilderTest {
   @Test
   public void toStringShouldReturnToPathValue() {
     // Setup
-    when(linkFactory.toUri(eq(METHOD_NAME), isNull(Object[].class),
-        anyMapOf(String.class, Object.class))).thenReturn(uriMethod);
+    when(linkFactory.toUri(eq(METHOD_NAME), isNull(),
+        anyMap())).thenReturn(uriMethod);
 
     when(uriMethod.getPath()).thenReturn(THEURI);
 
@@ -166,21 +168,33 @@ public class SimpleMethodLinkBuilderTest {
     assertThat(path).isNotNull().isEqualTo(THEURI);
   }
 
-  private ArgumentMatcher<Object[]> isParametersOfOneElement() {
-    return new ArgumentMatcher<Object[]>() {
-      public boolean matches(Object[] array) {
-        return array != null && ((Object[]) array).length == 1;
+  private Matcher<Object[]> isParametersOfOneElement() {
+    return new BaseMatcher<Object[]>() {
+      @Override
+      public void describeTo(Description description) {
+        description.appendText("one element");
+      }
+      @Override
+      public boolean matches(Object item) {
+        return item != null && ((Object[]) item).length == 1;
       }
     };
   }
 
-  private ArgumentMatcher<Map<String, Object>> isPathVariablesOfVariable(final String variable,
+  private Matcher<Map<String, Object>> isPathVariablesOfVariable(final String variable,
       final String value) {
-    return new ArgumentMatcher<Map<String, Object>>() {
+    return new BaseMatcher<Map<String, Object>>() {
+      @Override
+      public void describeTo(Description description) {
+        description.appendText("is path variables of variable");
+      }
+
       @SuppressWarnings("unchecked")
-      public boolean matches(Map<String, Object> arg) {
-        if (arg.size() == 1) {
-          Object argVariableValue = arg.get(variable);
+      @Override
+      public boolean matches(Object arg) {
+        Map<String, Object> item = (Map<String, Object>)arg;
+        if (item.size() == 1) {
+          Object argVariableValue = item.get(variable);
           return value.equals(argVariableValue);
         }
         return false;
