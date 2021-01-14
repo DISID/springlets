@@ -35,7 +35,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.repository.support.QueryDslRepositorySupport;
+import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
@@ -54,7 +54,7 @@ import javax.persistence.metamodel.SingularAttribute;
  * @param <T> the entity class to manage in the repository
  * @author Cèsar Ordiñana at http://www.disid.com[DISID Corporation S.L.]
  */
-public class QueryDslRepositorySupportExt<T> extends QueryDslRepositorySupport {
+public class QueryDslRepositorySupportExt<T> extends QuerydslRepositorySupport {
 
   private static final Logger LOG = LoggerFactory.getLogger(QueryDslRepositorySupportExt.class);
 
@@ -62,7 +62,7 @@ public class QueryDslRepositorySupportExt<T> extends QueryDslRepositorySupport {
   private PathBuilder<Object> entityIdPath = null;
 
   /**
-   * Creates a new {@link QueryDslRepositorySupport} instance for the given domain type.
+   * Creates a new {@link QuerydslRepositorySupport} instance for the given domain type.
    *
    * @param domainClass must not be {@literal null}.
    */

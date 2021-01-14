@@ -67,7 +67,7 @@ public class UserLoginServiceImpl implements UserLoginService {
   @Override
   @Transactional
   public void delete(Long id) {
-    repository.delete(id);
+    repository.deleteById(id);
   }
 
   // === Batch CRUD Methods
@@ -75,13 +75,13 @@ public class UserLoginServiceImpl implements UserLoginService {
   @Override
   @Transactional
   public List<UserLogin> save(Iterable<UserLogin> userLogins) {
-    return repository.save(userLogins);
+    return repository.saveAll(userLogins);
   }
 
   @Override
   @Transactional
   public void delete(Iterable<Long> ids) {
-    List<UserLogin> toDelete = repository.findAll(ids);
+    List<UserLogin> toDelete = repository.findAllById(ids);
     repository.deleteInBatch(toDelete);
   }
 
@@ -94,12 +94,12 @@ public class UserLoginServiceImpl implements UserLoginService {
 
   @Override
   public List<UserLogin> findAll(Iterable<Long> ids) {
-    return repository.findAll(ids);
+    return repository.findAllById(ids);
   }
 
   @Override
   public UserLogin findOne(Long id) {
-    return repository.findOne(id);
+    return repository.getOne(id);
   }
 
   @Override

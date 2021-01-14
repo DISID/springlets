@@ -111,6 +111,11 @@ public class SpringletsWebMvcExcludeFilter extends AnnotationCustomizableTypeExc
   }
 
   @Override
+  protected Set<Class<?>> getComponentIncludes() {
+    return null;
+  }
+
+  @Override
   protected boolean defaultInclude(MetadataReader metadataReader,
       MetadataReaderFactory metadataReaderFactory) throws IOException {
     if (super.defaultInclude(metadataReader, metadataReaderFactory)) {

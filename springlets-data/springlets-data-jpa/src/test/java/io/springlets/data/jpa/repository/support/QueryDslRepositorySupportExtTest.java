@@ -26,7 +26,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
@@ -110,9 +110,11 @@ public class QueryDslRepositorySupportExtTest {
   public void applyPaginationWithNullPageableShouldNotFail() {
     // Prepare
     Map<String, Path<?>[]> attributeMapping = new HashMap<>();
+    /*
     when(pageable.getSort()).thenReturn(sort);
     when(sort.iterator()).thenReturn(iterator);
     when(iterator.hasNext()).thenReturn(false);
+     */
 
     // Exercise & verify
     support.applyPagination(null, null, attributeMapping);

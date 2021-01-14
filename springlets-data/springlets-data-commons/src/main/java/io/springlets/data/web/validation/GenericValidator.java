@@ -47,7 +47,7 @@ public class GenericValidator<T> implements Validator {
      */
     @Override
     public boolean supports(Class<?> clazz) {
-        return clazz.equals(this.clazz);
+        return this.clazz.isAssignableFrom(clazz);
     }
 
     /**

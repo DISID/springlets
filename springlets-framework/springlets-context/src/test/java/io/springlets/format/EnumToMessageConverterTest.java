@@ -16,8 +16,9 @@
 package io.springlets.format;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyString;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.isNull;
 import static org.mockito.Mockito.when;
 
 import org.junit.Before;
@@ -27,7 +28,7 @@ import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.invocation.InvocationOnMock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.stubbing.Answer;
 import org.springframework.context.MessageSource;
 import org.springframework.core.convert.TypeDescriptor;
@@ -71,12 +72,12 @@ public class EnumToMessageConverterTest {
   @Test
   public void checkConvertsToEnumName() {
     // Prepare
-    when(messageSource.getMessage(anyString(), any(Object[].class), anyString(), any(Locale.class)))
+    when(messageSource.getMessage(anyString(), isNull(), anyString(), any(Locale.class)))
         .thenAnswer(new Answer<String>() {
 
           @Override
           public String answer(InvocationOnMock invocation) throws Throwable {
-            return invocation.getArgumentAt(2, String.class);
+            return invocation.getArgument(2);
           }
 
         });
@@ -92,12 +93,12 @@ public class EnumToMessageConverterTest {
   @Test
   public void checkConvertsToEnumMessage() {
     // Prepare
-    when(messageSource.getMessage(anyString(), any(Object[].class), anyString(), any(Locale.class)))
+    when(messageSource.getMessage(anyString(), isNull(), anyString(), any(Locale.class)))
         .thenAnswer(new Answer<String>() {
 
           @Override
           public String answer(InvocationOnMock invocation) throws Throwable {
-            String name = invocation.getArgumentAt(2, String.class);
+            String name = invocation.getArgument(2);
             return name.toLowerCase();
           }
 

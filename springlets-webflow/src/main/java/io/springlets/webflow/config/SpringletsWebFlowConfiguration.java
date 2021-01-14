@@ -45,9 +45,9 @@ import org.springframework.webflow.mvc.builder.MvcViewFactoryCreator;
 import org.springframework.webflow.mvc.servlet.FlowHandlerAdapter;
 import org.springframework.webflow.mvc.servlet.FlowHandlerMapping;
 import org.springframework.webflow.security.SecurityFlowExecutionListener;
-import org.thymeleaf.spring4.SpringTemplateEngine;
-import org.thymeleaf.spring4.webflow.view.AjaxThymeleafViewResolver;
-import org.thymeleaf.spring4.webflow.view.FlowAjaxThymeleafView;
+import org.thymeleaf.spring5.SpringTemplateEngine;
+import org.thymeleaf.spring5.webflow.view.AjaxThymeleafViewResolver;
+import org.thymeleaf.spring5.webflow.view.FlowAjaxThymeleafView;
 
 import io.springlets.webflow.binding.convert.StringToNullConverter;
 

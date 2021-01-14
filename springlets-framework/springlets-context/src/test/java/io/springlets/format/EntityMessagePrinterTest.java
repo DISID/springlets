@@ -16,9 +16,6 @@
 package io.springlets.format;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.when;
 
 import org.junit.Rule;
@@ -26,7 +23,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.context.MessageSource;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.core.convert.support.DefaultConversionService;
@@ -77,8 +74,11 @@ public class EntityMessagePrinterTest {
   @Test
   public void shouldPrintToStringWithEmptyMessage() {
     // Prepare
-    when(messageSource.getMessage(anyString(), any(Object[].class), anyString(), eq(locale)))
+    /*
+    lenient
+    when(messageSource.getMessage(anyString(), isNull(), anyString(), eq(locale)))
         .thenReturn(TO_STRING_EXPRESSION);
+     */
     printer =
         new EntityMessagePrinter("empty", messageSource, parser, context, conversionService,
             TO_STRING_EXPRESSION);

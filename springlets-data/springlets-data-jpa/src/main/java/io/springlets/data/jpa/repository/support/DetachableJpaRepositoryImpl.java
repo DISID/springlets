@@ -17,6 +17,8 @@ package io.springlets.data.jpa.repository.support;
 
 import io.springlets.data.jpa.repository.DetachableJpaRepository;
 
+import org.hibernate.Hibernate;
+import org.hibernate.proxy.HibernateProxy;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.support.JpaEntityInformation;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
@@ -26,9 +28,9 @@ import java.io.Serializable;
 import javax.persistence.EntityManager;
 
 /**
- * {@link JpaRepository} extension to allow to get detached entities using the 
+ * {@link JpaRepository} extension to allow to get detached entities using the
  * {@link EntityManager#detach(Object)} method.
- * 
+ *
  * @author Cèsar Ordiñana at http://www.disid.com[DISID Corporation S.L.]
  */
 public class DetachableJpaRepositoryImpl<T, ID extends Serializable>
@@ -39,7 +41,7 @@ public class DetachableJpaRepositoryImpl<T, ID extends Serializable>
   /**
    * Creates a new {@link DetachableJpaRepositoryImpl} to manage objects of the given
    * {@link JpaEntityInformation}.
-   * 
+   *
    * @param entityInformation must not be {@literal null}.
    * @param entityManager must not be {@literal null}.
    */
@@ -51,7 +53,7 @@ public class DetachableJpaRepositoryImpl<T, ID extends Serializable>
 
   /**
    * Creates a new {@link DetachableJpaRepositoryImpl} to manage objects of the given domain type.
-   * 
+   *
    * @param domainClass must not be {@literal null}.
    * @param em must not be {@literal null}.
    */
@@ -62,11 +64,13 @@ public class DetachableJpaRepositoryImpl<T, ID extends Serializable>
 
   @Override
   public T findOneDetached(ID id) {
-    T entity = findOne(id);
-    if (entity != null) {
+    T unproxiedEntity = null;
+    T entity = getOne(id);
+    if (entity instanceof HibernateProxy) {
+      unproxiedEntity = (T) Hibernate.unproxy(entity);
       entityManager.detach(entity);
     }
-    return entity;
+    return unproxiedEntity;
   }
 
 }

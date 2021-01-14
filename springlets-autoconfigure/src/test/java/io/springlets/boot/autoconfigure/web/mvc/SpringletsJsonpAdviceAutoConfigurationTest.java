@@ -28,10 +28,11 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import org.springframework.beans.BeansException;
 import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
-import org.springframework.boot.autoconfigure.web.HttpMessageConvertersAutoConfiguration;
-import org.springframework.boot.autoconfigure.web.WebMvcAutoConfiguration;
-import org.springframework.boot.test.util.EnvironmentTestUtils;
+import org.springframework.boot.autoconfigure.http.HttpMessageConvertersAutoConfiguration;
+import org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration;
+import org.springframework.boot.test.util.TestPropertyValues;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -99,7 +100,7 @@ public class SpringletsJsonpAdviceAutoConfigurationTest {
    *
    * @throws Exception
    */
-  @Test
+  @Test(expected = BeansException.class)
   public void disabledAdvice() {
 
     // Setup
@@ -133,9 +134,10 @@ public class SpringletsJsonpAdviceAutoConfigurationTest {
    */
   @Test
   public void registerAdvice() throws Exception {
-    EnvironmentTestUtils.addEnvironment(this.context,
-        "springlets.mvc.advices.enabled:true",
-        "springlets.mvc.advices.jsonp.query-param-names:callback1,callback2");
+    TestPropertyValues.of(
+            "springlets.mvc.advices.enabled:true",
+            "springlets.mvc.advices.jsonp.query-param-names:callback1,callback2")
+            .applyTo(this.context);
     this.context.setServletContext(new MockServletContext());
     this.context.register(TestConfiguration.class);
     this.context.refresh();
@@ -171,8 +173,9 @@ public class SpringletsJsonpAdviceAutoConfigurationTest {
    */
   @Test
   public void registerAdviceDefaultValues() throws Exception {
-    EnvironmentTestUtils.addEnvironment(this.context,
-        "springlets.mvc.advices.enabled:true");
+    TestPropertyValues.of(
+        "springlets.mvc.advices.enabled:true")
+    .applyTo(this.context);
     this.context.setServletContext(new MockServletContext());
     this.context.register(TestConfiguration.class);
     this.context.refresh();
@@ -193,10 +196,10 @@ public class SpringletsJsonpAdviceAutoConfigurationTest {
    * {@link ApplicationContext}.
    *
    * @param env Strings following the pattern "property-name:property-value"
-   * @see EnvironmentTestUtils#addEnvironment(String, org.springframework.core.env.ConfigurableEnvironment, String...)
+   * @see TestPropertyValues#of(String...)
    */
   private void registerAndRefreshContext(String... env) {
-    EnvironmentTestUtils.addEnvironment(this.context, env);
+    TestPropertyValues.of(env).applyTo(this.context);
     this.context.register(SpringletsWebMvcAutoConfiguration.class);
     this.context.refresh();
   }
