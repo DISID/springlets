@@ -72,5 +72,9 @@
       <artifactId>hibernate-jpa-2.1-api</artifactId>
       <optional>true</optional>
     </dependency>
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-core</artifactId>
+    </dependency>
   </dependencies>
 </project>
